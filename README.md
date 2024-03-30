@@ -41,7 +41,7 @@ Follow these steps:
 6. Upgrade
 
     ``` bash
-    helm upgrade -f values-override.yaml seriohub-velero ./seriohub-velero/ -n velero-ui-helm
+    helm upgrade -f values-override.yaml seriohub-velero ./seriohub-velero/ -n velero-ui
     ```
 
 7. Uninstall
