@@ -1,0 +1,134 @@
+global:
+  veleroNamespace: velero
+api:
+  apiServer:
+    image:
+      repository: docker.io/dserio83/velero-api
+      tag: 0.1.7
+    imagePullPolicy: Always
+  ports:
+  - name: velero-api
+    port: 80
+    protocol: TCP
+    targetPort: api
+  replicas: 1
+  type: ClusterIP
+apiConfig:
+  apiEnableDocumentation: "1"
+  apiEndpointPort: "8001"
+  apiEndpointUrl: 0.0.0.0
+  apiRateLimiterCustom1: Security:xxx:60:20
+  apiRateLimiterL1: "60:20"
+  apiTokenExpirationMin: "30"
+  awsAccessKeyId: <AWS_ACCESS_KEY_ID>
+  awsSecretAccessKey: <AWS_SECRET_ACCESS_KEY>
+  debugLevel: info
+  downloadTmpFolder: /tmp/velero-api
+  k8SInClusterMode: "True"
+  k8SVeleroNamespace: velero
+  #k8SVeleroUiNamespace: velero-ui
+  origins1: '*'
+  resticPassword: static-passw0rd
+  securityDisableUsersPwdRate: "1"
+  securityPathDatabase: ./data
+  securityTokenKey: <your-token>
+  veleroCliDestPath: /usr/local/bin
+  veleroCliPath: ./velero-client
+  veleroCliPathCustom: ./velero-client-binary
+  veleroCliVersion: v1.12.2
+apiNp:
+  enabled: true
+  ports:
+  - nodePort: 30001
+    port: 80
+    targetPort: api
+  type: NodePort
+apiSa:
+  serviceAccount:
+    annotations: {}
+kubernetesClusterDomain: cluster.local
+ui:
+  ports:
+  - name: velero-ui
+    port: 80
+    protocol: TCP
+    targetPort: run
+  replicas: 1
+  type: ClusterIP
+  webserver:
+    image:
+      repository: docker.io/dserio83/velero-ui
+      tag: 0.1.7
+    imagePullPolicy: Always
+uiConfig:
+  nextPublicRefreshDatatableAfter: "1500"
+  nextPublicRefreshRecent: "5000"
+  nextPublicVeleroApiUrl: http://10.10.0.100
+  nextPublicVeleroApiWs: ws://10.10.0.100
+uiNp:
+  enabled: true
+  ports:
+  - nodePort: 30002
+    port: 3000
+    targetPort: run
+  type: NodePort
+apiIngress:
+  enabled: false
+  host: api.velero.your-cluster-domain
+uiIngress:
+  enabled: false
+  host: velero.your-cluster-domain
+#
+# watchdog
+#
+k8SReadOnlyServiceAccount:
+  serviceAccount:
+    annotations: {}
+report:
+  failedJobsHistoryLimit: 0
+  schedule: 0 8 * * *
+  successfulJobsHistoryLimit: 0
+  veleroWatchdogReport:
+    image:
+      repository: docker.io/dserio83/velero-watchdog
+      tag: 0.1.0
+    imagePullPolicy: Always
+watchdog:
+  replicas: 1
+  veleroMonitoring:
+    image:
+      repository: docker.io/dserio83/velero-watchdog
+      tag: 0.1.0
+    imagePullPolicy: Always
+    resources:
+      limits:
+        cpu: 500m
+        memory: 1256Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+watchdogClusterip:
+  ports:
+  - port: 8001
+    protocol: TCP
+    targetPort: 8001
+  type: ClusterIP
+watchdogConfig:
+  apiEndpointURL: "0.0.0.0"
+  apiEndPointPort: "8001"
+  debugLevel: "Info"
+  backupEnable: "True"
+  scheduleEnable: "True"
+  expiresDaysWarning: "29"
+  k8SInclusterMode: "True"
+  processClusterName: <cluster-name>
+  processCycleSec: "1800"
+  emailAccount: <email>
+  emailEnable: "False"
+  emailPassword: <pwd>
+  emailRecipients: <recipients>
+  emailSmtpPort: <smtp-port>
+  emailSmtpServer: <smtp-server>
+  telegramChatId: <chat-id>
+  telegramEnable: "False"
+  telegramToken: <token>

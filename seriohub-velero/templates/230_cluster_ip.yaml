@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "seriohub-velero.fullname" . }}-watchdog-clusterip
+  labels:
+  {{- include "seriohub-velero.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.watchdogClusterip.type }}
+  selector:
+    app: velero-watchdog
+  {{- include "seriohub-velero.selectorLabels" . | nindent 4 }}
+  ports:
+	{{- .Values.watchdogClusterip.ports | toYaml | nindent 2 }}
