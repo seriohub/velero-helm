@@ -7,19 +7,6 @@ apiConfig:
   awsSecretAccessKey: <awsSecretAccessKey>
   veleroCliVersion: v1.12.2
 
-### set specific tag image
-
-#api:
-#  apiServer:
-#    image:
-#      tag: 0.1.7
-#    imagePullPolicy: IfNotPresent
-#ui:
-#  webserver:
-#    image:
-#      tag: 0.1.7
-#    imagePullPolicy: IfNotPresent
-
 #
 # port configuration
 # you can use nodeport or ingress according to your needs
@@ -38,8 +25,9 @@ uiNp:
 #  nextPublicVeleroApiUrl: "http://<cluster node ip>:30001"
 #  nextPublicVeleroApiWs: "ws://<cluster node ip>:30001"
 
-### use ingress
-
+#
+# ingress configuration
+#
 apiIngress:
   enabled: false
   host: api.velero.<your-domain>
@@ -52,24 +40,16 @@ uiIngress:
 #  nextPublicVeleroApiUrl: "https://api.velero.<your-domain>"
 #  nextPublicVeleroApiWs: "wss://api.velero.<your-domain>"
 
-### watchdog 
+#
+# watchdog 
+#
 
-# cron for full report
+# full report cron
 report:
   schedule: 0 8 * * *
-  veleroWatchdogReport:
-    image:
-      tag: dev
-    imagePullPolicy: IfNotPresent
-# watchdog for alarm
-watchdog:
-  veleroMonitoring:
-    image:
-      tag: dev
-    imagePullPolicy: IfNotPresent
 watchdogConfig:
   processClusterName: your-cluster-name
-  # processCycleSec: 120
+  # processCycleSec: 300
   # expiresDaysWarning: 29
   emailEnable: "False"
   emailAccount: <your-email>

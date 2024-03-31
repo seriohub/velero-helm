@@ -44,3 +44,6 @@ rules:
   - pods/log
   verbs:
   - '*'
+- apiGroups: ["batch"]
+  resources: ["cronjobs"]
+  verbs: ["get", "list", "watch"]
