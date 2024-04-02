@@ -32,7 +32,7 @@ apiConfig:
   resticPassword: static-passw0rd
   securityDisableUsersPwdRate: "1"
   securityPathDatabase: ./data
-  securityTokenKey: <your-token>
+  # securityTokenKey: <your-token>
   veleroCliDestPath: /usr/local/bin
   veleroCliPath: ./velero-client
   veleroCliPathCustom: ./velero-client-binary
