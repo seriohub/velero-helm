@@ -2,17 +2,21 @@ global:
   veleroNamespace: velero
 
 apiConfig:
-  securityTokenKey: <security token key get from "openssl rand -hex 32">
   awsAccessKeyId: <awsAccessKeyId>
   awsSecretAccessKey: <awsSecretAccessKey>
   veleroCliVersion: v1.12.2
+  # apiTokenExpirationMin: "30"
+  # apiTokenRefreshExpirationDays: "7"
+  storage:
+    enabled: false
+    storageClassName: <your-storage-class-name>
 
 #
 # port configuration
 # you can use nodeport or ingress according to your needs
 #
 
-### use nodeport
+# use nodeport
 
 apiNp:
   enabled: false
@@ -41,16 +45,18 @@ uiIngress:
 #  nextPublicVeleroApiWs: "wss://api.velero.<your-domain>"
 
 #
-# watchdog 
+# watchdog configuration
 #
 
 # full report cron
 report:
   schedule: 0 8 * * *
 watchdogConfig:
-  processClusterName: your-cluster-name
+  processClusterName: <your-cluster-name>
   # processCycleSec: 300
   # expiresDaysWarning: 29
+  # notificationSkipCompleted: "True"
+  # notificationSkipInProgress: "True"
   emailEnable: "False"
   emailAccount: <your-email>
   emailPassword: <your-password>

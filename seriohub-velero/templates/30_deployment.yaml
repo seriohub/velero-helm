@@ -46,4 +46,15 @@ spec:
         - containerPort: 8001
           name: api
         resources: {}
+        {{- if .Values.apiConfig.storage.enabled }}
+        volumeMounts:
+          - name: data
+            mountPath: /app/data
+        {{- end }}
+      {{- if .Values.apiConfig.storage.enabled }}
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: pvc-api
+      {{- end }}
       serviceAccountName: {{ include "seriohub-velero.fullname" . }}-api-sa

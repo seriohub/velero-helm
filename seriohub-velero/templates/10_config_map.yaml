@@ -11,6 +11,7 @@ data:
   API_RATE_LIMITER_CUSTOM_1: {{ .Values.apiConfig.apiRateLimiterCustom1 | quote }}
   API_RATE_LIMITER_L1: {{ .Values.apiConfig.apiRateLimiterL1 | quote }}
   API_TOKEN_EXPIRATION_MIN: {{ .Values.apiConfig.apiTokenExpirationMin | quote }}
+  API_TOKEN_REFRESH_EXPIRATION_DAYS: {{ .Values.apiConfig.apiTokenRefreshExpirationDays | quote }}
   AWS_ACCESS_KEY_ID: {{ .Values.apiConfig.awsAccessKeyId | quote }}
   AWS_SECRET_ACCESS_KEY: {{ .Values.apiConfig.awsSecretAccessKey | quote }}
   DEBUG_LEVEL: {{ .Values.apiConfig.debugLevel | quote }}

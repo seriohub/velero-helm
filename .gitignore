@@ -1,2 +1,2 @@
-values-seriok8s*.yaml
-values-csk8s*.yaml
+*seriok8s*.yaml
+*csk8s*.yaml

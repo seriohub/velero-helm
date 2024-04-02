@@ -7,7 +7,7 @@ api:
   apiServer:
     image:
       repository: docker.io/dserio83/velero-api
-      tag: 0.1.8
+      tag: 0.1.9
     imagePullPolicy: IfNotPresent
   ports:
   - name: velero-api
@@ -32,7 +32,7 @@ apiConfig:
   resticPassword: static-passw0rd
   securityDisableUsersPwdRate: "1"
   securityPathDatabase: ./data
-  securityTokenKey: <your-token>
+  # securityTokenKey: <your-token>
   veleroCliDestPath: /usr/local/bin
   veleroCliPath: ./velero-client
   veleroCliPathCustom: ./velero-client-binary
@@ -92,14 +92,14 @@ report:
   veleroWatchdogReport:
     image:
       repository: docker.io/dserio83/velero-watchdog
-      tag: 0.1.0
+      tag: 0.1.1
     imagePullPolicy: IfNotPresent
 watchdog:
   replicas: 1
   veleroMonitoring:
     image:
       repository: docker.io/dserio83/velero-watchdog
-      tag: 0.1.0
+      tag: 0.1.1
     imagePullPolicy: IfNotPresent
     resources:
       limits:
@@ -124,6 +124,8 @@ watchdogConfig:
   k8SInclusterMode: "True"
   processClusterName: <cluster-name>
   processCycleSec: "300"
+  notificationSkipCompleted: "True"
+  notificationSkipInProgress: "True"
   emailAccount: <email>
   emailEnable: "False"
   emailPassword: <pwd>
