@@ -75,9 +75,11 @@ uiNp:
   type: NodePort
 apiIngress:
   enabled: false
+  ingressClassName: nginx
   host: api.velero.your-cluster-domain
 uiIngress:
   enabled: false
+  ingressClassName: nginx
   host: velero.your-cluster-domain
 #
 # watchdog
@@ -92,14 +94,14 @@ report:
   veleroWatchdogReport:
     image:
       repository: docker.io/dserio83/velero-watchdog
-      tag: 0.1.1
+      tag: 0.1.2
     imagePullPolicy: IfNotPresent
 watchdog:
   replicas: 1
   veleroMonitoring:
     image:
       repository: docker.io/dserio83/velero-watchdog
-      tag: 0.1.1
+      tag: 0.1.2
     imagePullPolicy: IfNotPresent
     resources:
       limits:
@@ -135,3 +137,6 @@ watchdogConfig:
   telegramChatId: <chat-id>
   telegramEnable: "False"
   telegramToken: <token>
+  slackChannel: <channel-id>
+  slackEnable: "False"
+  slackToken: <token>
