@@ -6,7 +6,7 @@ metadata:
   labels:
   {{- include "seriohub-velero.labels" . | nindent 4 }}
 spec:
-  ingressClassName: nginx
+  ingressClassName: {{ .Values.apiIngress.ingressClassName }}
   rules:
   - host: {{ .Values.apiIngress.host }}
     http:

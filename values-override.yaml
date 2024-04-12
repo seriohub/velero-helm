@@ -34,9 +34,11 @@ uiNp:
 #
 apiIngress:
   enabled: false
-  host: api.velero.<your-domain>
+  #ingressClassName: nginx
+  host: api.velero.<your-domain>  
 uiIngress:
   enabled: false
+  #ingressClassName: nginx
   host: velero.<your-domain>
 
 # uncomment and set if you use ingress
@@ -57,12 +59,18 @@ watchdogConfig:
   # expiresDaysWarning: 29
   # notificationSkipCompleted: "True"
   # notificationSkipInProgress: "True"
+  # email
   emailEnable: "False"
   emailAccount: <your-email>
   emailPassword: <your-password>
   emailRecipients: <email-recipents-comma-saparted>
   emailSmtpPort: <smtp-port>
   emailSmtpServer: <smtp-server>
+  # slack
+  slackEnable: "False"
+  slackChannel: <channel-id>  
+  slackToken: <token>
+  # telegram
   telegramEnable: "False"
   telegramChatId: "<telegram-chat-id>"
   telegramToken: "<telegram-token>"

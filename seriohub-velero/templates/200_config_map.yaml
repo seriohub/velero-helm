@@ -22,6 +22,9 @@ data:
   EMAIL_RECIPIENTS: {{ .Values.watchdogConfig.emailRecipients | quote }}
   EMAIL_SMTP_PORT: {{ .Values.watchdogConfig.emailSmtpPort | quote }}
   EMAIL_SMTP_SERVER: {{ .Values.watchdogConfig.emailSmtpServer | quote }}
+  SLACK_CHANNEL: {{ .Values.watchdogConfig.slackChannel | quote }}
+  SLACK_ENABLE: {{ .Values.watchdogConfig.slackEnable | quote }}
+  SLACK_TOKEN: {{ .Values.watchdogConfig.slackToken | quote }}
   TELEGRAM_CHAT_ID: {{ .Values.watchdogConfig.telegramChatId | quote }}
   TELEGRAM_ENABLE: {{ .Values.watchdogConfig.telegramEnable | quote }}
   TELEGRAM_TOKEN: {{ .Values.watchdogConfig.telegramToken | quote }}
