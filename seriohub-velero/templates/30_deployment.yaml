@@ -35,11 +35,20 @@ spec:
               fieldPath: metadata.namespace
         - name: KUBERNETES_CLUSTER_DOMAIN
           value: {{ quote .Values.kubernetesClusterDomain }}
+        - name: HELM_VERSION
+          value: {{ .Chart.version }}
+        - name: HELM_APP_VERSION
+          value: {{ .Chart.AppVersion }}
+        - name: HELM_API
+          value: {{ .Values.api.apiServer.image.tag }}
+        - name: HELM_UI
+          value: {{ .Values.ui.webServer.image.tag }}
+        - name: HELM_WATCHDOG
+          value: {{ .Values.watchdog.veleroMonitoring.image.tag }}
         envFrom:
         - configMapRef:
             name: velero-api-config
-        image: {{ .Values.api.apiServer.image.repository }}:{{ .Values.api.apiServer.image.tag
-          | default .Chart.AppVersion }}
+        image: {{ .Values.api.apiServer.image.repository }}:{{ .Values.api.apiServer.image.tag }}
         imagePullPolicy: {{ .Values.api.apiServer.imagePullPolicy }}
         name: api-server
         ports:

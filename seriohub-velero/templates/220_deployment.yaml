@@ -26,8 +26,7 @@ spec:
         envFrom:
         - configMapRef:
             name: velero-watchdog-config
-        image: {{ .Values.watchdog.veleroMonitoring.image.repository }}:{{ .Values.watchdog.veleroMonitoring.image.tag
-          | default .Chart.AppVersion }}
+        image: {{ .Values.watchdog.veleroMonitoring.image.repository }}:{{ .Values.watchdog.veleroMonitoring.image.tag }}
         imagePullPolicy: {{ .Values.watchdog.veleroMonitoring.imagePullPolicy }}
         name: velero-monitoring
         resources: {{- toYaml .Values.watchdog.veleroMonitoring.resources | nindent 10

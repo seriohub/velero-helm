@@ -27,8 +27,7 @@ spec:
         envFrom:
         - configMapRef:
             name: velero-ui-config
-        image: {{ .Values.ui.webserver.image.repository }}:{{ .Values.ui.webserver.image.tag
-          | default .Chart.AppVersion }}
+        image: {{ .Values.ui.webserver.image.repository }}:{{ .Values.ui.webserver.image.tag }}
         imagePullPolicy: {{ .Values.ui.webserver.imagePullPolicy }}
         name: webserver
         ports:
