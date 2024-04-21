@@ -56,7 +56,7 @@ ui:
     targetPort: run
   replicas: 1
   type: ClusterIP
-  webserver:
+  webServer:
     image:
       repository: docker.io/dserio83/velero-ui
       tag: 0.1.8

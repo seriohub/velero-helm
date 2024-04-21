@@ -27,8 +27,8 @@ spec:
         envFrom:
         - configMapRef:
             name: velero-ui-config
-        image: {{ .Values.ui.webserver.image.repository }}:{{ .Values.ui.webserver.image.tag }}
-        imagePullPolicy: {{ .Values.ui.webserver.imagePullPolicy }}
+        image: {{ .Values.ui.webServer.image.repository }}:{{ .Values.ui.webServer.image.tag }}
+        imagePullPolicy: {{ .Values.ui.webServer.imagePullPolicy }}
         name: webserver
         ports:
         - containerPort: 3000
