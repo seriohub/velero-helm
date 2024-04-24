@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ***
 
+## [v0.1.4] - 2024-04-24
+
+- Added test for notifications
+- Added new versions available notifications
+
 ## [v0.1.3] - 2024-04-02
 
 - Added slack notification
@@ -23,12 +28,13 @@ All notable changes to this project will be documented in this file.
 
 ### Components
 
-| version    | appVersion    | api   | ui    | watchdog  |
-|------------|---------------|-------|-------|-----------|
-| 0.1.3      | 0.1.3         | 0.1.9 | 0.1.8 | 0.1.2     |
-| 0.1.2      | 0.1.2         | 0.1.9 | 0.1.8 | 0.1.1     |
-| 0.1.1      | 0.1.1         | 0.1.8 | 0.1.8 | 0.1.0     |
-| 0.1.0      | 0.1.0         | 0.1.7 | 0.1.7 | dev       |
+| version    | appVersion    | api    | ui    | watchdog  |
+|------------|---------------|--------|-------|-----------|
+| 0.1.4      | 0.1.4         | 0.1.10 | 0.1.9 | 0.1.3     |
+| 0.1.3      | 0.1.3         | 0.1.9  | 0.1.8 | 0.1.2     |
+| 0.1.2      | 0.1.2         | 0.1.9  | 0.1.8 | 0.1.1     |
+| 0.1.1      | 0.1.1         | 0.1.8  | 0.1.8 | 0.1.0     |
+| 0.1.0      | 0.1.0         | 0.1.7  | 0.1.7 | dev       |
 
 ### Release
 
