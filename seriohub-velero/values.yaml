@@ -7,7 +7,7 @@ api:
   apiServer:
     image:
       repository: docker.io/dserio83/velero-api
-      tag: 0.1.9
+      tag: 0.1.10
     imagePullPolicy: IfNotPresent
   ports:
   - name: velero-api
@@ -59,7 +59,7 @@ ui:
   webServer:
     image:
       repository: docker.io/dserio83/velero-ui
-      tag: 0.1.8
+      tag: 0.1.9
     imagePullPolicy: IfNotPresent
 uiConfig:
   nextPublicRefreshDatatableAfter: "1500"
@@ -94,14 +94,14 @@ report:
   veleroWatchdogReport:
     image:
       repository: docker.io/dserio83/velero-watchdog
-      tag: 0.1.2
+      tag: 0.1.3
     imagePullPolicy: IfNotPresent
 watchdog:
   replicas: 1
   veleroMonitoring:
     image:
       repository: docker.io/dserio83/velero-watchdog
-      tag: 0.1.2
+      tag: 0.1.3
     imagePullPolicy: IfNotPresent
     resources:
       limits:

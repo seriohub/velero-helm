@@ -36,7 +36,7 @@ spec:
         - name: KUBERNETES_CLUSTER_DOMAIN
           value: {{ quote .Values.kubernetesClusterDomain }}
         - name: HELM_VERSION
-          value: {{ .Chart.version }}
+          value: {{ .Chart.Version }}
         - name: HELM_APP_VERSION
           value: {{ .Chart.AppVersion }}
         - name: HELM_API
