@@ -53,6 +53,8 @@ uiIngress:
 # full report cron
 report:
   schedule: 0 8 * * *
+
+# watchdog daemon
 watchdogConfig:
   processClusterName: <your-cluster-name>
   # processCycleSec: 300
