@@ -9,7 +9,7 @@ All notable changes to this project will be documented in this file.
 - Added test for notifications
 - Added new versions available notifications
 
-## [v0.1.3] - 2024-04-02
+## [v0.1.3] - 2024-04-12
 
 - Added slack notification
 
