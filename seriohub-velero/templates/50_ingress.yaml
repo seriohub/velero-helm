@@ -1,4 +1,4 @@
-{{- if .Values.apiIngress.enabled }}
+{{- if .Values.uiIngress.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -6,9 +6,9 @@ metadata:
   labels:
   {{- include "seriohub-velero.labels" . | nindent 4 }}
 spec:
-  ingressClassName: {{ .Values.apiIngress.ingressClassName }}
+  ingressClassName: {{ .Values.uiIngress.ingressClassName }}
   rules:
-  - host: {{ .Values.apiIngress.host }}
+  - host: {{ .Values.uiIngress.host }}
     http:
       paths:
       - backend:
@@ -16,6 +16,13 @@ spec:
             name: '{{ include "seriohub-velero.fullname" . }}-api'
             port:
               number: 80
-        path: /
+        path: /api
+        pathType: Prefix
+      - backend:
+          service:
+            name: '{{ include "seriohub-velero.fullname" . }}-api'
+            port:
+              number: 80
+        path: /ws
         pathType: Prefix
 {{- end }}

@@ -1,9 +1,18 @@
+#
+# Global
+#
 global:
   veleroNamespace: velero
+  # kubernetesClusterDomain: my-cluster
 
+#
+# API Config
+#
 apiConfig:
+  #
   awsAccessKeyId: <awsAccessKeyId>
   awsSecretAccessKey: <awsSecretAccessKey>
+  # debugLevel: debug
   veleroCliVersion: v1.12.2
   # apiTokenExpirationMin: "30"
   # apiTokenRefreshExpirationDays: "7"
@@ -12,55 +21,53 @@ apiConfig:
     storageClassName: <your-storage-class-name>
 
 #
-# port configuration
-# you can use nodeport or ingress according to your needs
+# You can use nodeport or ingress according to your needs
 #
-
-# use nodeport
-
-apiNp:
-  enabled: false
-
+#
+# Nodeport
+#
 uiNp:
   enabled: false
-
-# uncomment and set if you use nodeport
-#uiConfig:
-#  nextPublicVeleroApiUrl: "http://<cluster node ip>:30001"
-#  nextPublicVeleroApiWs: "ws://<cluster node ip>:30001"
-
+  ip: "10.10.0.100"  # any ip address of your cluster
+  apiPort: "30001"
+  uiPort: "30002"
 #
-# ingress configuration
+# Ingress
 #
-apiIngress:
-  enabled: false
-  #ingressClassName: nginx
-  host: api.velero.<your-domain>  
 uiIngress:
   enabled: false
-  #ingressClassName: nginx
+  # ingressClassName: nginx
   host: velero.<your-domain>
-
-# uncomment and set if you use ingress
-#uiConfig:
-#  nextPublicVeleroApiUrl: "https://api.velero.<your-domain>"
-#  nextPublicVeleroApiWs: "wss://api.velero.<your-domain>"
+  tls:
+    enabled: false
+  # metadata:
+  #   annotations:
+  #     cert-manager.io/cluster-issuer: "letsencrypt-prod" 
+  # spec:
+  #   tls:
+  #    - hosts:
+  #      - velero-ui.domain.com
+  #      secretName: velero-ui-tls
 
 #
-# watchdog configuration
+# Watchdog Cron
 #
-
-# full report cron
 report:
   schedule: 0 8 * * *
 
-# watchdog daemon
+#
+# Watchdog Daemon
+#
 watchdogConfig:
+  # config
+  k8SInclusterMode: "True"
   processClusterName: <your-cluster-name>
   # processCycleSec: 300
   # expiresDaysWarning: 29
-  # notificationSkipCompleted: "True"
-  # notificationSkipInProgress: "True"
+  notificationSkipCompleted: "True"
+  notificationSkipInProgress: "True"
+  
+  
   # email
   emailEnable: "False"
   emailAccount: <your-email>
@@ -68,10 +75,12 @@ watchdogConfig:
   emailRecipients: <email-recipents-comma-saparted>
   emailSmtpPort: <smtp-port>
   emailSmtpServer: <smtp-server>
+  
   # slack
   slackEnable: "False"
   slackChannel: <channel-id>  
   slackToken: <token>
+  
   # telegram
   telegramEnable: "False"
   telegramChatId: "<telegram-chat-id>"

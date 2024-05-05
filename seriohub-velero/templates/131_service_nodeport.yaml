@@ -6,10 +6,12 @@ metadata:
   labels:
   {{- include "seriohub-velero.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.uiNp.type }}
+  type: NodePort
   selector:
     layer: webserver
   {{- include "seriohub-velero.selectorLabels" . | nindent 4 }}
   ports:
-	{{- .Values.uiNp.ports | toYaml | nindent 2 }}
+    - nodePort: {{ .Values.uiNp.uiPort }}
+      port: 80
+      targetPort: run
 {{- end }}
