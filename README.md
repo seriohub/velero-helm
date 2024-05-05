@@ -1,6 +1,6 @@
 # HELM Install
 
-With Helm, you can install
+With Helm, you install
 
 - [Velero API](https://github.com/seriohub/velero-api)
 - [Velero UI](https://github.com/seriohub/velero-ui)
@@ -22,10 +22,13 @@ Follow these steps:
 
 3. Edit the necessary data in the [values-override.yaml](values-override.yaml) file.
 
-    For configuration values see:
-    - [API Configuration](https://github.com/seriohub/velero-api#configuration)
-    - [UI Configuration](https://github.com/seriohub/velero-ui#configuration)
-    - [Watchdog Configuration](https://github.com/seriohub/velero-watchdog#configuration)
+    > [!NOTE]
+    > If you need advanced configurations, you can configure the [values.yaml](seriohub-velero/values.yaml)
+    >
+    > The description of the parameters is available in the relevant readme:
+    > - [API Configuration](https://github.com/seriohub/velero-api#configuration)
+    > - [UI Configuration](https://github.com/seriohub/velero-ui#configuration)
+    > - [Watchdog Configuration](https://github.com/seriohub/velero-watchdog#configuration)
 
 4. Create the namespace
 
@@ -34,6 +37,9 @@ Follow these steps:
     ```
 
 5. Install using Helm:
+
+    > [!IMPORTANT]
+    > Make sure to customize the values in the [values-override.yaml](values-override.yaml) file according to your requirements before running the installation command.
 
     ``` bash
     helm install -f values-override.yaml seriohub-velero ./seriohub-velero/ -n velero-ui
@@ -51,5 +57,3 @@ Follow these steps:
     helm uninstall seriohub-velero -n velero-ui
     kubectl delete ns velero-ui
     ```
-
-Make sure to customize the values in the values-override.yaml file according to your requirements before running the installation command.

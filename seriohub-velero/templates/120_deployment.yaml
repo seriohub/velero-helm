@@ -23,7 +23,7 @@ spec:
       containers:
       - env:
         - name: KUBERNETES_CLUSTER_DOMAIN
-          value: {{ quote .Values.kubernetesClusterDomain }}
+          value: {{ quote .Values.global.kubernetesClusterDomain }}
         envFrom:
         - configMapRef:
             name: velero-ui-config

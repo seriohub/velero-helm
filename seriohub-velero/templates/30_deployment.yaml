@@ -34,7 +34,7 @@ spec:
             fieldRef:
               fieldPath: metadata.namespace
         - name: KUBERNETES_CLUSTER_DOMAIN
-          value: {{ quote .Values.kubernetesClusterDomain }}
+          value: {{ quote .Values.global.kubernetesClusterDomain }}
         - name: HELM_VERSION
           value: {{ .Chart.Version }}
         - name: HELM_APP_VERSION
