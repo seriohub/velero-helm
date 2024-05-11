@@ -6,7 +6,7 @@ With Helm, you install
 - [Velero UI](https://github.com/seriohub/velero-ui)
 - [Velero Watchdog](https://github.com/seriohub/velero-watchdog)
 
-## Instal with repo
+## Install with repo
 
 Follow these steps:
 
@@ -26,7 +26,7 @@ Follow these steps:
 
     ``` bash
     NAME                CHART VERSION   APP VERSION DESCRIPTION                                       
-    seriohub-velero/vui 0.1.6           0.1.5       Velero User Interface: a friendly UI and dashbo..
+    seriohub-velero/vui 0.1.6           0.1.6       Velero User Interface: a friendly UI and dashbo..
     ```
 
 3. Create a configuration file starting from [values-override.yaml](values-override.yaml) file.
