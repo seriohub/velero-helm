@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: velero-ui-config
+  labels:
+  {{- include "seriohub-velero.labels" . | nindent 4 }}
+data:
+  NEXT_PUBLIC_REFRESH_DATATABLE_AFTER: {{ .Values.uiConfig.nextPublicRefreshDatatableAfter  | quote }}
+  NEXT_PUBLIC_REFRESH_RECENT: {{ .Values.uiConfig.nextPublicRefreshRecent | quote  }}
+  #  
+  # Ingress
+  #
+  {{- if .Values.uiIngress.enabled }}
+  {{- if .Values.uiIngress.tls.enabled }}
+  NEXT_PUBLIC_VELERO_API_URL: {{ printf "https://%s/api" .Values.uiIngress.host | quote }}
+  NEXT_PUBLIC_VELERO_API_WS: {{ printf "wss://%s" .Values.uiIngress.host | quote }}
+  {{- else }}
+  NEXT_PUBLIC_VELERO_API_URL: {{ printf "http://%s/api" .Values.uiIngress.host | quote }}
+  NEXT_PUBLIC_VELERO_API_WS: {{ printf "ws://%s" .Values.uiIngress.host | quote }}
+  {{- end }}
+  {{- end }}
+  #  
+  # NodePort
+  #
+  {{- if .Values.uiNp.enabled }}
+  NEXT_PUBLIC_VELERO_API_URL: {{ printf "http://%s:%s/api" .Values.uiNp.ip .Values.uiNp.apiPort | quote }}
+  NEXT_PUBLIC_VELERO_API_WS: {{ printf "ws://%s:%s" .Values.uiNp.ip .Values.uiNp.apiPort | quote }}
+  {{- end }}

@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: velero-watchdog-config
+  labels:
+  {{- include "seriohub-velero.labels" . | nindent 4 }}
+data:
+  {{- if not (quote .Values.watchdogConfig.apiEndpointURL | empty)  }}
+  API_ENDPOINT_URL: {{ .Values.watchdogConfig.apiEndpointURL | quote }}
+  {{- end }}
+  API_ENDPOINT_PORT: {{ .Values.watchdogConfig.apiEndpointPort | quote }}
+  DEBUG_LEVEL: {{ .Values.watchdogConfig.debugLevel | quote }}
+  BACKUP_ENABLE: {{ .Values.watchdogConfig.backupEnable | quote }}
+  SCHEDULE_ENABLE: {{ .Values.watchdogConfig.scheduleEnable | quote }}
+  EXPIRES_DAYS_WARNING: {{ .Values.watchdogConfig.expiresDaysWarning | quote }}
+  K8S_INCLUSTER_MODE: {{ .Values.watchdogConfig.k8SInclusterMode | quote }}
+  PROCESS_CLUSTER_NAME: {{ .Values.watchdogConfig.processClusterName | quote }}
+  PROCESS_CYCLE_SEC: {{ .Values.watchdogConfig.processCycleSec | quote }}
+  NOTIFICATION_SKIP_COMPLETED: {{ .Values.watchdogConfig.notificationSkipCompleted | quote }}
+  NOTIFICATION_SKIP_INPROGRESS: {{ .Values.watchdogConfig.notificationSkipInProgress | quote }}
+  EMAIL_ACCOUNT: {{ .Values.watchdogConfig.emailAccount | quote }}
+  EMAIL_ENABLE: {{ .Values.watchdogConfig.emailEnable | quote }}
+  EMAIL_PASSWORD: {{ .Values.watchdogConfig.emailPassword | quote }}
+  EMAIL_RECIPIENTS: {{ .Values.watchdogConfig.emailRecipients | quote }}
+  EMAIL_SMTP_PORT: {{ .Values.watchdogConfig.emailSmtpPort | quote }}
+  EMAIL_SMTP_SERVER: {{ .Values.watchdogConfig.emailSmtpServer | quote }}
+  SLACK_CHANNEL: {{ .Values.watchdogConfig.slackChannel | quote }}
+  SLACK_ENABLE: {{ .Values.watchdogConfig.slackEnable | quote }}
+  SLACK_TOKEN: {{ .Values.watchdogConfig.slackToken | quote }}
+  TELEGRAM_CHAT_ID: {{ .Values.watchdogConfig.telegramChatId | quote }}
+  TELEGRAM_ENABLE: {{ .Values.watchdogConfig.telegramEnable | quote }}
+  TELEGRAM_TOKEN: {{ .Values.watchdogConfig.telegramToken | quote }}
+  

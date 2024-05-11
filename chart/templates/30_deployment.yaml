@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "seriohub-velero.fullname" . }}-api
+  # name: velero-api
+  labels:
+    app: velero-api
+    layer: api
+    tier: backend
+  {{- include "seriohub-velero.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.api.replicas }}
+  selector:
+    matchLabels:
+      app: velero-api
+      layer: api
+      tier: backend
+    {{- include "seriohub-velero.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: velero-api
+        layer: api
+        tier: backend
+      {{- include "seriohub-velero.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ quote .Values.global.kubernetesClusterDomain }}
+        - name: HELM_VERSION
+          value: {{ .Chart.Version }}
+        - name: HELM_APP_VERSION
+          value: {{ .Chart.AppVersion }}
+        - name: HELM_API
+          value: {{ .Values.api.apiServer.image.tag }}
+        - name: HELM_UI
+          value: {{ .Values.ui.webServer.image.tag }}
+        - name: HELM_WATCHDOG
+          value: {{ .Values.watchdog.veleroMonitoring.image.tag }}
+        envFrom:
+        - configMapRef:
+            name: velero-api-config
+        image: {{ .Values.api.apiServer.image.repository }}:{{ .Values.api.apiServer.image.tag }}
+        imagePullPolicy: {{ .Values.api.apiServer.imagePullPolicy }}
+        name: api-server
+        ports:
+        - containerPort: 8001
+          name: api
+        resources: {}
+        {{- if .Values.apiConfig.storage.enabled }}
+        volumeMounts:
+          - name: data
+            mountPath: /app/data
+        {{- end }}
+      {{- if .Values.apiConfig.storage.enabled }}
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: pvc-api
+      {{- end }}
+      serviceAccountName: {{ include "seriohub-velero.fullname" . }}-api-sa

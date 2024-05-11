@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "seriohub-velero.fullname" . }}-report
+  labels:
+  {{- include "seriohub-velero.labels" . | nindent 4 }}
+spec:
+  failedJobsHistoryLimit: {{ .Values.report.failedJobsHistoryLimit }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - command:
+            - python3
+            - watchdog.py
+            env:
+            - name: KUBERNETES_CLUSTER_DOMAIN
+              value: {{ quote .Values.global.kubernetesClusterDomain }}
+            envFrom:
+            - configMapRef:
+                name: velero-watchdog-config
+            image: {{ .Values.report.veleroWatchdogReport.image.repository }}:{{
+              .Values.report.veleroWatchdogReport.image.tag | default .Chart.AppVersion
+              }}
+            imagePullPolicy: {{ .Values.report.veleroWatchdogReport.imagePullPolicy
+              }}
+            name: velero-watchdog-report
+            resources: {}
+          restartPolicy: Never
+          serviceAccountName: {{ include "seriohub-velero.fullname" . }}-k8s-read-only-service-account
+  schedule: {{ .Values.report.schedule | quote }}
+  successfulJobsHistoryLimit: {{ .Values.report.successfulJobsHistoryLimit }}

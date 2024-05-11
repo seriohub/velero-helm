@@ -1,0 +1,31 @@
+apiVersion: v1
+entries:
+  vui:
+  - apiVersion: v2
+    appVersion: 0.1.5
+    created: "2024-05-10T09:14:44.775125297Z"
+    description: "Velero User Interface: a friendly UI and dashboard for Velero"
+    digest: 463555d5047d3591ed3f77c7464b486328ae4bb2edd3434f0ffe5dcbf88af88b
+    home: https://github.com/seriohub/velero-ui
+    keywords:
+    - kubernetes
+    - velero
+    - ui
+    - gui
+    - dashboard
+    maintainers:
+    - name: Davide Serio
+      url: https://github.com/davideserio
+    - name: Luciano Serio
+      url: https://github.com/lucianoserio
+    name: velero-ui
+    sources:
+    - https://github.com/seriohub/velero-ui
+    - https://github.com/seriohub/velero-api
+    - https://github.com/seriohub/velero-watchdog
+    - https://github.com/seriohub/velero-helm
+    type: application
+    urls:
+    - https://seriohub.github.io/velero-helm/vui-0.1.6.tgz
+    version: 0.1.6
+generated: "2024-05-10T09:14:44.752971012Z"

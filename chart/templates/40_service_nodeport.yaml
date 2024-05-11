@@ -1,0 +1,19 @@
+{{- if .Values.uiNp.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "seriohub-velero.fullname" . }}-api-np
+  labels:
+  {{- include "seriohub-velero.labels" . | nindent 4 }}
+spec:
+  type: NodePort
+  selector:
+    app: velero-api
+    layer: api
+    tier: backend
+  {{- include "seriohub-velero.selectorLabels" . | nindent 4 }}
+  ports:
+    - nodePort: {{ .Values.uiNp.apiPort }}
+      port: 80
+      targetPort: api
+{{- end }}

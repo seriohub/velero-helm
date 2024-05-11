@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "seriohub-velero.fullname" . }}-ui
+  # name: velero-ui
+  labels:
+    layer: webserver
+    tier: frontend
+  {{- include "seriohub-velero.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.ui.replicas }}
+  selector:
+    matchLabels:
+      layer: webserver
+      tier: frontend
+    {{- include "seriohub-velero.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        layer: webserver
+        tier: frontend
+      {{- include "seriohub-velero.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - env:
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ quote .Values.global.kubernetesClusterDomain }}
+        envFrom:
+        - configMapRef:
+            name: velero-ui-config
+        image: {{ .Values.ui.webServer.image.repository }}:{{ .Values.ui.webServer.image.tag }}
+        imagePullPolicy: {{ .Values.ui.webServer.imagePullPolicy }}
+        name: webserver
+        ports:
+        - containerPort: 3000
+          name: run
+        resources: {}
