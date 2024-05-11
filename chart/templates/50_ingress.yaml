@@ -5,6 +5,8 @@ metadata:
   name: {{ include "seriohub-velero.fullname" . }}-api-ingress
   labels:
   {{- include "seriohub-velero.labels" . | nindent 4 }}
+  annotations:
+  {{- .Values.uiIngress.metadata.annotations | toYaml | nindent 4}}
 spec:
   ingressClassName: {{ .Values.uiIngress.ingressClassName }}
   rules:
@@ -28,6 +30,7 @@ spec:
   {{- if not .Values.uiIngress.spec.tls }}
   tls: []
   {{- else }}
+  tls:
   {{- .Values.uiIngress.spec.tls | toYaml | nindent 2 }}
   {{- end }}
 {{- end }}

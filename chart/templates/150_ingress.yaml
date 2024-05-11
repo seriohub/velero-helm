@@ -23,6 +23,7 @@ spec:
   {{- if not .Values.uiIngress.spec.tls }}
   tls: []
   {{- else }}
+  tls:
   {{- .Values.uiIngress.spec.tls | toYaml | nindent 2 }}
   {{- end }}
 {{- end }}
