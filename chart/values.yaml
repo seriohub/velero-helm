@@ -124,7 +124,7 @@ report:
   veleroWatchdogReport:
     image:
       repository: docker.io/dserio83/velero-watchdog
-      tag: 0.1.3
+      tag: 0.1.4
     imagePullPolicy: IfNotPresent
 
 #
@@ -135,7 +135,7 @@ watchdog:
   veleroMonitoring:
     image:
       repository: docker.io/dserio83/velero-watchdog
-      tag: 0.1.3
+      tag: 0.1.4
     imagePullPolicy: IfNotPresent
     resources:
       limits:
