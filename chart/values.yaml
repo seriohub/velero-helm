@@ -167,6 +167,7 @@ watchdogConfig:
   processCycleSec: "300"
   notificationSkipCompleted: "True"
   notificationSkipInProgress: "True"
+  notificationSkipRemoved: "True"
   emailAccount: <email>
   emailEnable: "False"
   emailPassword: <pwd>
