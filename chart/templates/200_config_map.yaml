@@ -18,6 +18,7 @@ data:
   PROCESS_CYCLE_SEC: {{ .Values.watchdogConfig.processCycleSec | quote }}
   NOTIFICATION_SKIP_COMPLETED: {{ .Values.watchdogConfig.notificationSkipCompleted | quote }}
   NOTIFICATION_SKIP_INPROGRESS: {{ .Values.watchdogConfig.notificationSkipInProgress | quote }}
+  NOTIFICATION_SKIP_REMOVED: {{ .Values.watchdogConfig.notificationSkipRemoved | quote }}
   EMAIL_ACCOUNT: {{ .Values.watchdogConfig.emailAccount | quote }}
   EMAIL_ENABLE: {{ .Values.watchdogConfig.emailEnable | quote }}
   EMAIL_PASSWORD: {{ .Values.watchdogConfig.emailPassword | quote }}
