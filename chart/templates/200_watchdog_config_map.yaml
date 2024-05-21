@@ -19,6 +19,7 @@ data:
   NOTIFICATION_SKIP_COMPLETED: {{ .Values.watchdogConfig.notificationSkipCompleted | quote }}
   NOTIFICATION_SKIP_INPROGRESS: {{ .Values.watchdogConfig.notificationSkipInProgress | quote }}
   NOTIFICATION_SKIP_REMOVED: {{ .Values.watchdogConfig.notificationSkipRemoved | quote }}
+  NOTIFICATION_SKIP_DELETING: {{ .Values.watchdogConfig.notificationSkipDeleting | quote }}
   EMAIL_ACCOUNT: {{ .Values.watchdogConfig.emailAccount | quote }}
   EMAIL_ENABLE: {{ .Values.watchdogConfig.emailEnable | quote }}
   EMAIL_PASSWORD: {{ .Values.watchdogConfig.emailPassword | quote }}
@@ -28,6 +29,8 @@ data:
   SLACK_CHANNEL: {{ .Values.watchdogConfig.slackChannel | quote }}
   SLACK_ENABLE: {{ .Values.watchdogConfig.slackEnable | quote }}
   SLACK_TOKEN: {{ .Values.watchdogConfig.slackToken | quote }}
+  REPORT_BACKUP_ITEM_PREFIX: {{ .Values.watchdogConfig.reportBackupItemPrefix | quote }}
+  REPORT_SCHEDULE_ITEM_PREFIX: {{ .Values.watchdogConfig.reportScheduleItemPrefix | quote }}
   TELEGRAM_CHAT_ID: {{ .Values.watchdogConfig.telegramChatId | quote }}
   TELEGRAM_ENABLE: {{ .Values.watchdogConfig.telegramEnable | quote }}
   TELEGRAM_TOKEN: {{ .Values.watchdogConfig.telegramToken | quote }}

@@ -4,10 +4,20 @@ All notable changes to this project will be documented in this file.
 
 ***
 
+## [v0.1.8] - 2024-05-21
+
+- Updated API version to 0.1.13
+- Updated UI version to 0.1.11
+- Updated watchdog version to 0.1.5
+- Added NOTIFICATION_SKIP_DELETING watchdog config param
+- Added REPORT_BACKUP_ITEM_PREFIX watchdog config param
+- Added REPORT_SCHEDULE_ITEM_PREFIX watchdog config param
+- Consolidate ingress into one file
+
 ## [v0.1.7] - 2024-05-11
 
 - Updated watchdog version
-- Added NOTIFICATION_SKIP_REMOVED watchdog config params
+- Added NOTIFICATION_SKIP_REMOVED watchdog config param
 
 ## [v0.1.6] - 2024-05-11
 
@@ -44,6 +54,7 @@ All notable changes to this project will be documented in this file.
 
 | version    | appVersion    | api    | ui     | watchdog  |
 |------------|---------------|--------|--------|-----------|
+| 0.1.8      | 0.1.8         | 0.1.13 | 0.1.11 | 0.1.5     |
 | 0.1.7      | 0.1.7         | 0.1.12 | 0.1.10 | 0.1.4     |
 | 0.1.6      | 0.1.6         | 0.1.12 | 0.1.10 | 0.1.3     |
 | 0.1.5      | 0.1.5         | 0.1.11 | 0.1.10 | 0.1.3     |

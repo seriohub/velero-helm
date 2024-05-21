@@ -12,7 +12,7 @@ api:
   apiServer:
     image:
       repository: docker.io/dserio83/velero-api
-      tag: 0.1.12
+      tag: 0.1.13
     imagePullPolicy: IfNotPresent
   ports:
   - name: velero-api
@@ -70,7 +70,7 @@ ui:
   webServer:
     image:
       repository: docker.io/dserio83/velero-ui
-      tag: 0.1.10
+      tag: 0.1.11
     imagePullPolicy: IfNotPresent
 
 #
@@ -124,7 +124,7 @@ report:
   veleroWatchdogReport:
     image:
       repository: docker.io/dserio83/velero-watchdog
-      tag: 0.1.4
+      tag: 0.1.5
     imagePullPolicy: IfNotPresent
 
 #
@@ -135,7 +135,7 @@ watchdog:
   veleroMonitoring:
     image:
       repository: docker.io/dserio83/velero-watchdog
-      tag: 0.1.4
+      tag: 0.1.5
     imagePullPolicy: IfNotPresent
     resources:
       limits:
@@ -168,6 +168,7 @@ watchdogConfig:
   notificationSkipCompleted: "True"
   notificationSkipInProgress: "True"
   notificationSkipRemoved: "True"
+  notificationSkipDeleting: "True"
   emailAccount: <email>
   emailEnable: "False"
   emailPassword: <pwd>
@@ -177,6 +178,8 @@ watchdogConfig:
   telegramChatId: <chat-id>
   telegramEnable: "False"
   telegramToken: <token>
+  reportBackupItemPrefix: ""
+  reportScheduleItemPrefix: ""
   slackChannel: <channel-id>
   slackEnable: "False"
   slackToken: <token>
