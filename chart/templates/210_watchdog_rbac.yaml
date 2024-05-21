@@ -15,9 +15,9 @@ metadata:
   {{- include "seriohub-velero.labels" . | nindent 4 }}
 rules:
 - apiGroups:
-  - '*'
+  - "*"
   resources:
-  - '*'
+  - "*"
   verbs:
   - get
   - list
@@ -31,8 +31,8 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: '{{ include "seriohub-velero.fullname" . }}-k8s-read-only-role'
+  name: "{{ include "seriohub-velero.fullname" . }}-k8s-read-only-role"
 subjects:
 - kind: ServiceAccount
-  name: '{{ include "seriohub-velero.fullname" . }}-k8s-read-only-service-account'
-  namespace: '{{ .Release.Namespace }}'
+  name: "{{ include "seriohub-velero.fullname" . }}-k8s-read-only-service-account"
+  namespace: "{{ .Release.Namespace }}"

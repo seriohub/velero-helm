@@ -64,8 +64,10 @@ watchdogConfig:
   processClusterName: <your-cluster-name>
   # processCycleSec: 300
   # expiresDaysWarning: 29
-  notificationSkipCompleted: "True"
-  notificationSkipInProgress: "True"
+  notificationSkipCompleted: "False"
+  # notificationSkipInProgress: "True"
+  # notificationSkipRemoved: "True"
+  # notificationSkipDeleting: "True"
    
   # email
   emailEnable: "False"
