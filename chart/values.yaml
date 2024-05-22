@@ -22,12 +22,12 @@ api:
     imagePullPolicy: IfNotPresent
     # -- SecurityContext for Pod
     podSecurityContext:
-      enabled: true
+      enabled: false
       seccompProfile:
         type: RuntimeDefault
     # -- SecurityContext for Container
     securityContext:
-      enabled: true
+      enabled: false
       allowPrivilegeEscalation: false
       capabilities:
         drop:
@@ -135,12 +135,12 @@ ui:
     imagePullPolicy: IfNotPresent
     # -- SecurityContext for Pod
     podSecurityContext:
-      enabled: true
+      enabled: false
       seccompProfile:
         type: RuntimeDefault
     # -- SecurityContext for Container
     securityContext:
-      enabled: true
+      enabled: false
       allowPrivilegeEscalation: false
       capabilities:
         drop:
@@ -233,12 +233,12 @@ report:
     imagePullPolicy: IfNotPresent
     # -- SecurityContext for Pod
     podSecurityContext:
-      enabled: true
+      enabled: false
       seccompProfile:
         type: RuntimeDefault
     # -- SecurityContext for Container
     securityContext:
-      enabled: true
+      enabled: false
       allowPrivilegeEscalation: false
       capabilities:
         drop:
@@ -286,12 +286,12 @@ watchdog:
     imagePullPolicy: IfNotPresent
     # -- SecurityContext for Pod
     podSecurityContext:
-      enabled: true
+      enabled: false
       seccompProfile:
         type: RuntimeDefault
     # -- SecurityContext for Container
     securityContext:
-      enabled: true
+      enabled: false
       allowPrivilegeEscalation: false
       capabilities:
         drop:

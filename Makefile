@@ -12,7 +12,7 @@ helm-lint: ct
 helm-test: kind ct
 	$(KIND) create cluster --wait=60s --name $(KIND_NAME)
 	@make helm-test-exec
-	$(KIND) delete cluster --name capsule-charts
+	$(KIND) delete cluster --name $(KIND_NAME)
 
 helm-test-exec:
 	$(CT) install --config $(SRC_ROOT)/.github/configs/ct.yaml --all --debug

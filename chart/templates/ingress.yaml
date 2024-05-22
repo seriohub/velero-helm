@@ -2,11 +2,13 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "seriohub-velero.fullname" . }}-ui-ingress
+  name: {{ include "seriohub-velero.fullname" . }}-ingress
   labels:
   {{- include "seriohub-velero.labels" . | nindent 4 }}
+  {{- with .Values.uiIngress.metadata.annotations }}
   annotations:
-  {{- .Values.uiIngress.metadata.annotations | toYaml | nindent 4}}
+    {{- . | toYaml | nindent 4}}
+  {{- end }}
 spec:
   ingressClassName: {{ .Values.uiIngress.ingressClassName }}
   rules:
@@ -19,6 +21,20 @@ spec:
             port:
               number: 80
         path: /
+        pathType: Prefix
+      - backend:
+          service:
+            name: '{{ include "seriohub-velero.fullname" . }}-api'
+            port:
+              number: 80
+        path: /api
+        pathType: Prefix
+      - backend:
+          service:
+            name: '{{ include "seriohub-velero.fullname" . }}-api'
+            port:
+              number: 80
+        path: /ws
         pathType: Prefix
   tls:
   {{- if .Values.uiIngress.spec.tls }}
