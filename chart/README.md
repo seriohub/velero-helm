@@ -30,9 +30,9 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | api.apiServer.image.tag | string | `"0.1.13"` | Image Tag |
 | api.apiServer.imagePullPolicy | string | `"IfNotPresent"` |  |
 | api.apiServer.nodeSelector | object | `{}` | Operator nodeSelector |
-| api.apiServer.podSecurityContext | object | `{"enabled":true,"seccompProfile":{"type":"RuntimeDefault"}}` | SecurityContext for Pod |
+| api.apiServer.podSecurityContext | object | `{"enabled":false,"seccompProfile":{"type":"RuntimeDefault"}}` | SecurityContext for Pod |
 | api.apiServer.resources | object | `{}` | Resources for the Operator |
-| api.apiServer.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"enabled":true,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":65534}` | SecurityContext for Container |
+| api.apiServer.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"enabled":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":65534}` | SecurityContext for Container |
 | api.apiServer.tolerations | list | `[]` | Operator tolerations |
 | api.apiServer.volumeMounts | string | `nil` | VolumeMounts |
 | api.apiServer.volumes | string | `nil` | Volumes |
@@ -79,9 +79,9 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | report.veleroWatchdogReport.image.tag | string | `"0.1.5"` | Image Tag |
 | report.veleroWatchdogReport.imagePullPolicy | string | `"IfNotPresent"` |  |
 | report.veleroWatchdogReport.nodeSelector | object | `{}` | Operator nodeSelector |
-| report.veleroWatchdogReport.podSecurityContext | object | `{"enabled":true,"seccompProfile":{"type":"RuntimeDefault"}}` | SecurityContext for Pod |
+| report.veleroWatchdogReport.podSecurityContext | object | `{"enabled":false,"seccompProfile":{"type":"RuntimeDefault"}}` | SecurityContext for Pod |
 | report.veleroWatchdogReport.resources | object | `{}` | Resources for the Operator |
-| report.veleroWatchdogReport.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"enabled":true,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":65534}` | SecurityContext for Container |
+| report.veleroWatchdogReport.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"enabled":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":65534}` | SecurityContext for Container |
 | report.veleroWatchdogReport.tolerations | list | `[]` | Operator tolerations |
 | report.veleroWatchdogReport.volumeMounts | string | `nil` | VolumeMounts |
 | report.veleroWatchdogReport.volumes | string | `nil` | Volumes |
@@ -97,9 +97,9 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | ui.webServer.image.tag | string | `"0.1.11"` | Image Tag |
 | ui.webServer.imagePullPolicy | string | `"IfNotPresent"` | Image pull policy   |
 | ui.webServer.nodeSelector | object | `{}` | Operator nodeSelector |
-| ui.webServer.podSecurityContext | object | `{"enabled":true,"seccompProfile":{"type":"RuntimeDefault"}}` | SecurityContext for Pod |
+| ui.webServer.podSecurityContext | object | `{"enabled":false,"seccompProfile":{"type":"RuntimeDefault"}}` | SecurityContext for Pod |
 | ui.webServer.resources | object | `{}` | Resources for the Operator |
-| ui.webServer.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"enabled":true,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":65534}` | SecurityContext for Container |
+| ui.webServer.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"enabled":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":65534}` | SecurityContext for Container |
 | ui.webServer.tolerations | list | `[]` | Operator tolerations |
 | ui.webServer.volumeMounts | string | `nil` | VolumeMounts |
 | ui.webServer.volumes | string | `nil` | Volumes |
@@ -124,9 +124,9 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | watchdog.veleroMonitoring.image.tag | string | `"0.1.5"` | Image Tag |
 | watchdog.veleroMonitoring.imagePullPolicy | string | `"IfNotPresent"` |  |
 | watchdog.veleroMonitoring.nodeSelector | object | `{}` | Operator nodeSelector |
-| watchdog.veleroMonitoring.podSecurityContext | object | `{"enabled":true,"seccompProfile":{"type":"RuntimeDefault"}}` | SecurityContext for Pod |
+| watchdog.veleroMonitoring.podSecurityContext | object | `{"enabled":false,"seccompProfile":{"type":"RuntimeDefault"}}` | SecurityContext for Pod |
 | watchdog.veleroMonitoring.resources | object | `{"limits":{"cpu":"500m","memory":"1256Mi"},"requests":{"cpu":"250m","memory":"256Mi"}}` | Resources for the Operator |
-| watchdog.veleroMonitoring.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"enabled":true,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":65534}` | SecurityContext for Container |
+| watchdog.veleroMonitoring.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"enabled":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":65534}` | SecurityContext for Container |
 | watchdog.veleroMonitoring.tolerations | list | `[]` | Operator tolerations |
 | watchdog.veleroMonitoring.volumeMounts | string | `nil` | VolumeMounts |
 | watchdog.veleroMonitoring.volumes | string | `nil` | Volumes |
