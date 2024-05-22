@@ -10,6 +10,30 @@ spec:
     spec:
       template:
         spec:
+          {{- with .Values.report.veleroWatchdogReport.volumes }}
+          volumes:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.report.veleroWatchdogReport.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- if .Values.report.veleroWatchdogReport.podSecurityContext.enabled }}
+          securityContext:
+            {{- toYaml (omit .Values.report.veleroWatchdogReport.podSecurityContext "enabled") | nindent 12 }}
+          {{- end }}
+          {{- with .Values.report.veleroWatchdogReport.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.report.veleroWatchdogReport.affinity }}
+          affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.report.veleroWatchdogReport.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           containers:
           - command:
             - python3
@@ -20,13 +44,21 @@ spec:
             envFrom:
             - configMapRef:
                 name: velero-watchdog-config
-            image: {{ .Values.report.veleroWatchdogReport.image.repository }}:{{
-              .Values.report.veleroWatchdogReport.image.tag | default .Chart.AppVersion
-              }}
-            imagePullPolicy: {{ .Values.report.veleroWatchdogReport.imagePullPolicy
-              }}
+            image: "{{ .Values.report.veleroWatchdogReport.image.registry | trimSuffix "/" }}/{{ .Values.report.veleroWatchdogReport.image.repository }}:{{ .Values.report.veleroWatchdogReport.image.tag }}"
+            imagePullPolicy: {{ .Values.report.veleroWatchdogReport.imagePullPolicy }}
             name: velero-watchdog-report
-            resources: {}
+            {{- if .Values.report.veleroWatchdogReport.securityContext.enabled }}
+            securityContext:
+              {{- toYaml (omit .Values.report.veleroWatchdogReport.securityContext "enabled") | nindent 14 }}
+            {{- end }}
+            {{- with .Values.report.veleroWatchdogReport.resources }}
+            resources:
+              {{- . | toYaml | nindent 14 }}
+            {{- end }}
+            {{- with .Values.report.veleroWatchdogReport.volumeMounts }}
+            volumeMounts:
+              {{- toYaml . | nindent 14 }}
+            {{- end }}
           restartPolicy: Never
           serviceAccountName: {{ include "seriohub-velero.fullname" . }}-k8s-read-only-service-account
   schedule: {{ .Values.report.schedule | quote }}

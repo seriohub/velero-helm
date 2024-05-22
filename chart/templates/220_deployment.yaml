@@ -20,6 +20,30 @@ spec:
         tier: backend
       {{- include "seriohub-velero.selectorLabels" . | nindent 8 }}
     spec:
+      {{- with .Values.watchdog.veleroMonitoring.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.watchdog.veleroMonitoring.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.watchdog.veleroMonitoring.podSecurityContext.enabled }}
+      securityContext:
+        {{- toYaml (omit .Values.watchdog.veleroMonitoring.podSecurityContext "enabled") | nindent 8 }}
+      {{- end }}
+      {{- with .Values.watchdog.veleroMonitoring.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.watchdog.veleroMonitoring.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.watchdog.veleroMonitoring.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
       - env:
         - name: KUBERNETES_CLUSTER_DOMAIN
@@ -27,9 +51,27 @@ spec:
         envFrom:
         - configMapRef:
             name: velero-watchdog-config
-        image: {{ .Values.watchdog.veleroMonitoring.image.repository }}:{{ .Values.watchdog.veleroMonitoring.image.tag }}
+        - secretRef:
+            name: velero-watchdog-config
+        image: "{{ .Values.watchdog.veleroMonitoring.image.registry | trimSuffix "/" }}/{{ .Values.watchdog.veleroMonitoring.image.repository }}:{{ .Values.watchdog.veleroMonitoring.image.tag }}"
         imagePullPolicy: {{ .Values.watchdog.veleroMonitoring.imagePullPolicy }}
         name: velero-monitoring
-        resources: {{- toYaml .Values.watchdog.veleroMonitoring.resources | nindent 10
-          }}
+        {{- if .Values.watchdog.veleroMonitoring.securityContext.enabled }}
+        securityContext:
+          {{- toYaml (omit .Values.watchdog.veleroMonitoring.securityContext "enabled") | nindent 10 }}
+        {{- end }}
+        {{- with .Values.watchdog.veleroMonitoring.resources }}
+        resources:
+          {{ . | toYaml | nindent 10 }}
+        {{- end }}
+        {{- with .Values.watchdog.veleroMonitoring.volumeMounts }}
+        volumeMounts:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+
+
+
+
+
+          
       serviceAccountName: {{ include "seriohub-velero.fullname" . }}-k8s-read-only-service-account

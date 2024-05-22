@@ -21,6 +21,30 @@ spec:
         tier: frontend
       {{- include "seriohub-velero.selectorLabels" . | nindent 8 }}
     spec:
+      {{- with .Values.ui.webServer.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.ui.webServer.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.ui.webServer.podSecurityContext.enabled }}
+      securityContext:
+        {{- toYaml (omit .Values.ui.webServer.podSecurityContext "enabled") | nindent 8 }}
+      {{- end }}
+      {{- with .Values.ui.webServer.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.ui.webServer.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.ui.webServer.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
       - env:
         - name: KUBERNETES_CLUSTER_DOMAIN
@@ -28,10 +52,21 @@ spec:
         envFrom:
         - configMapRef:
             name: velero-ui-config
-        image: {{ .Values.ui.webServer.image.repository }}:{{ .Values.ui.webServer.image.tag }}
+        image: "{{ .Values.ui.webServer.image.registry | trimSuffix "/" }}/{{ .Values.ui.webServer.image.repository }}:{{ .Values.ui.webServer.image.tag }}"
         imagePullPolicy: {{ .Values.ui.webServer.imagePullPolicy }}
         name: webserver
         ports:
         - containerPort: 3000
           name: run
-        resources: {}
+        {{- if .Values.ui.webServer.securityContext.enabled }}
+        securityContext:
+          {{- toYaml (omit .Values.ui.webServer.securityContext "enabled") | nindent 10 }}
+        {{- end }}
+        {{- with .Values.ui.webServer.resources }}
+        resources:
+          {{- . | toYaml | nindent 10 }}
+        {{- end }}
+        {{- with .Values.ui.webServer.volumeMounts }}
+        volumeMounts:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
