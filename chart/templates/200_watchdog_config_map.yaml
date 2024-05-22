@@ -1,0 +1,64 @@
+{{- with .Values.watchdogConfig }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: velero-watchdog-config
+  labels:
+  {{- include "seriohub-velero.labels" $ | nindent 4 }}
+data:
+  {{- if not (quote .apiEndpointURL | empty)  }}
+  API_ENDPOINT_URL: {{ .apiEndpointURL | quote }}
+  {{- end }}
+<<<<<<< HEAD:chart/templates/200_config_map.yaml
+  API_ENDPOINT_PORT: {{ .apiEndpointPort | quote }}
+  DEBUG_LEVEL: {{ .debugLevel | quote }}
+  BACKUP_ENABLE: {{ .backupEnable | quote }}
+  SCHEDULE_ENABLE: {{ .scheduleEnable | quote }}
+  EXPIRES_DAYS_WARNING: {{ .expiresDaysWarning | quote }}
+  K8S_INCLUSTER_MODE: {{ .k8SInclusterMode | quote }}
+  PROCESS_CLUSTER_NAME: {{ .processClusterName | quote }}
+  PROCESS_CYCLE_SEC: {{ .processCycleSec | quote }}
+  NOTIFICATION_SKIP_COMPLETED: {{ .notificationSkipCompleted | quote }}
+  NOTIFICATION_SKIP_INPROGRESS: {{ .notificationSkipInProgress | quote }}
+  NOTIFICATION_SKIP_REMOVED: {{ .notificationSkipRemoved | quote }}
+  EMAIL_ACCOUNT: {{ .emailAccount | quote }}
+  EMAIL_ENABLE: {{ .emailEnable | quote }}
+  EMAIL_PASSWORD: {{ .emailPassword | quote }}
+  EMAIL_RECIPIENTS: {{ .emailRecipients | quote }}
+  EMAIL_SMTP_PORT: {{ .emailSmtpPort | quote }}
+  EMAIL_SMTP_SERVER: {{ .emailSmtpServer | quote }}
+  SLACK_CHANNEL: {{ .slackChannel | quote }}
+  SLACK_ENABLE: {{ .slackEnable | quote }}
+  SLACK_TOKEN: {{ .slackToken | quote }}
+  TELEGRAM_CHAT_ID: {{ .telegramChatId | quote }}
+  TELEGRAM_ENABLE: {{ .telegramEnable | quote }}
+  {{- end }}
+=======
+  API_ENDPOINT_PORT: {{ .Values.watchdogConfig.apiEndpointPort | quote }}
+  DEBUG_LEVEL: {{ .Values.watchdogConfig.debugLevel | quote }}
+  BACKUP_ENABLE: {{ .Values.watchdogConfig.backupEnable | quote }}
+  SCHEDULE_ENABLE: {{ .Values.watchdogConfig.scheduleEnable | quote }}
+  EXPIRES_DAYS_WARNING: {{ .Values.watchdogConfig.expiresDaysWarning | quote }}
+  K8S_INCLUSTER_MODE: {{ .Values.watchdogConfig.k8SInclusterMode | quote }}
+  PROCESS_CLUSTER_NAME: {{ .Values.watchdogConfig.processClusterName | quote }}
+  PROCESS_CYCLE_SEC: {{ .Values.watchdogConfig.processCycleSec | quote }}
+  NOTIFICATION_SKIP_COMPLETED: {{ .Values.watchdogConfig.notificationSkipCompleted | quote }}
+  NOTIFICATION_SKIP_INPROGRESS: {{ .Values.watchdogConfig.notificationSkipInProgress | quote }}
+  NOTIFICATION_SKIP_REMOVED: {{ .Values.watchdogConfig.notificationSkipRemoved | quote }}
+  NOTIFICATION_SKIP_DELETING: {{ .Values.watchdogConfig.notificationSkipDeleting | quote }}
+  EMAIL_ACCOUNT: {{ .Values.watchdogConfig.emailAccount | quote }}
+  EMAIL_ENABLE: {{ .Values.watchdogConfig.emailEnable | quote }}
+  EMAIL_PASSWORD: {{ .Values.watchdogConfig.emailPassword | quote }}
+  EMAIL_RECIPIENTS: {{ .Values.watchdogConfig.emailRecipients | quote }}
+  EMAIL_SMTP_PORT: {{ .Values.watchdogConfig.emailSmtpPort | quote }}
+  EMAIL_SMTP_SERVER: {{ .Values.watchdogConfig.emailSmtpServer | quote }}
+  SLACK_CHANNEL: {{ .Values.watchdogConfig.slackChannel | quote }}
+  SLACK_ENABLE: {{ .Values.watchdogConfig.slackEnable | quote }}
+  SLACK_TOKEN: {{ .Values.watchdogConfig.slackToken | quote }}
+  REPORT_BACKUP_ITEM_PREFIX: {{ .Values.watchdogConfig.reportBackupItemPrefix | quote }}
+  REPORT_SCHEDULE_ITEM_PREFIX: {{ .Values.watchdogConfig.reportScheduleItemPrefix | quote }}
+  TELEGRAM_CHAT_ID: {{ .Values.watchdogConfig.telegramChatId | quote }}
+  TELEGRAM_ENABLE: {{ .Values.watchdogConfig.telegramEnable | quote }}
+  TELEGRAM_TOKEN: {{ .Values.watchdogConfig.telegramToken | quote }}
+  
+>>>>>>> 6ced3eb5e2a7403570a91b2e4b61161e1f3c10b9:chart/templates/200_watchdog_config_map.yaml
