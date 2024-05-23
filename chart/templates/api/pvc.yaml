@@ -1,0 +1,16 @@
+{{- if .Values.apiConfig.storage.enabled }}
+  {{- with .Values.apiConfig.storage }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc-api
+spec:
+  storageClassName: {{ .storageClassName }}
+  {{- with .accessModes }}
+  accessModes: 
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  resources:
+    {{- toYaml .resources | nindent 4 }}
+  {{- end }}
+{{- end }}

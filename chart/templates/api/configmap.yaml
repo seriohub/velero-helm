@@ -1,0 +1,33 @@
+{{- with .Values.apiConfig }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: velero-api-config
+  labels:
+  {{- include "seriohub-velero.labels" $ | nindent 4 }}
+data:
+  # Static
+  DOWNLOAD_TMP_FOLDER:  "/tmp/velero-api"
+  SECURITY_PATH_DATABASE: "./data"
+  VELERO_CLI_DEST_PATH: "/usr/local/bin"
+
+  API_ENABLE_DOCUMENTATION: {{ .apiEnableDocumentation | quote }}
+  API_ENDPOINT_PORT: {{ .apiEndpointPort | quote }}
+  API_ENDPOINT_URL: {{ .apiEndpointUrl | quote }}
+  API_RATE_LIMITER_CUSTOM_1: {{ .apiRateLimiterCustom1 | quote }}
+  API_RATE_LIMITER_L1: {{ .apiRateLimiterL1 | quote }}
+  API_TOKEN_EXPIRATION_MIN: {{ .apiTokenExpirationMin | quote }}
+  API_TOKEN_REFRESH_EXPIRATION_DAYS: {{ .apiTokenRefreshExpirationDays | quote }}
+  DEBUG_LEVEL: {{ .debugLevel | quote }}
+  K8S_IN_CLUSTER_MODE: {{ .k8SInClusterMode | quote }}
+  K8S_VELERO_NAMESPACE: {{ $.Values.global.veleroNamespace }}
+  K8S_VELERO_UI_NAMESPACE: {{ $.Release.Namespace }}
+  ORIGINS_1: {{ .origins1 | quote }}
+  SECURITY_DISABLE_USERS_PWD_RATE: {{ .securityDisableUsersPwdRate | quote }}
+  VELERO_CLI_PATH: {{ .veleroCliPath | quote }}
+  VELERO_CLI_PATH_CUSTOM: {{ .veleroCliPathCustom | quote }}
+  VELERO_CLI_VERSION: {{ .veleroCliVersion | quote }}
+  VELERO_WATCHDOG_URL: {{ include "seriohub-velero.fullname" $ }}-watchdog-clusterip
+  VELERO_WATCHDOG_PORT: "{{ $.Values.watchdogClusterip.port }}"
+  REPORT_CRONJOB_NAME: {{ include "seriohub-velero.fullname" $ }}-report
+{{- end }}

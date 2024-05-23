@@ -3,7 +3,7 @@
 #
 global:
   # -- Namespace of velero installation
-  veleroNamespace: velero
+  veleroNamespace: velero-system
   # -- Kubernetes Cluster Domain
   kubernetesClusterDomain: cluster.local
 
@@ -14,25 +14,25 @@ api:
   apiServer:
     image:
       # -- Image Registry
-      registry: docker.io
+      registry: artifacts.bedag.cloud/dockerhub
       # -- Image Repository
       repository: dserio83/velero-api
       # -- Image Tag
-      tag: 0.1.13
+      tag: 0.1.12
     imagePullPolicy: IfNotPresent
     # -- SecurityContext for Pod
     podSecurityContext:
-      enabled: false
+      enabled: true
       seccompProfile:
         type: RuntimeDefault
     # -- SecurityContext for Container
     securityContext:
-      enabled: false
+      enabled: true
       allowPrivilegeEscalation: false
       capabilities:
         drop:
         - ALL
-      readOnlyRootFilesystem: true
+      readOnlyRootFilesystem: false
       runAsNonRoot: true
       runAsUser: 65534
     # -- Operator nodeSelector
@@ -126,26 +126,26 @@ ui:
   webServer:
     image:
       # -- Image Registry
-      registry: docker.io
+      registry: artifacts.bedag.cloud/dockerhub
       # -- Image Repository
       repository: dserio83/velero-ui
       # -- Image Tag
-      tag: 0.1.11
+      tag: 0.1.10
     # -- Image pull policy  
     imagePullPolicy: IfNotPresent
     # -- SecurityContext for Pod
     podSecurityContext:
-      enabled: false
+      enabled: true
       seccompProfile:
         type: RuntimeDefault
     # -- SecurityContext for Container
     securityContext:
-      enabled: false
+      enabled: true
       allowPrivilegeEscalation: false
       capabilities:
         drop:
         - ALL
-      readOnlyRootFilesystem: true
+      readOnlyRootFilesystem: false
       runAsNonRoot: true
       runAsUser: 65534
     # -- Operator nodeSelector
@@ -185,7 +185,7 @@ uiConfig:
 # UI Nodeport
 #
 uiNp:
-  enabled: true
+  enabled: false
   ip: ""
   apiPort: "30001"
   uiPort: "30002"
@@ -194,14 +194,14 @@ uiNp:
 # UI Ingress
 #
 uiIngress:
-  enabled: false
-  ingressClassName: nginx
-  host: velero.your-cluster-domain
+  enabled: true
+  ingressClassName: gelan-pub
+  host: velero.svc.gelan-ict.ch
+  tls:
+    enabled: true
   metadata:
     annotations:
       # cert-manager.io/cluster-issuer: "letsencrypt-prod" 
-  tls:
-    enabled: true
   spec:
     tls:
     # - hosts:
@@ -225,25 +225,25 @@ report:
   veleroWatchdogReport:
     image:
       # -- Image Registry
-      registry: docker.io
+      registry: artifacts.bedag.cloud/dockerhub
       # -- Image Repository
       repository: dserio83/velero-watchdog
       # -- Image Tag
-      tag: 0.1.5
+      tag: 0.1.4
     imagePullPolicy: IfNotPresent
     # -- SecurityContext for Pod
     podSecurityContext:
-      enabled: false
+      enabled: true
       seccompProfile:
         type: RuntimeDefault
     # -- SecurityContext for Container
     securityContext:
-      enabled: false
+      enabled: true
       allowPrivilegeEscalation: false
       capabilities:
         drop:
         - ALL
-      readOnlyRootFilesystem: true
+      readOnlyRootFilesystem: false
       runAsNonRoot: true
       runAsUser: 65534
     # -- Operator nodeSelector
@@ -278,25 +278,25 @@ watchdog:
   veleroMonitoring:
     image:
       # -- Image Registry
-      registry: docker.io
+      registry: artifacts.bedag.cloud/dockerhub
       # -- Image Repository
       repository: dserio83/velero-watchdog
       # -- Image Tag
-      tag: 0.1.5
+      tag: 0.1.4
     imagePullPolicy: IfNotPresent
     # -- SecurityContext for Pod
     podSecurityContext:
-      enabled: false
+      enabled: true
       seccompProfile:
         type: RuntimeDefault
     # -- SecurityContext for Container
     securityContext:
-      enabled: false
+      enabled: true
       allowPrivilegeEscalation: false
       capabilities:
         drop:
         - ALL
-      readOnlyRootFilesystem: true
+      readOnlyRootFilesystem: false
       runAsNonRoot: true
       runAsUser: 65534
     # -- Operator nodeSelector
@@ -345,7 +345,6 @@ watchdogConfig:
   notificationSkipCompleted: "True"
   notificationSkipInProgress: "True"
   notificationSkipRemoved: "True"
-  notificationSkipDeleting: "True"
   emailAccount: <email>
   emailEnable: "False"
   emailPassword: <pwd>
@@ -355,8 +354,6 @@ watchdogConfig:
   telegramChatId: <chat-id>
   telegramEnable: "False"
   telegramToken: <token>
-  reportBackupItemPrefix: ""
-  reportScheduleItemPrefix: ""
   slackChannel: <channel-id>
   slackEnable: "False"
   slackToken: <token>

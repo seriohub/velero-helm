@@ -49,22 +49,58 @@ spec:
         envFrom:
         - configMapRef:
             name: velero-api-config
-        image: {{ .Values.api.apiServer.image.repository }}:{{ .Values.api.apiServer.image.tag }}
+        - secretRef:
+            name: velero-api-config
+        image: "{{ .Values.api.apiServer.image.registry | trimSuffix "/" }}/{{ .Values.api.apiServer.image.repository }}:{{ .Values.api.apiServer.image.tag }}"
         imagePullPolicy: {{ .Values.api.apiServer.imagePullPolicy }}
         name: api-server
         ports:
         - containerPort: 8001
           name: api
-        resources: {}
-        {{- if .Values.apiConfig.storage.enabled }}
+        {{- if .Values.api.apiServer.securityContext.enabled }}
+        securityContext:
+          {{- toYaml (omit .Values.api.apiServer.securityContext "enabled") | nindent 10 }}
+        {{- end }}
+        {{- with .Values.api.apiServer.resources }}
+        resources:
+          {{ . | toYaml | nindent 10 }}
+        {{- end }}
         volumeMounts:
+        {{- with .Values.api.apiServer.volumeMounts }}
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
           - name: data
             mountPath: /app/data
-        {{- end }}
-      {{- if .Values.apiConfig.storage.enabled }}
+      {{- with .Values.api.apiServer.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.api.apiServer.podSecurityContext.enabled }}
+      securityContext:
+        {{- toYaml (omit .Values.api.apiServer.podSecurityContext "enabled") | nindent 8 }}
+      {{- end }}
+      {{- with .Values.api.apiServer.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.api.apiServer.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.api.apiServer.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
+      {{- with .Values.api.apiServer.volumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.apiConfig.storage.enabled }}
         - name: data
           persistentVolumeClaim:
             claimName: pvc-api
-      {{- end }}
+      {{- else }}
+        - name: data
+          emptyDir: {}
+      {{- end}}
       serviceAccountName: {{ include "seriohub-velero.fullname" . }}-api-sa

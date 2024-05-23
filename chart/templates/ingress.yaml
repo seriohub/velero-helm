@@ -5,14 +5,23 @@ metadata:
   name: {{ include "seriohub-velero.fullname" . }}-ingress
   labels:
   {{- include "seriohub-velero.labels" . | nindent 4 }}
+  {{- with .Values.uiIngress.metadata.annotations }}
   annotations:
-  {{- .Values.uiIngress.metadata.annotations | toYaml | nindent 4}}
+    {{- . | toYaml | nindent 4}}
+  {{- end }}
 spec:
   ingressClassName: {{ .Values.uiIngress.ingressClassName }}
   rules:
   - host: {{ .Values.uiIngress.host }}
     http:
       paths:
+      - backend:
+          service:
+            name: '{{ include "seriohub-velero.fullname" . }}-ui'
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
       - backend:
           service:
             name: '{{ include "seriohub-velero.fullname" . }}-api'
@@ -27,17 +36,13 @@ spec:
               number: 80
         path: /ws
         pathType: Prefix
-      - backend:
-          service:
-            name: '{{ include "seriohub-velero.fullname" . }}-ui'
-            port:
-              number: 80
-        path: /
-        pathType: Prefix
-  {{- if not .Values.uiIngress.spec.tls }}
-  tls: []
-  {{- else }}
   tls:
-  {{- .Values.uiIngress.spec.tls | toYaml | nindent 2 }}
+  {{- if .Values.uiIngress.spec.tls }}
+    {{- .Values.uiIngress.spec.tls | toYaml | nindent 2 }}
+  {{- end }}
+  {{- if .Values.uiIngress.tls.enabled }}
+  - hosts:
+      - {{ .Values.uiIngress.host }}
+    secretName: {{ include "seriohub-velero.fullname" . }}-api-tls
   {{- end }}
 {{- end }}
