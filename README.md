@@ -31,6 +31,14 @@ Follow these steps:
 
 3. Create a configuration file starting from [values-override.yaml](values-override.yaml) file.
 
+    > [!NOTE]
+    > If you need advanced configurations, you can configure the [values.yaml](seriohub-velero/values.yaml)
+    >
+    > The description of the parameters is available in the relevant readme:
+    > - [API Configuration](https://github.com/seriohub/velero-api#configuration)
+    > - [UI Configuration](https://github.com/seriohub/velero-ui#configuration)
+    > - [Watchdog Configuration](https://github.com/seriohub/velero-watchdog#configuration)
+
 4. Create namespace:
   
     ``` bash
@@ -46,7 +54,7 @@ Follow these steps:
 6. Upgrade (In the case of changes or updates):
 
     ``` bash
-    helm upgrade -f values-override.yaml seriohub-velero seriohub-velero/vui -n velero-ui
+    helm upgrade -f values-override.yaml vui seriohub-velero/vui -n velero-ui
     ```
 
 7. Uninstall
@@ -95,18 +103,18 @@ Follow these steps:
     > Make sure to customize the values in the [values-override.yaml](values-override.yaml) file according to your requirements before running the installation command.
 
     ``` bash
-    helm install -f values-override.yaml seriohub-velero ./seriohub-velero/ -n velero-ui
+    helm install -f values-override.yaml vui ./chart/ -n velero-ui
     ```
 
 6. Upgrade (In the case of changes or updates):
 
     ``` bash
-    helm upgrade -f values-override.yaml seriohub-velero ./seriohub-velero/ -n velero-ui
+    helm upgrade -f values-override.yaml vui ./chart/ -n velero-ui
     ```
 
 7. Uninstall
 
     ``` bash
-    helm uninstall seriohub-velero -n velero-ui
+    helm uninstall vui -n velero-ui
     kubectl delete ns velero-ui
     ```

@@ -61,6 +61,7 @@ report:
 watchdogConfig:
   # config
   k8SInclusterMode: "True"
+  # k8sVeleroNamespace: "velero"
   processClusterName: <your-cluster-name>
   # processCycleSec: 300
   # expiresDaysWarning: 29

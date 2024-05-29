@@ -23,21 +23,19 @@ maintainers:
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.1.8
+version: 0.1.9
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "0.1.8"
+appVersion: "0.1.9"
 
-# date        version   appVersion    api       ui        watchdog
-# 2024-05-21  0.1.8     0.1.8         0.1.13    0.1.11    0.1.5
-# 2024-05-13  0.1.7     0.1.7         0.1.12    0.1.10    0.1.4
-# 2024-05-11  0.1.6     0.1.6         0.1.12    0.1.10    0.1.3
-# 2024-05-05  0.1.5     0.1.5         0.1.11    0.1.10    0.1.3
-# 2024-04-24  0.1.4     0.1.4         0.1.10    0.1.9     0.1.3
-# 2024-04-12  0.1.3     0.1.3         0.1.9     0.1.8     0.1.2
-# 2024-04-02  0.1.2     0.1.2         0.1.9     0.1.8     0.1.1
-# 2024-03-31  0.1.1     0.1.1         0.1.8     0.1.8     0.1.0
-# 2024-03-31  0.1.0     0.1.0         0.1.7     0.1.7     dev
+annotations:
+  contributors: "https://github.com/seriohub/velero-helm/contributors"
+  license: "Apache-2.0"
+  category: "Database"
+  documentation: "https://example.com/docs"
+  supportContact: "support@example.com"
+  environment: "production"
+  team: "backend"
