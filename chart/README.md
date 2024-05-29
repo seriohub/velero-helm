@@ -95,7 +95,7 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | ui.webServer.image.registry | string | `"docker.io"` | Image Registry |
 | ui.webServer.image.repository | string | `"dserio83/velero-ui"` | Image Repository |
 | ui.webServer.image.tag | string | `"0.1.11"` | Image Tag |
-| ui.webServer.imagePullPolicy | string | `"IfNotPresent"` | Image pull policy   |
+| ui.webServer.imagePullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | ui.webServer.nodeSelector | object | `{}` | Operator nodeSelector |
 | ui.webServer.podSecurityContext | object | `{"enabled":false,"seccompProfile":{"type":"RuntimeDefault"}}` | SecurityContext for Pod |
 | ui.webServer.resources | object | `{}` | Resources for the Operator |
