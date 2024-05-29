@@ -19,6 +19,8 @@ maintainers:
     url: https://github.com/davideserio
   - name: Luciano Serio
     url: https://github.com/lucianoserio
+annotations:
+  contributors: "https://github.com/seriohub/velero-helm/contributors"
 
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
@@ -30,12 +32,3 @@ version: 0.1.9
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
 appVersion: "0.1.9"
-
-annotations:
-  contributors: "https://github.com/seriohub/velero-helm/contributors"
-  license: "Apache-2.0"
-  category: "Database"
-  documentation: "https://example.com/docs"
-  supportContact: "support@example.com"
-  environment: "production"
-  team: "backend"

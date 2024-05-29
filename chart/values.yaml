@@ -152,7 +152,7 @@ ui:
       repository: dserio83/velero-ui
       # -- Image Tag
       tag: 0.1.11
-    # -- Image pull policy  
+    # -- Image pull policy
     imagePullPolicy: IfNotPresent
     # -- SecurityContext for Pod
     podSecurityContext:
@@ -231,7 +231,7 @@ uiIngress:
   host: velero.your-cluster-domain
   metadata:
     annotations:
-      # cert-manager.io/cluster-issuer: "letsencrypt-prod" 
+      # cert-manager.io/cluster-issuer: "letsencrypt-prod"
   tls:
     enabled: true
   spec:
@@ -424,4 +424,3 @@ watchdogConfig:
   slackEnable: "False"
   # -- Token for access to Slack via Http API
   slackToken: <token>
-  
