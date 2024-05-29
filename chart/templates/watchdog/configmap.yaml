@@ -10,6 +10,7 @@ data:
   API_ENDPOINT_URL: {{ .apiEndpointURL | quote }}
   {{- end }}
   API_ENDPOINT_PORT: {{ .apiEndpointPort | quote }}
+  DEBUG: {{ .debugLevel | quote }}
   DEBUG_LEVEL: {{ .debugLevel | quote }}
   BACKUP_ENABLE: {{ .backupEnable | quote }}
   SCHEDULE_ENABLE: {{ .scheduleEnable | quote }}
@@ -32,4 +33,5 @@ data:
   REPORT_SCHEDULE_ITEM_PREFIX: {{ .reportScheduleItemPrefix | quote }}
   TELEGRAM_CHAT_ID: {{ .telegramChatId | quote }}
   TELEGRAM_ENABLE: {{ .telegramEnable | quote }}
-  {{- end }}
+  K8S_VELERO_NAMESPACE: {{ .k8sVeleroNamespace | quote }}
+{{- end }}

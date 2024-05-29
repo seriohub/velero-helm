@@ -69,26 +69,47 @@ api:
 # API Config
 #
 apiConfig:
+  # -- Token validity after the creation (minutes)
   apiTokenExpirationMin: "60"
+  # -- Token validity after the creation (days)
   apiTokenRefreshExpirationDays: "7"
+  # -- Enabled/Disabled the fastapi documentation user interfaces
   apiEnableDocumentation: "1"
+  # -- Socket bind port
   apiEndpointPort: "8001"
+  # -- Socket bind host
   apiEndpointUrl: 0.0.0.0
+  # -- Custom security rate limiter: 60 seconds max requests 10
   apiRateLimiterCustom1: Security:xxx:60:20
+  # -- Rate limiter: 60 seconds max requests 10
   apiRateLimiterL1: "60:20"
+  # -- AWS_ACCESS_KEY_ID
   awsAccessKeyId: <AWS_ACCESS_KEY_ID>
+  # -- AWS_SECRET_ACCESS_KEY
   awsSecretAccessKey: <AWS_SECRET_ACCESS_KEY>
+  # -- Debug level info
   debugLevel: info
+  # -- Destination folder when executing velero backup download
   downloadTmpFolder: /tmp/velero-api
+  # -- Enabled if is deployed in a cluster
   k8SInClusterMode: "True"
+  # -- Allowed origin
   origins1: '*'
+  # -- Velero restic password
   resticPassword: static-passw0rd
+  # -- If True user can have a weak password, otherwise is required a strong password
   securityDisableUsersPwdRate: "1"
+  # -- Path where create the SQL-Lite database used for storing the users credentials
   securityPathDatabase: ./data
+  # Optional: Secret key used for JWT creation
   # securityTokenKey: <your-token>
+  # -- Path where to extract the velero executable file
   veleroCliDestPath: /usr/local/bin
+  # -- Path where the compressed velero client archives are located
   veleroCliPath: ./velero-client
+  # -- Path where the user can store manually the binary file
   veleroCliPathCustom: ./velero-client-binary
+  # -- Name of the velero client release to be used
   veleroCliVersion: v1.12.2
 
   # Storage Configuration
@@ -131,7 +152,7 @@ ui:
       repository: dserio83/velero-ui
       # -- Image Tag
       tag: 0.1.11
-    # -- Image pull policy  
+    # -- Image pull policy
     imagePullPolicy: IfNotPresent
     # -- SecurityContext for Pod
     podSecurityContext:
@@ -176,30 +197,41 @@ ui:
 # UI Config
 #
 uiConfig:
+  # -- Milliseconds delay for datatable update after each operation
   nextPublicRefreshDatatableAfter: "1500"
+  # -- Polling task in progress updates in milliseconds
   nextPublicRefreshRecent: "5000"
+  # -- Url to http velero-api project
   nextPublicVeleroApiUrl: http://10.10.0.100
+  # -- Url to ws velero-api project
   nextPublicVeleroApiWs: ws://10.10.0.100
 
 #
 # UI Nodeport
 #
 uiNp:
+  # -- Enable or disable nodeport
   enabled: true
+  # -- Any ip address of your cluster
   ip: ""
+  # -- API port
   apiPort: "30001"
+  # -- UI port
   uiPort: "30002"
 
 #
 # UI Ingress
 #
 uiIngress:
+  # -- Enable or disable ingress
   enabled: false
+  # -- Ingress class name
   ingressClassName: nginx
+  # -- Velero ui host
   host: velero.your-cluster-domain
   metadata:
     annotations:
-      # cert-manager.io/cluster-issuer: "letsencrypt-prod" 
+      # cert-manager.io/cluster-issuer: "letsencrypt-prod"
   tls:
     enabled: true
   spec:
@@ -220,6 +252,7 @@ k8SReadOnlyServiceAccount:
 #
 report:
   failedJobsHistoryLimit: 0
+  # -- Cron for full report
   schedule: 0 8 * * *
   successfulJobsHistoryLimit: 0
   veleroWatchdogReport:
@@ -229,7 +262,7 @@ report:
       # -- Image Repository
       repository: dserio83/velero-watchdog
       # -- Image Tag
-      tag: 0.1.5
+      tag: 0.1.6
     imagePullPolicy: IfNotPresent
     # -- SecurityContext for Pod
     podSecurityContext:
@@ -282,7 +315,7 @@ watchdog:
       # -- Image Repository
       repository: dserio83/velero-watchdog
       # -- Image Tag
-      tag: 0.1.5
+      tag: 0.1.6
     imagePullPolicy: IfNotPresent
     # -- SecurityContext for Pod
     podSecurityContext:
@@ -333,30 +366,61 @@ watchdogClusterip:
 # Watchdog Config
 #
 watchdogConfig:
+  # -- Socket bind host
   apiEndpointURL: "0.0.0.0"
+  # -- Socket bind port
   apiEndPointPort: "8001"
+  # -- View debugging information.
+  debug: "False"
+  # -- Debug level information.
   debugLevel: "Info"
+  # -- Enable watcher for backups without schedule or last backup for each schedule
   backupEnable: "True"
+  # -- Enable watcher for schedule
   scheduleEnable: "True"
+  # -- Number of days to backup expiration below which to display a warning about the backup
   expiresDaysWarning: "29"
+  # -- Enable in cluster mode
   k8SInclusterMode: "True"
+  # -- Name of the namespace where vmware-tanzu/velero is deployed
+  k8sVeleroNamespace: "velero"
+  # -- Force the cluster name and it appears in the message
   processClusterName: <cluster-name>
+  # -- Cycle time (seconds)
   processCycleSec: "300"
+  # -- Skip notification new completed backup
   notificationSkipCompleted: "True"
+  # -- Skip notification new in progress backup
   notificationSkipInProgress: "True"
+  # -- Skip notification backup removed
   notificationSkipRemoved: "True"
+  # -- Skip notification backup deleting
   notificationSkipDeleting: "True"
+  # -- User name account
   emailAccount: <email>
+  # -- Enable email notification
   emailEnable: "False"
+  # -- Email password account
   emailPassword: <pwd>
+  # -- Email recipients semicolon separated
   emailRecipients: <recipients>
+  # -- SMTP port
   emailSmtpPort: <smtp-port>
+  # -- SMTP server
   emailSmtpServer: <smtp-server>
+  # -- Telegram chat id where send the notifications
   telegramChatId: <chat-id>
+  # -- Enable telegram notification
   telegramEnable: "False"
+  # -- Token for access to Telegram bot via Http API
   telegramToken: <token>
+  # -- Add a prefix to backup items in reports
   reportBackupItemPrefix: ""
+  # -- Add a prefix to schedule items in reports
   reportScheduleItemPrefix: ""
+  # -- Channel id where sens the notification
   slackChannel: <channel-id>
+  # -- Enable Slack notification
   slackEnable: "False"
+  # -- Token for access to Slack via Http API
   slackToken: <token>

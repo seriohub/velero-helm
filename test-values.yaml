@@ -340,11 +340,13 @@ watchdogConfig:
   scheduleEnable: "True"
   expiresDaysWarning: "29"
   k8SInclusterMode: "True"
+  k8sVeleroNamespace: "velero"
   processClusterName: <cluster-name>
   processCycleSec: "300"
   notificationSkipCompleted: "True"
   notificationSkipInProgress: "True"
   notificationSkipRemoved: "True"
+  notificationSkipDeleting: "True"
   emailAccount: <email>
   emailEnable: "False"
   emailPassword: <pwd>
@@ -354,6 +356,8 @@ watchdogConfig:
   telegramChatId: <chat-id>
   telegramEnable: "False"
   telegramToken: <token>
+  reportBackupItemPrefix: ""
+  reportScheduleItemPrefix: ""
   slackChannel: <channel-id>
   slackEnable: "False"
   slackToken: <token>

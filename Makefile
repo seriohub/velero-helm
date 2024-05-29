@@ -11,6 +11,7 @@ helm-lint: ct
 
 helm-test: kind ct
 	$(KIND) create cluster --wait=60s --name $(KIND_NAME)
+	kubectl create namespace velero # otherwise missing dependency
 	@make helm-test-exec
 	$(KIND) delete cluster --name $(KIND_NAME)
 
