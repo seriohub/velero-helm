@@ -32,7 +32,7 @@ Follow these steps:
 3. Create a configuration file starting from [values-override.yaml](values-override.yaml) file.
 
     > [!NOTE]
-    > If you need advanced configurations, you can configure the [values.yaml](seriohub-velero/values.yaml)
+    > If you need advanced configurations, you can configure the [values.yaml](chart/values.yaml)
     >
     > The description of the parameters is available in the relevant readme:
     > - [API Configuration](https://github.com/seriohub/velero-api#configuration)
@@ -84,7 +84,7 @@ Follow these steps:
 3. Edit the necessary data in the [values-override.yaml](values-override.yaml) file.
 
     > [!NOTE]
-    > If you need advanced configurations, you can configure the [values.yaml](seriohub-velero/values.yaml)
+    > If you need advanced configurations, you can configure the [values.yaml](chart/values.yaml)
     >
     > The description of the parameters is available in the relevant readme:
     > - [API Configuration](https://github.com/seriohub/velero-api#configuration)
