@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ***
 
+## [v0.1.10] - 2024-05-31
+
+- Updated API version to 0.1.14
+- Updated UI version to 0.1.12
+
 ## [v0.1.9] - 2024-05-29
 
 - Updated watchdog version to 0.1.6
@@ -59,6 +64,7 @@ All notable changes to this project will be documented in this file.
 
 | version    | appVersion    | api    | ui     | watchdog  |
 |------------|---------------|--------|--------|-----------|
+| 0.1.10     | 0.1.10        | 0.1.14 | 0.1.12 | 0.1.6     |
 | 0.1.9      | 0.1.9         | 0.1.13 | 0.1.11 | 0.1.6     |
 | 0.1.8      | 0.1.8         | 0.1.13 | 0.1.11 | 0.1.5     |
 | 0.1.7      | 0.1.7         | 0.1.12 | 0.1.10 | 0.1.4     |
@@ -71,6 +77,8 @@ All notable changes to this project will be documented in this file.
 | 0.1.0      | 0.1.0         | 0.1.7  | 0.1.7  | dev       |
 
 ### Release
+
+v0.1.10: [https://github.com/seriohub/velero-helm/releases/tag/v0.1.10](https://github.com/seriohub/velero-helm/releases/tag/v0.1.10)
 
 v0.1.9: [https://github.com/seriohub/velero-helm/releases/tag/v0.1.9](https://github.com/seriohub/velero-helm/releases/tag/v0.1.9)
 
