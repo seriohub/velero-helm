@@ -37,17 +37,14 @@ uiNp:
 uiIngress:
   enabled: false
   # ingressClassName: nginx
-  host: velero.<your-domain>
-  tls:
-    enabled: false
   # metadata:
   #   annotations:
   #     cert-manager.io/cluster-issuer: "letsencrypt-prod" 
-  # spec:
-  #   tls:
-  #    - hosts:
-  #      - velero-ui.domain.com
-  #      secretName: velero-ui-tls
+  spec:
+    tls:
+  #  - hosts:
+  #    - velero.<your-domain>
+  #    secretName: velero-ui-tls
 
 #
 # Watchdog Cron

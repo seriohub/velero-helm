@@ -40,9 +40,4 @@ spec:
   {{- if .Values.uiIngress.spec.tls }}
     {{- .Values.uiIngress.spec.tls | toYaml | nindent 2 }}
   {{- end }}
-  {{- if .Values.uiIngress.tls.enabled }}
-  - hosts:
-      - {{ .Values.uiIngress.host }}
-    secretName: {{ include "seriohub-velero.fullname" . }}-api-tls
-  {{- end }}
 {{- end }}

@@ -196,17 +196,14 @@ uiNp:
 uiIngress:
   enabled: true
   ingressClassName: gelan-pub
-  host: velero.svc.gelan-ict.ch
-  tls:
-    enabled: true
   metadata:
     annotations:
       # cert-manager.io/cluster-issuer: "letsencrypt-prod" 
   spec:
     tls:
-    # - hosts:
-    #   - velero-ui.domain.com
-    #   secretName: velero-ui-tls
+    - hosts:
+      - velero.svc.gelan-ict.ch
+      secretName: velero-ui-tls
 
 #
 # Service Account
