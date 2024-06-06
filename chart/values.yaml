@@ -227,13 +227,9 @@ uiIngress:
   enabled: false
   # -- Ingress class name
   ingressClassName: nginx
-  # -- Velero ui host
-  host: velero.your-cluster-domain
   metadata:
     annotations:
       # cert-manager.io/cluster-issuer: "letsencrypt-prod"
-  tls:
-    enabled: true
   spec:
     tls:
     # - hosts:

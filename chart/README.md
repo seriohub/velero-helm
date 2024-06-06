@@ -108,11 +108,9 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | uiConfig.nextPublicVeleroApiUrl | string | `"http://10.10.0.100"` | Url to http velero-api project |
 | uiConfig.nextPublicVeleroApiWs | string | `"ws://10.10.0.100"` | Url to ws velero-api project |
 | uiIngress.enabled | bool | `false` | Enable or disable ingress |
-| uiIngress.host | string | `"velero.your-cluster-domain"` | Velero ui host |
 | uiIngress.ingressClassName | string | `"nginx"` | Ingress class name |
 | uiIngress.metadata.annotations | string | `nil` |  |
 | uiIngress.spec.tls | string | `nil` |  |
-| uiIngress.tls.enabled | bool | `true` |  |
 | uiNp.apiPort | string | `"30001"` | API port |
 | uiNp.enabled | bool | `true` | Enable or disable nodeport |
 | uiNp.ip | string | `""` | Any ip address of your cluster |
