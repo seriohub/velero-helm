@@ -11,8 +11,8 @@ data:
   # Ingress
   #
   {{- if .Values.uiIngress.enabled }}
-  NEXT_PUBLIC_VELERO_API_URL: {{ printf "https://%s/api" .Values.uiIngress.host | quote }}
-  NEXT_PUBLIC_VELERO_API_WS: {{ printf "wss://%s" .Values.uiIngress.host | quote }}
+  NEXT_PUBLIC_VELERO_API_URL: {{ printf "https://%s/api" (index (index .Values.uiIngress.spec.tls 0).hosts 0)| quote }}
+  NEXT_PUBLIC_VELERO_API_WS: {{ printf "wss://%s" (index (index .Values.uiIngress.spec.tls 0).hosts 0) | quote }}
   {{- end }}
   #  
   # NodePort
