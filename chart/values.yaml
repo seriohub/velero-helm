@@ -111,6 +111,10 @@ apiConfig:
   veleroCliPathCustom: ./velero-client-binary
   # -- Name of the velero client release to be used
   veleroCliVersion: v1.12.2
+  # -- Default admin username
+  defaultAdminUsername: admin
+  # -- Default admin password
+  defaultAdminPassword: admin
 
   # Storage Configuration
   storage:
