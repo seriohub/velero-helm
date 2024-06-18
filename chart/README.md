@@ -52,6 +52,8 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | apiConfig.awsAccessKeyId | string | `"<AWS_ACCESS_KEY_ID>"` | AWS_ACCESS_KEY_ID |
 | apiConfig.awsSecretAccessKey | string | `"<AWS_SECRET_ACCESS_KEY>"` | AWS_SECRET_ACCESS_KEY |
 | apiConfig.debugLevel | string | `"info"` | Debug level info |
+| apiConfig.defaultAdminPassword | string | `"admin"` | Default admin password |
+| apiConfig.defaultAdminUsername | string | `"admin"` | Default admin username |
 | apiConfig.downloadTmpFolder | string | `"/tmp/velero-api"` | Destination folder when executing velero backup download |
 | apiConfig.k8SInClusterMode | string | `"True"` | Enabled if is deployed in a cluster |
 | apiConfig.origins1 | string | `"*"` | Allowed origin |
