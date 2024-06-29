@@ -1,3 +1,4 @@
+{{- if eq .Values.global.agentMode false }}
 {{- if .Values.uiIngress.enabled }}
 apiVersion: v1
 kind: Service
@@ -12,4 +13,5 @@ spec:
   {{- include "seriohub-velero.selectorLabels" . | nindent 4 }}
   ports:
 	{{- .Values.ui.ports | toYaml | nindent 2 }}
+{{- end }}
 {{- end }}

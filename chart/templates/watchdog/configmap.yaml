@@ -16,7 +16,7 @@ data:
   SCHEDULE_ENABLE: {{ .scheduleEnable | quote }}
   EXPIRES_DAYS_WARNING: {{ .expiresDaysWarning | quote }}
   K8S_INCLUSTER_MODE: {{ .k8SInclusterMode | quote }}
-  PROCESS_CLUSTER_NAME: {{ .processClusterName | quote }}
+  PROCESS_CLUSTER_NAME: {{ $.Values.global.clusterName | quote }}
   PROCESS_CYCLE_SEC: {{ .processCycleSec | quote }}
   NOTIFICATION_SKIP_COMPLETED: {{ .notificationSkipCompleted | quote }}
   NOTIFICATION_SKIP_INPROGRESS: {{ .notificationSkipInProgress | quote }}

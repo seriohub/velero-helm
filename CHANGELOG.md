@@ -6,7 +6,12 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.1.12] - 2024-06-28
 
-- Add the components.txt file
+- Added the components.txt file
+- Added the agent mode value option in global section
+- Added the cluster name value option in the global section
+- Removed the processClusterName value option in watchdogConfig
+- Updated API version to 0.1.16
+- Updated UI version to 0.1.14
 
 ## [v0.1.11] - 2024-06-18
 

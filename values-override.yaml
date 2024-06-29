@@ -4,6 +4,8 @@
 global:
   veleroNamespace: velero
   # kubernetesClusterDomain: my-cluster
+  # agentMode: false
+  # clusterName: <your-cluster-name>
 
 #
 # API Config
@@ -84,3 +86,13 @@ watchdogConfig:
   telegramEnable: "False"
   telegramChatId: "<telegram-chat-id>"
   telegramToken: "<telegram-token>"
+
+#
+# uiConfig
+# you can enable an experimental function to add a second cluster to the login screen
+#
+# uiConfig:
+  # experimental: true
+  # exNextPublicVeleroApiName2: "your-cluster-name-2"
+  # exNextPublicVeleroApiUrl2: "https://your-url-api-2/api"
+  # exNextPublicVeleroApiWs2: "wss://your-url-api-2"

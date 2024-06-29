@@ -6,6 +6,10 @@ global:
   veleroNamespace: velero
   # -- Kubernetes Cluster Domain
   kubernetesClusterDomain: cluster.local
+  # -- Agent mode: If true, the UI will not be installed
+  agentMode: false
+  # -- ClusterName
+  clusterName: <cluster-name>
 
 #
 # API
@@ -18,7 +22,7 @@ api:
       # -- Image Repository
       repository: dserio83/velero-api
       # -- Image Tag
-      tag: 0.1.15
+      tag: 0.1.16
     imagePullPolicy: IfNotPresent
     # -- SecurityContext for Pod
     podSecurityContext:
@@ -155,7 +159,7 @@ ui:
       # -- Image Repository
       repository: dserio83/velero-ui
       # -- Image Tag
-      tag: 0.1.13
+      tag: 0.1.14
     # -- Image pull policy
     imagePullPolicy: IfNotPresent
     # -- SecurityContext for Pod
@@ -209,6 +213,17 @@ uiConfig:
   nextPublicVeleroApiUrl: http://10.10.0.100
   # -- Url to ws velero-api project
   nextPublicVeleroApiWs: ws://10.10.0.100
+  #
+  # Experimental
+  #
+  experimental: false
+  # -- Cluster name where velero-api 2 is deployed
+  exNextPublicVeleroApiName2: ""
+  # -- Url to http velero-api 2 project
+  exNextPublicVeleroApiUrl2: ""
+  # -- Url to ws velero-api 2 project
+  exNextPublicVeleroApiWs2: ""
+  
 
 #
 # UI Nodeport
