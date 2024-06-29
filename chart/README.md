@@ -69,6 +69,8 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | apiConfig.veleroCliPathCustom | string | `"./velero-client-binary"` | Path where the user can store manually the binary file |
 | apiConfig.veleroCliVersion | string | `"v1.12.2"` | Name of the velero client release to be used |
 | apiSa.serviceAccount.annotations | object | `{}` |  |
+| global.agentMode | bool | `false` | Agent mode: If true, the UI will not be installed |
+| global.clusterName | string | `"<cluster-name>"` | ClusterName |
 | global.kubernetesClusterDomain | string | `"cluster.local"` | Kubernetes Cluster Domain |
 | global.veleroNamespace | string | `"velero"` | Namespace of velero installation |
 | k8SReadOnlyServiceAccount.serviceAccount.annotations | object | `{}` |  |
@@ -105,6 +107,10 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | ui.webServer.tolerations | list | `[]` | Operator tolerations |
 | ui.webServer.volumeMounts | string | `nil` | VolumeMounts |
 | ui.webServer.volumes | string | `nil` | Volumes |
+| uiConfig.exNextPublicVeleroApiName2 | string | `""` | Cluster name where velero-api 2 is deployed |
+| uiConfig.exNextPublicVeleroApiUrl2 | string | `""` | Url to http velero-api 2 project |
+| uiConfig.exNextPublicVeleroApiWs2 | string | `""` | Url to ws velero-api 2 project |
+| uiConfig.experimental | bool | `false` |  |
 | uiConfig.nextPublicRefreshDatatableAfter | string | `"1500"` | Milliseconds delay for datatable update after each operation |
 | uiConfig.nextPublicRefreshRecent | string | `"5000"` | Polling task in progress updates in milliseconds |
 | uiConfig.nextPublicVeleroApiUrl | string | `"http://10.10.0.100"` | Url to http velero-api project |

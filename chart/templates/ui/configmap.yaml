@@ -1,23 +1,32 @@
+{{- if eq .Values.global.agentMode false }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: velero-ui-config
   labels:
-  {{- include "seriohub-velero.labels" . | nindent 4 }}
+    {{- include "seriohub-velero.labels" . | nindent 4 }}
 data:
-  NEXT_PUBLIC_REFRESH_DATATABLE_AFTER: {{ .Values.uiConfig.nextPublicRefreshDatatableAfter  | quote }}
+  NEXT_PUBLIC_REFRESH_DATATABLE_AFTER: {{ .Values.uiConfig.nextPublicRefreshDatatableAfter | quote }}
   NEXT_PUBLIC_REFRESH_RECENT: {{ .Values.uiConfig.nextPublicRefreshRecent | quote  }}
+  NEXT_PUBLIC_VELERO_API_NAME_1: {{ .Values.global.clusterName | quote  }}
   #  
   # Ingress
   #
   {{- if .Values.uiIngress.enabled }}
-  NEXT_PUBLIC_VELERO_API_URL: {{ printf "https://%s/api" (index (index .Values.uiIngress.spec.tls 0).hosts 0)| quote }}
-  NEXT_PUBLIC_VELERO_API_WS: {{ printf "wss://%s" (index (index .Values.uiIngress.spec.tls 0).hosts 0) | quote }}
+  NEXT_PUBLIC_VELERO_API_URL_1: {{ printf "https://%s/api" (index (index .Values.uiIngress.spec.tls 0).hosts 0) | quote }}
+  NEXT_PUBLIC_VELERO_API_WS_1: {{ printf "wss://%s" (index (index .Values.uiIngress.spec.tls 0).hosts 0) | quote }}
   {{- end }}
   #  
   # NodePort
   #
   {{- if .Values.uiNp.enabled }}
-  NEXT_PUBLIC_VELERO_API_URL: {{ printf "http://%s:%s/api" .Values.uiNp.ip .Values.uiNp.apiPort | quote }}
-  NEXT_PUBLIC_VELERO_API_WS: {{ printf "ws://%s:%s" .Values.uiNp.ip .Values.uiNp.apiPort | quote }}
+  NEXT_PUBLIC_VELERO_API_URL_1: {{ printf "http://%s:%s/api" .Values.uiNp.ip .Values.uiNp.apiPort | quote }}
+  NEXT_PUBLIC_VELERO_API_WS_1: {{ printf "ws://%s:%s" .Values.uiNp.ip .Values.uiNp.apiPort | quote }}
   {{- end }}
+  {{- if eq .Values.uiConfig.experimental true }}
+  NEXT_PUBLIC_LOGIN_CLUSTERS_SWITCH: "true"
+  NEXT_PUBLIC_VELERO_API_NAME_2: {{ .Values.uiConfig.exNextPublicVeleroApiName2 | quote  }}
+  NEXT_PUBLIC_VELERO_API_URL_2: {{ .Values.uiConfig.exNextPublicVeleroApiUrl2 | quote  }}
+  NEXT_PUBLIC_VELERO_API_WS_2: {{ .Values.uiConfig.exNextPublicVeleroApiWs2 | quote  }}
+  {{- end }}
+{{- end }}

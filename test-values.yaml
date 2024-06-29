@@ -6,6 +6,10 @@ global:
   veleroNamespace: velero-system
   # -- Kubernetes Cluster Domain
   kubernetesClusterDomain: cluster.local
+  # -- Agent mode: If true, the UI will not be installed
+  agentMode: false
+  # -- ClusterName
+  clusterName: <my-cluster-name>
 
 #
 # API
@@ -338,7 +342,6 @@ watchdogConfig:
   expiresDaysWarning: "29"
   k8SInclusterMode: "True"
   k8sVeleroNamespace: "velero"
-  processClusterName: <cluster-name>
   processCycleSec: "300"
   notificationSkipCompleted: "True"
   notificationSkipInProgress: "True"
