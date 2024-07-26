@@ -81,7 +81,7 @@ All notable changes to this project will be documented in this file.
 
 ### Components
 
-[Software version information](./components.txt)
+[Software version information](https://github.com/seriohub/velero-helm/blob/main/components.txt)
 
 ### Release
 
