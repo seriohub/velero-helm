@@ -12,7 +12,7 @@ metadata:
 spec:
   ingressClassName: {{ .Values.uiIngress.ingressClassName }}
   rules:
-  - host: {{ .Values.uiIngress.host }}
+  - host: {{ (index (index .Values.uiIngress.spec.tls 0).hosts 0) }}
     http:
       paths:
       - backend:
