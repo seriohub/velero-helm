@@ -1,6 +1,6 @@
 # vui
 
-![Version: 0.1.13](https://img.shields.io/badge/Version-0.1.13-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.13](https://img.shields.io/badge/AppVersion-0.1.13-informational?style=flat-square)
+![Version: 0.1.14](https://img.shields.io/badge/Version-0.1.14-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.14](https://img.shields.io/badge/AppVersion-0.1.14-informational?style=flat-square)
 
 Velero User Interface: a friendly UI and dashboard for Velero
 
@@ -27,7 +27,7 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | api.apiServer.affinity | object | `{}` | Operator affinity |
 | api.apiServer.image.registry | string | `"docker.io"` | Image Registry |
 | api.apiServer.image.repository | string | `"dserio83/velero-api"` | Image Repository |
-| api.apiServer.image.tag | string | `"0.1.17"` | Image Tag |
+| api.apiServer.image.tag | string | `"0.1.18"` | Image Tag |
 | api.apiServer.imagePullPolicy | string | `"IfNotPresent"` |  |
 | api.apiServer.nodeSelector | object | `{}` | Operator nodeSelector |
 | api.apiServer.podSecurityContext | object | `{"enabled":false,"seccompProfile":{"type":"RuntimeDefault"}}` | SecurityContext for Pod |
@@ -98,7 +98,7 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | ui.webServer.affinity | object | `{}` | Operator affinity |
 | ui.webServer.image.registry | string | `"docker.io"` | Image Registry |
 | ui.webServer.image.repository | string | `"dserio83/velero-ui"` | Image Repository |
-| ui.webServer.image.tag | string | `"0.1.15"` | Image Tag |
+| ui.webServer.image.tag | string | `"0.1.16"` | Image Tag |
 | ui.webServer.imagePullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | ui.webServer.nodeSelector | object | `{}` | Operator nodeSelector |
 | ui.webServer.podSecurityContext | object | `{"enabled":false,"seccompProfile":{"type":"RuntimeDefault"}}` | SecurityContext for Pod |
