@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ***
 
+## [v0.1.14] - 2024-08-01
+
+- Updated API version to 0.1.18
+- Updated UI version to 0.1.16
+- Fix host in ingress
+
 ## [v0.1.13] - 2024-07-26
 
 - Updated API version to 0.1.17
