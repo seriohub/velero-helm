@@ -60,3 +60,14 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the name for the credentials secret.
+*/}}
+{{- define "seriohub-velero.secretName" -}}
+{{- if and .Values.apiConfig (not (empty .Values.apiConfig.existingSecret)) -}}
+  {{- .Values.apiConfig.existingSecret -}}
+{{- else -}}
+  {{ include "seriohub-velero.fullname" . }}-secret
+{{- end -}}
+{{- end -}}

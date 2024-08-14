@@ -50,7 +50,7 @@ spec:
         - configMapRef:
             name: velero-api-config
         - secretRef:
-            name: velero-api-config
+            name: {{ include "seriohub-velero.secretName" . }}
         image: "{{ .Values.api.apiServer.image.registry | trimSuffix "/" }}/{{ .Values.api.apiServer.image.repository }}:{{ .Values.api.apiServer.image.tag }}"
         imagePullPolicy: {{ .Values.api.apiServer.imagePullPolicy }}
         name: api-server
