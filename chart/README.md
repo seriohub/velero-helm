@@ -55,7 +55,7 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | apiConfig.defaultAdminPassword | string | `"admin"` | Default admin password |
 | apiConfig.defaultAdminUsername | string | `"admin"` | Default admin username |
 | apiConfig.downloadTmpFolder | string | `"/tmp/velero-api"` | Destination folder when executing velero backup download |
-| apiConfig.existingSecret | string | `""` | reference to own secret |
+| apiConfig.existingSecret | string | `nil` | Reference to own secret |
 | apiConfig.k8SInClusterMode | string | `"True"` | Enabled if is deployed in a cluster |
 | apiConfig.origins1 | string | `"*"` | Allowed origin |
 | apiConfig.resticPassword | string | `"static-passw0rd"` | Velero restic password |

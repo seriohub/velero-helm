@@ -120,6 +120,7 @@ apiConfig:
   # -- Default admin password
   defaultAdminPassword: admin
   # Optional: Name of pre-existing Secret, must include subsequent secrets
+  # -- Reference to own secret
   existingSecret:
   # <AWS_ACCESS_KEY_ID>,<AWS_SECRET_ACCESS_KEY>,<RESTIC_PASSWORD>,<SECURITY_PATH_DATABASE>,<DEFAULT_ADMIN_USERNAME>,<DEFAULT_ADMIN_PASSWORD>
   # Optional: <SECURITY_TOKEN_KEY> 
