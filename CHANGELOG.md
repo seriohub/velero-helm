@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ***
 
+## [v0.1.15] - 2024-08-19
+
+- Added secret override feature
+
 ## [v0.1.14] - 2024-08-01
 
 - Updated API version to 0.1.18
