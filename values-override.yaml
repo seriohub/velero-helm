@@ -11,6 +11,8 @@ global:
 # API Config
 #
 apiConfig:
+  # To generate a fixed secure random secret key use the command: openssl rand -hex 32
+  # securityTokenKey:
   #
   awsAccessKeyId: <awsAccessKeyId>
   awsSecretAccessKey: <awsSecretAccessKey>
