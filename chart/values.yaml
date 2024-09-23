@@ -389,7 +389,7 @@ watchdogConfig:
   # -- Socket bind host
   apiEndpointURL: "0.0.0.0"
   # -- Socket bind port
-  apiEndPointPort: "8001"
+  apiEndpointPort: "8001"
   # -- View debugging information.
   debug: "False"
   # -- Debug level information.
