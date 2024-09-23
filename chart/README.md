@@ -1,6 +1,6 @@
 # vui
 
-![Version: 0.1.15](https://img.shields.io/badge/Version-0.1.15-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.14](https://img.shields.io/badge/AppVersion-0.1.14-informational?style=flat-square)
+![Version: 0.1.16](https://img.shields.io/badge/Version-0.1.16-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.14](https://img.shields.io/badge/AppVersion-0.1.14-informational?style=flat-square)
 
 Velero User Interface: a friendly UI and dashboard for Velero
 
@@ -139,7 +139,7 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | watchdog.veleroMonitoring.volumes | string | `nil` | Volumes |
 | watchdogClusterip.port | int | `8001` |  |
 | watchdogClusterip.targetPort | int | `8001` |  |
-| watchdogConfig.apiEndPointPort | string | `"8001"` | Socket bind port |
+| watchdogConfig.apiEndpointPort | string | `"8001"` | Socket bind port |
 | watchdogConfig.apiEndpointURL | string | `"0.0.0.0"` | Socket bind host |
 | watchdogConfig.backupEnable | string | `"True"` | Enable watcher for backups without schedule or last backup for each schedule |
 | watchdogConfig.debug | string | `"False"` | View debugging information. |
