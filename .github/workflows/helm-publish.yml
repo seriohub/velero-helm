@@ -34,7 +34,7 @@ jobs:
           registry: ghcr.io
           repository: ${{ github.repository_owner }}/charts
           name: "vui"
-          chart-path: "charts" 
+          path: "chart" 
           version: ${{ steps.extract_version.outputs.version }}
           registry-username: ${{ github.actor }}
           registry-password: ${{ secrets.GITHUB_TOKEN }}
