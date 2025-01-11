@@ -22,7 +22,7 @@ api:
       # -- Image Repository
       repository: dserio83/velero-api
       # -- Image Tag
-      tag: 0.1.19
+      tag: 0.1.20
     imagePullPolicy: IfNotPresent
     # -- SecurityContext for Pod
     podSecurityContext:
@@ -164,7 +164,7 @@ ui:
       # -- Image Repository
       repository: dserio83/velero-ui
       # -- Image Tag
-      tag: 0.1.18
+      tag: 0.1.19
     # -- Image pull policy
     imagePullPolicy: IfNotPresent
     # -- SecurityContext for Pod
@@ -218,6 +218,8 @@ uiConfig:
   nextPublicVeleroApiUrl: http://10.10.0.100
   # -- Url to ws velero-api project
   nextPublicVeleroApiWs: ws://10.10.0.100
+  # -- Enabled UI logger
+  nextPublicLoggerEnabled: false
   #
   # Experimental
   #
@@ -228,7 +230,6 @@ uiConfig:
   exNextPublicVeleroApiUrl2: ""
   # -- Url to ws velero-api 2 project
   exNextPublicVeleroApiWs2: ""
-
 
 #
 # UI Nodeport
