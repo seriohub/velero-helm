@@ -9,6 +9,7 @@ data:
   NEXT_PUBLIC_REFRESH_DATATABLE_AFTER: {{ .Values.uiConfig.nextPublicRefreshDatatableAfter | quote }}
   NEXT_PUBLIC_REFRESH_RECENT: {{ .Values.uiConfig.nextPublicRefreshRecent | quote  }}
   NEXT_PUBLIC_VELERO_API_NAME_1: {{ .Values.global.clusterName | quote  }}
+  NEXT_PUBLIC_LOGGER_ENABLED: {{ .Values.global.nextPublicLoggerEnabled | quote  }}
   #  
   # Ingress
   #
