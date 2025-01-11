@@ -27,6 +27,12 @@ jobs:
           GIT_TAG=${GITHUB_REF##*/}
           VERSION=${GIT_TAG##*v}
           echo "version=$(echo $VERSION)" >> $GITHUB_OUTPUT
+      - name: Debug file system
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "Contents of current directory:"
+          ls -R
       - name: Helm | Publish
         id: helm_publish
         uses: peak-scale/github-actions/helm-oci-chart@38322faabccd75abfa581c435e367d446b6d2c3b # v0.1.0
