@@ -19,7 +19,7 @@ All notable changes to this project will be documented in this file.
 - Updated API version to 0.1.18
 - Updated UI version to 0.1.17
 
-  ## [v0.1.16] - 2024-09-23
+## [v0.1.16] - 2024-09-23
 
 - Updated API version to 0.1.18
 - Updated UI version to 0.1.16
