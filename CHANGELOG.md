@@ -109,19 +109,25 @@ All notable changes to this project will be documented in this file.
 
 - 🎉 first release!
 
-### Components
+***
+
+## Components compatibility
 
 [Software version information](https://github.com/seriohub/velero-helm/blob/main/components.txt)
 
-### Release
+***
 
-v0.1.13: [https://github.com/seriohub/velero-helm/releases/tag/v0.1.13](https://github.com/seriohub/velero-helm/releases/tag/v0.1.13)
+## Tags
 
-v0.1.12: [https://github.com/seriohub/velero-helm/releases/tag/v0.1.12](https://github.com/seriohub/velero-helm/releases/tag/v0.1.12)
+v0.1.19: [https://github.com/seriohub/velero-helm/releases/tag/v0.1.19](https://github.com/seriohub/velero-helm/releases/tag/v0.1.19)
+
+v0.1.18: [https://github.com/seriohub/velero-helm/releases/tag/v0.1.18](https://github.com/seriohub/velero-helm/releases/tag/v0.1.18)
+
+v0.1.15: [https://github.com/seriohub/velero-helm/releases/tag/v0.1.15](https://github.com/seriohub/velero-helm/releases/tag/v0.1.15)
+
+v0.1.14: [https://github.com/seriohub/velero-helm/releases/tag/v0.1.14](https://github.com/seriohub/velero-helm/releases/tag/v0.1.14)
 
 v0.1.11: [https://github.com/seriohub/velero-helm/releases/tag/v0.1.11](https://github.com/seriohub/velero-helm/releases/tag/v0.1.11)
-
-v0.1.10: [https://github.com/seriohub/velero-helm/releases/tag/v0.1.10](https://github.com/seriohub/velero-helm/releases/tag/v0.1.10)
 
 v0.1.9: [https://github.com/seriohub/velero-helm/releases/tag/v0.1.9](https://github.com/seriohub/velero-helm/releases/tag/v0.1.9)
 
