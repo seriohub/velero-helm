@@ -22,7 +22,7 @@ api:
       # -- Image Repository
       repository: dserio83/velero-api
       # -- Image Tag
-      tag: 0.1.20
+      tag: 0.1.21
     imagePullPolicy: IfNotPresent
     # -- SecurityContext for Pod
     podSecurityContext:
@@ -87,10 +87,6 @@ apiConfig:
   apiRateLimiterCustom1: Security:xxx:60:20
   # -- Rate limiter: 60 seconds max requests 10
   apiRateLimiterL1: "60:20"
-  # -- AWS_ACCESS_KEY_ID
-  awsAccessKeyId: <AWS_ACCESS_KEY_ID>
-  # -- AWS_SECRET_ACCESS_KEY
-  awsSecretAccessKey: <AWS_SECRET_ACCESS_KEY>
   # -- Debug level info
   debugLevel: info
   # -- Destination folder when executing velero backup download
@@ -164,7 +160,7 @@ ui:
       # -- Image Repository
       repository: dserio83/velero-ui
       # -- Image Tag
-      tag: 0.1.19
+      tag: 0.1.20
     # -- Image pull policy
     imagePullPolicy: IfNotPresent
     # -- SecurityContext for Pod
