@@ -80,8 +80,6 @@ apiConfig:
   apiEndpointUrl: 0.0.0.0
   apiRateLimiterCustom1: Security:xxx:60:20
   apiRateLimiterL1: "60:20"
-  awsAccessKeyId: <AWS_ACCESS_KEY_ID>
-  awsSecretAccessKey: <AWS_SECRET_ACCESS_KEY>
   debugLevel: info
   downloadTmpFolder: /tmp/velero-api
   k8SInClusterMode: "True"
