@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ***
 
+## [v0.1.20] - 2025-01-23
+
+- Updated API version to 0.1.21
+- Updated UI version to 0.1.20
+
 ## [v0.1.19] - 2025-01-11
 
 - Updated API version to 0.1.20
