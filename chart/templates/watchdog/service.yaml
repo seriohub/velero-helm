@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "seriohub-velero.fullname" . }}-watchdog-clusterip
+  name: {{ include "seriohub-velero.fullname" . }}-watchdog
   labels:
   {{- include "seriohub-velero.labels" . | nindent 4 }}
 spec:

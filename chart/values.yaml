@@ -2,14 +2,14 @@
 # Global
 #
 global:
-  # -- Namespace of velero installation
+  # -- Name of the namespace where vmware-tanzu/velero is deployed
   veleroNamespace: velero
-  # -- Kubernetes Cluster Domain
-  kubernetesClusterDomain: cluster.local
   # -- Agent mode: If true, the UI will not be installed
   agentMode: false
   # -- ClusterName
   clusterName: <cluster-name>
+  # -- Enable in cluster mode
+  k8SInclusterMode: "True"
 
 #
 # API
@@ -22,8 +22,9 @@ api:
       # -- Image Repository
       repository: dserio83/velero-api
       # -- Image Tag
-      tag: 0.1.21
+      tag: 0.1.22
     imagePullPolicy: IfNotPresent
+    imagePullSecrets: []
     # -- SecurityContext for Pod
     podSecurityContext:
       enabled: false
@@ -67,7 +68,6 @@ api:
     protocol: TCP
     targetPort: api
   replicas: 1
-  type: ClusterIP
 
 #
 # API Config
@@ -84,15 +84,13 @@ apiConfig:
   # -- Socket bind host
   apiEndpointUrl: 0.0.0.0
   # -- Custom security rate limiter: 60 seconds max requests 10
-  apiRateLimiterCustom1: Security:xxx:60:20
+  apiRateLimiterCustom1: Security:xxx:60:100
   # -- Rate limiter: 60 seconds max requests 10
-  apiRateLimiterL1: "60:20"
+  apiRateLimiterL1: "60:100"
   # -- Debug level info
   debugLevel: info
   # -- Destination folder when executing velero backup download
   downloadTmpFolder: /tmp/velero-api
-  # -- Enabled if is deployed in a cluster
-  k8SInClusterMode: "True"
   # -- Allowed origin
   origins1: '*'
   # -- Velero restic password
@@ -152,7 +150,6 @@ ui:
     protocol: TCP
     targetPort: run
   replicas: 1
-  type: ClusterIP
   webServer:
     image:
       # -- Image Registry
@@ -160,9 +157,10 @@ ui:
       # -- Image Repository
       repository: dserio83/velero-ui
       # -- Image Tag
-      tag: 0.1.20
+      tag: 0.1.21
     # -- Image pull policy
     imagePullPolicy: IfNotPresent
+    imagePullSecrets: []
     # -- SecurityContext for Pod
     podSecurityContext:
       enabled: false
@@ -200,7 +198,6 @@ ui:
     volumes:
     # - name: velero-api
     #   emptyDir: {}
-
 
 #
 # UI Config
@@ -228,7 +225,7 @@ uiConfig:
   exNextPublicVeleroApiWs2: ""
 
 #
-# UI Nodeport
+# VUI access with nodeport
 #
 uiNp:
   # -- Enable or disable nodeport
@@ -241,7 +238,7 @@ uiNp:
   uiPort: "30002"
 
 #
-# UI Ingress
+# VUI access with ingress
 #
 uiIngress:
   # -- Enable or disable ingress
@@ -256,6 +253,13 @@ uiIngress:
     # - hosts:
     #   - velero-ui.domain.com
     #   secretName: velero-ui-tls
+
+#
+# VUI custom service, create ClusterIpOnly
+#
+clusterIpService:
+  #-- Enable or disable ClusterIP services
+  enabled: false
 
 #
 # Service Account
@@ -279,8 +283,9 @@ report:
       # -- Image Repository
       repository: dserio83/velero-watchdog
       # -- Image Tag
-      tag: 0.1.6
+      tag: 0.1.7
     imagePullPolicy: IfNotPresent
+    imagePullSecrets: []
     # -- SecurityContext for Pod
     podSecurityContext:
       enabled: false
@@ -319,7 +324,6 @@ report:
     # - name: velero-api
     #   emptyDir: {}
 
-
 #
 # Watchdog Daemon
 #
@@ -332,8 +336,9 @@ watchdog:
       # -- Image Repository
       repository: dserio83/velero-watchdog
       # -- Image Tag
-      tag: 0.1.6
+      tag: 0.1.7
     imagePullPolicy: IfNotPresent
+    imagePullSecrets: []
     # -- SecurityContext for Pod
     podSecurityContext:
       enabled: false
@@ -390,19 +395,13 @@ watchdogConfig:
   # -- View debugging information.
   debug: "False"
   # -- Debug level information.
-  debugLevel: "Info"
+  debugLevel: info
   # -- Enable watcher for backups without schedule or last backup for each schedule
   backupEnable: "True"
   # -- Enable watcher for schedule
   scheduleEnable: "True"
   # -- Number of days to backup expiration below which to display a warning about the backup
   expiresDaysWarning: "29"
-  # -- Enable in cluster mode
-  k8SInclusterMode: "True"
-  # -- Name of the namespace where vmware-tanzu/velero is deployed
-  k8sVeleroNamespace: "velero"
-  # -- Force the cluster name and it appears in the message
-  processClusterName: <cluster-name>
   # -- Cycle time (seconds)
   processCycleSec: "300"
   # -- Skip notification new completed backup
@@ -425,6 +424,10 @@ watchdogConfig:
   emailSmtpPort: <smtp-port>
   # -- SMTP server
   emailSmtpServer: <smtp-server>
+  # -- Send notification message at startup
+  sendStartMessage: "True"
+  # -- Send report at startup
+  sendReportAtStartup: "False"
   # -- Telegram chat id where send the notifications
   telegramChatId: <chat-id>
   # -- Enable telegram notification
