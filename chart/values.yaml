@@ -258,7 +258,7 @@ uiIngress:
 # VUI custom service, create ClusterIpOnly
 #
 clusterIpService:
-  #-- Enable or disable ClusterIP services
+  # -- Enable or disable ClusterIP services
   enabled: false
 
 #

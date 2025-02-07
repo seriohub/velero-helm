@@ -67,7 +67,7 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | apiConfig.veleroCliPathCustom | string | `"./velero-client-binary"` | Path where the user can store manually the binary file |
 | apiConfig.veleroCliVersion | string | `"v1.12.2"` | Name of the velero client release to be used |
 | apiSa.serviceAccount.annotations | object | `{}` |  |
-| clusterIpService.enabled | bool | `false` |  |
+| clusterIpService.enabled | bool | `false` | Enable or disable ClusterIP services |
 | global.agentMode | bool | `false` | Agent mode: If true, the UI will not be installed |
 | global.clusterName | string | `"<cluster-name>"` | ClusterName |
 | global.k8SInclusterMode | string | `"True"` | Enable in cluster mode |
