@@ -1,6 +1,6 @@
 # vui
 
-![Version: 0.1.20](https://img.shields.io/badge/Version-0.1.20-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.18](https://img.shields.io/badge/AppVersion-0.1.18-informational?style=flat-square)
+![Version: 0.1.21](https://img.shields.io/badge/Version-0.1.21-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.19](https://img.shields.io/badge/AppVersion-0.1.19-informational?style=flat-square)
 
 Velero User Interface: a friendly UI and dashboard for Velero
 
@@ -27,8 +27,9 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | api.apiServer.affinity | object | `{}` | Operator affinity |
 | api.apiServer.image.registry | string | `"docker.io"` | Image Registry |
 | api.apiServer.image.repository | string | `"dserio83/velero-api"` | Image Repository |
-| api.apiServer.image.tag | string | `"0.1.21"` | Image Tag |
+| api.apiServer.image.tag | string | `"0.1.22"` | Image Tag |
 | api.apiServer.imagePullPolicy | string | `"IfNotPresent"` |  |
+| api.apiServer.imagePullSecrets | list | `[]` |  |
 | api.apiServer.nodeSelector | object | `{}` | Operator nodeSelector |
 | api.apiServer.podSecurityContext | object | `{"enabled":false,"seccompProfile":{"type":"RuntimeDefault"}}` | SecurityContext for Pod |
 | api.apiServer.resources | object | `{}` | Resources for the Operator |
@@ -41,12 +42,11 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | api.ports[0].protocol | string | `"TCP"` |  |
 | api.ports[0].targetPort | string | `"api"` |  |
 | api.replicas | int | `1` |  |
-| api.type | string | `"ClusterIP"` |  |
 | apiConfig.apiEnableDocumentation | string | `"1"` | Enabled/Disabled the fastapi documentation user interfaces |
 | apiConfig.apiEndpointPort | string | `"8001"` | Socket bind port |
 | apiConfig.apiEndpointUrl | string | `"0.0.0.0"` | Socket bind host |
-| apiConfig.apiRateLimiterCustom1 | string | `"Security:xxx:60:20"` | Custom security rate limiter: 60 seconds max requests 10 |
-| apiConfig.apiRateLimiterL1 | string | `"60:20"` | Rate limiter: 60 seconds max requests 10 |
+| apiConfig.apiRateLimiterCustom1 | string | `"Security:xxx:60:100"` | Custom security rate limiter: 60 seconds max requests 10 |
+| apiConfig.apiRateLimiterL1 | string | `"60:100"` | Rate limiter: 60 seconds max requests 10 |
 | apiConfig.apiTokenExpirationMin | string | `"60"` | Token validity after the creation (minutes) |
 | apiConfig.apiTokenRefreshExpirationDays | string | `"7"` | Token validity after the creation (days) |
 | apiConfig.debugLevel | string | `"info"` | Debug level info |
@@ -54,7 +54,6 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | apiConfig.defaultAdminUsername | string | `"admin"` | Default admin username |
 | apiConfig.downloadTmpFolder | string | `"/tmp/velero-api"` | Destination folder when executing velero backup download |
 | apiConfig.existingSecret | string | `nil` | Reference to own secret |
-| apiConfig.k8SInClusterMode | string | `"True"` | Enabled if is deployed in a cluster |
 | apiConfig.origins1 | string | `"*"` | Allowed origin |
 | apiConfig.resticPassword | string | `"static-passw0rd"` | Velero restic password |
 | apiConfig.securityDisableUsersPwdRate | string | `"1"` | If True user can have a weak password, otherwise is required a strong password |
@@ -68,10 +67,11 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | apiConfig.veleroCliPathCustom | string | `"./velero-client-binary"` | Path where the user can store manually the binary file |
 | apiConfig.veleroCliVersion | string | `"v1.12.2"` | Name of the velero client release to be used |
 | apiSa.serviceAccount.annotations | object | `{}` |  |
+| clusterIpService.enabled | bool | `false` | Enable or disable ClusterIP services |
 | global.agentMode | bool | `false` | Agent mode: If true, the UI will not be installed |
 | global.clusterName | string | `"<cluster-name>"` | ClusterName |
-| global.kubernetesClusterDomain | string | `"cluster.local"` | Kubernetes Cluster Domain |
-| global.veleroNamespace | string | `"velero"` | Namespace of velero installation |
+| global.k8SInclusterMode | string | `"True"` | Enable in cluster mode |
+| global.veleroNamespace | string | `"velero"` | Name of the namespace where vmware-tanzu/velero is deployed |
 | k8SReadOnlyServiceAccount.serviceAccount.annotations | object | `{}` |  |
 | report.failedJobsHistoryLimit | int | `0` |  |
 | report.schedule | string | `"0 8 * * *"` | Cron for full report |
@@ -79,8 +79,9 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | report.veleroWatchdogReport.affinity | object | `{}` | Operator affinity |
 | report.veleroWatchdogReport.image.registry | string | `"docker.io"` | Image Registry |
 | report.veleroWatchdogReport.image.repository | string | `"dserio83/velero-watchdog"` | Image Repository |
-| report.veleroWatchdogReport.image.tag | string | `"0.1.6"` | Image Tag |
+| report.veleroWatchdogReport.image.tag | string | `"0.1.7"` | Image Tag |
 | report.veleroWatchdogReport.imagePullPolicy | string | `"IfNotPresent"` |  |
+| report.veleroWatchdogReport.imagePullSecrets | list | `[]` |  |
 | report.veleroWatchdogReport.nodeSelector | object | `{}` | Operator nodeSelector |
 | report.veleroWatchdogReport.podSecurityContext | object | `{"enabled":false,"seccompProfile":{"type":"RuntimeDefault"}}` | SecurityContext for Pod |
 | report.veleroWatchdogReport.resources | object | `{}` | Resources for the Operator |
@@ -93,12 +94,12 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | ui.ports[0].protocol | string | `"TCP"` |  |
 | ui.ports[0].targetPort | string | `"run"` |  |
 | ui.replicas | int | `1` |  |
-| ui.type | string | `"ClusterIP"` |  |
 | ui.webServer.affinity | object | `{}` | Operator affinity |
 | ui.webServer.image.registry | string | `"docker.io"` | Image Registry |
 | ui.webServer.image.repository | string | `"dserio83/velero-ui"` | Image Repository |
-| ui.webServer.image.tag | string | `"0.1.20"` | Image Tag |
+| ui.webServer.image.tag | string | `"0.1.21"` | Image Tag |
 | ui.webServer.imagePullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| ui.webServer.imagePullSecrets | list | `[]` |  |
 | ui.webServer.nodeSelector | object | `{}` | Operator nodeSelector |
 | ui.webServer.podSecurityContext | object | `{"enabled":false,"seccompProfile":{"type":"RuntimeDefault"}}` | SecurityContext for Pod |
 | ui.webServer.resources | object | `{}` | Resources for the Operator |
@@ -127,8 +128,9 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | watchdog.veleroMonitoring.affinity | object | `{}` | Operator affinity |
 | watchdog.veleroMonitoring.image.registry | string | `"docker.io"` | Image Registry |
 | watchdog.veleroMonitoring.image.repository | string | `"dserio83/velero-watchdog"` | Image Repository |
-| watchdog.veleroMonitoring.image.tag | string | `"0.1.6"` | Image Tag |
+| watchdog.veleroMonitoring.image.tag | string | `"0.1.7"` | Image Tag |
 | watchdog.veleroMonitoring.imagePullPolicy | string | `"IfNotPresent"` |  |
+| watchdog.veleroMonitoring.imagePullSecrets | list | `[]` |  |
 | watchdog.veleroMonitoring.nodeSelector | object | `{}` | Operator nodeSelector |
 | watchdog.veleroMonitoring.podSecurityContext | object | `{"enabled":false,"seccompProfile":{"type":"RuntimeDefault"}}` | SecurityContext for Pod |
 | watchdog.veleroMonitoring.resources | object | `{"limits":{"cpu":"500m","memory":"1256Mi"},"requests":{"cpu":"250m","memory":"256Mi"}}` | Resources for the Operator |
@@ -142,7 +144,7 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | watchdogConfig.apiEndpointURL | string | `"0.0.0.0"` | Socket bind host |
 | watchdogConfig.backupEnable | string | `"True"` | Enable watcher for backups without schedule or last backup for each schedule |
 | watchdogConfig.debug | string | `"False"` | View debugging information. |
-| watchdogConfig.debugLevel | string | `"Info"` | Debug level information. |
+| watchdogConfig.debugLevel | string | `"info"` | Debug level information. |
 | watchdogConfig.emailAccount | string | `"<email>"` | User name account |
 | watchdogConfig.emailEnable | string | `"False"` | Enable email notification |
 | watchdogConfig.emailPassword | string | `"<pwd>"` | Email password account |
@@ -150,17 +152,16 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | watchdogConfig.emailSmtpPort | string | `"<smtp-port>"` | SMTP port |
 | watchdogConfig.emailSmtpServer | string | `"<smtp-server>"` | SMTP server |
 | watchdogConfig.expiresDaysWarning | string | `"29"` | Number of days to backup expiration below which to display a warning about the backup |
-| watchdogConfig.k8SInclusterMode | string | `"True"` | Enable in cluster mode |
-| watchdogConfig.k8sVeleroNamespace | string | `"velero"` | Name of the namespace where vmware-tanzu/velero is deployed |
 | watchdogConfig.notificationSkipCompleted | string | `"True"` | Skip notification new completed backup |
 | watchdogConfig.notificationSkipDeleting | string | `"True"` | Skip notification backup deleting |
 | watchdogConfig.notificationSkipInProgress | string | `"True"` | Skip notification new in progress backup |
 | watchdogConfig.notificationSkipRemoved | string | `"True"` | Skip notification backup removed |
-| watchdogConfig.processClusterName | string | `"<cluster-name>"` | Force the cluster name and it appears in the message |
 | watchdogConfig.processCycleSec | string | `"300"` | Cycle time (seconds) |
 | watchdogConfig.reportBackupItemPrefix | string | `""` | Add a prefix to backup items in reports |
 | watchdogConfig.reportScheduleItemPrefix | string | `""` | Add a prefix to schedule items in reports |
 | watchdogConfig.scheduleEnable | string | `"True"` | Enable watcher for schedule |
+| watchdogConfig.sendReportAtStartup | string | `"False"` | Send report at startup |
+| watchdogConfig.sendStartMessage | string | `"True"` | Send notification message at startup |
 | watchdogConfig.slackChannel | string | `"<channel-id>"` | Channel id where sens the notification |
 | watchdogConfig.slackEnable | string | `"False"` | Enable Slack notification |
 | watchdogConfig.slackToken | string | `"<token>"` | Token for access to Slack via Http API |

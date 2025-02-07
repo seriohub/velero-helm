@@ -2,7 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+To check the updates for each individual component, refer to the respective changelogs.
+
 ***
+
+## [v0.1.21] - 2025-02-07
+
+🔄 Component Updates
+
+- 🚀 Updated API to version 0.1.22
+- 🎨 Updated UI to version 0.1.21
+- 🛡️ Updated Watchdog to version 0.1.7
+
+📊 Helm Chart Improvements
+
+- ⚙️ Various optimizations and enhancements in the Helm chart for better deployment and configurability.
 
 ## [v0.1.20] - 2025-01-23
 
@@ -123,6 +137,10 @@ All notable changes to this project will be documented in this file.
 ***
 
 ## Tags
+
+v0.1.21: [https://github.com/seriohub/velero-helm/releases/tag/v0.1.21](https://github.com/seriohub/velero-helm/releases/tag/v0.1.21)
+
+v0.1.20: [https://github.com/seriohub/velero-helm/releases/tag/v0.1.20](https://github.com/seriohub/velero-helm/releases/tag/v0.1.20)
 
 v0.1.19: [https://github.com/seriohub/velero-helm/releases/tag/v0.1.19](https://github.com/seriohub/velero-helm/releases/tag/v0.1.19)
 

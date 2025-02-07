@@ -48,8 +48,14 @@ spec:
       {{- end }}
       containers:
       - env:
-        - name: KUBERNETES_CLUSTER_DOMAIN
-          value: {{ quote .Values.global.kubernetesClusterDomain }}
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
         envFrom:
         - configMapRef:
             name: velero-ui-config

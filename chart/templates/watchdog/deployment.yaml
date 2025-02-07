@@ -46,11 +46,23 @@ spec:
       {{- end }}
       containers:
       - env:
-        - name: KUBERNETES_CLUSTER_DOMAIN
-          value: {{ quote .Values.global.kubernetesClusterDomain }}
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
         envFrom:
+        {{- if lookup "v1" "ConfigMap" .Release.Namespace "velero-watchdog-user-config" }}
+        - configMapRef:
+            name: velero-watchdog-user-config
+        {{- end }}
         - configMapRef:
             name: velero-watchdog-config
+        - configMapRef:
+            name: vui-helm-config
         - secretRef:
             name: velero-watchdog-config
         image: "{{ .Values.watchdog.veleroMonitoring.image.registry | trimSuffix "/" }}/{{ .Values.watchdog.veleroMonitoring.image.repository }}:{{ .Values.watchdog.veleroMonitoring.image.tag }}"
@@ -68,10 +80,4 @@ spec:
         volumeMounts:
           {{- toYaml . | nindent 10 }}
         {{- end }}
-
-
-
-
-
-          
       serviceAccountName: {{ include "seriohub-velero.fullname" . }}-k8s-read-only-service-account

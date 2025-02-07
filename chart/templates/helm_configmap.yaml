@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vui-helm-config
+  labels:
+  {{- include "seriohub-velero.labels" $ | nindent 4 }}
+data:
+  HELM_VERSION: {{ $.Chart.Version }}
+  HELM_APP_VERSION: {{ $.Chart.AppVersion }}
+  HELM_API: {{ $.Values.api.apiServer.image.tag }}
+  HELM_UI: {{ $.Values.ui.webServer.image.tag }}
+  HELM_WATCHDOG: {{ $.Values.watchdog.veleroMonitoring.image.tag }}
+  AGENT_MODE: {{ $.Values.global.agentMode | quote }}

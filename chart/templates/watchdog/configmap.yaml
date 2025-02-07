@@ -6,32 +6,28 @@ metadata:
   labels:
   {{- include "seriohub-velero.labels" $ | nindent 4 }}
 data:
-  {{- if not (quote .apiEndpointURL | empty)  }}
   API_ENDPOINT_URL: {{ .apiEndpointURL | quote }}
-  {{- end }}
   API_ENDPOINT_PORT: {{ .apiEndpointPort | quote }}
-  DEBUG: {{ .debugLevel | quote }}
+  
+  DEBUG: {{ .debugLevel | quote }}  
   DEBUG_LEVEL: {{ .debugLevel | quote }}
-  BACKUP_ENABLE: {{ .backupEnable | quote }}
-  SCHEDULE_ENABLE: {{ .scheduleEnable | quote }}
-  EXPIRES_DAYS_WARNING: {{ .expiresDaysWarning | quote }}
-  K8S_INCLUSTER_MODE: {{ .k8SInclusterMode | quote }}
-  PROCESS_CLUSTER_NAME: {{ $.Values.global.clusterName | quote }}
-  PROCESS_CYCLE_SEC: {{ .processCycleSec | quote }}
+  
+  CLUSTER_ID: {{ $.Values.global.clusterName | quote  }} 
+  K8S_IN_CLUSTER_MODE: {{ $.Values.global.k8SInclusterMode | quote  }} 
+  K8S_VELERO_NAMESPACE: {{ $.Values.global.veleroNamespace | quote  }} 
+  K8S_VELERO_UI_NAMESPACE: {{ $.Release.Namespace }}
+  
+  # USER CONFIGURATION FROM HELM
+  SEND_START_MESSAGE: {{ .sendStartMessage | quote }}
+  SEND_REPORT_AT_STARTUP: {{ .sendReportAtStartup | quote }}
+  BACKUP_ENABLED: {{ .backupEnable | quote }}
+  SCHEDULE_ENABLED: {{ .scheduleEnable | quote }}  
   NOTIFICATION_SKIP_COMPLETED: {{ .notificationSkipCompleted | quote }}
   NOTIFICATION_SKIP_INPROGRESS: {{ .notificationSkipInProgress | quote }}
   NOTIFICATION_SKIP_REMOVED: {{ .notificationSkipRemoved | quote }}
-  NOTIFICATION_SKIP_DELETING: {{ .notificationSkipDeleting | quote }}
-  EMAIL_ACCOUNT: {{ .emailAccount | quote }}
-  EMAIL_ENABLE: {{ .emailEnable | quote }}
-  EMAIL_RECIPIENTS: {{ .emailRecipients | quote }}
-  EMAIL_SMTP_PORT: {{ .emailSmtpPort | quote }}
-  EMAIL_SMTP_SERVER: {{ .emailSmtpServer | quote }}
-  SLACK_CHANNEL: {{ .slackChannel | quote }}
-  SLACK_ENABLE: {{ .slackEnable | quote }}
+  NOTIFICATION_SKIP_DELETING: {{ .notificationSkipDeleting | quote }}  
+  EXPIRES_DAYS_WARNING: {{ .expiresDaysWarning | quote }}
+  PROCESS_CYCLE_SEC: {{ .processCycleSec | quote }}
   REPORT_BACKUP_ITEM_PREFIX: {{ .reportBackupItemPrefix | quote }}
-  REPORT_SCHEDULE_ITEM_PREFIX: {{ .reportScheduleItemPrefix | quote }}
-  TELEGRAM_CHAT_ID: {{ .telegramChatId | quote }}
-  TELEGRAM_ENABLE: {{ .telegramEnable | quote }}
-  K8S_VELERO_NAMESPACE: {{ .k8sVeleroNamespace | quote }}
+  REPORT_SCHEDULE_ITEM_PREFIX: {{ .reportScheduleItemPrefix | quote }}  
 {{- end }}
