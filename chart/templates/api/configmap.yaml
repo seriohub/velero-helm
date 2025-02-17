@@ -37,4 +37,27 @@ data:
 
   SECURITY_PATH_DATABASE: "./data"
   SECURITY_DISABLE_USERS_PWD_RATE: {{ .securityDisableUsersPwdRate | quote }}
+  
+  #
+  # AUTHENTICATION
+  #
+  AUTH_ENABLED: {{ $.Values.authentication.enabled | quote }}
+  AUTH_TYPE: {{ $.Values.authentication.type | quote }}
+  {{- if eq ($.Values.authentication.type | upper) "LDAP" }}
+  # LDAP authentication
+  LDAP_URI: {{ $.Values.authentication.ldap.uri | quote }}
+  LDAP_USE_SSL: {{ $.Values.authentication.ldap.useSsl | quote }}
+  LDAP_BASE_DN: {{ $.Values.authentication.ldap.baseDn | quote }}
+  LDAP_BIND_DN: {{ $.Values.authentication.ldap.bindDn | quote }}
+  LDAP_USER_SEARCH_FILTER: {{ $.Values.authentication.ldap.userSearchFilter | quote }}
+  # LDAP authz
+  {{- if eq ($.Values.authentication.ldap.authz.enabled | upper) "TRUE" }}  
+  LDAP_AUTHZ_ENABLED: {{ $.Values.authentication.ldap.authz.enabled | quote }}
+  LDAP_AUTHZ_STRATEGY: {{ $.Values.authentication.ldap.authz.strategy | quote }}
+  LDAP_AUTHZ_BASE_DN: {{ $.Values.authentication.ldap.authz.authzBaseDn | quote }}
+  LDAP_AUTHZ_FILTER: {{ $.Values.authentication.ldap.authz.authzFilter | quote }}
+  LDAP_AUTHZ_ATTRIBUTE: {{ $.Values.authentication.ldap.authz.authzAttribute | quote }}
+  LDAP_AUTHZ_VALUE: {{ $.Values.authentication.ldap.authz.authzValue | quote }}
+  {{- end }}
+  {{- end }}
 {{- end }}

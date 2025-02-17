@@ -6,24 +6,28 @@ metadata:
   labels:
     {{- include "seriohub-velero.labels" . | nindent 4 }}
 data:
+  #
   # Configuration
+  #
+  NEXT_PUBLIC_AUTH_ENABLED: {{ .Values.authentication.enabled | quote }}
   NEXT_PUBLIC_REFRESH_DATATABLE_AFTER: {{ .Values.uiConfig.nextPublicRefreshDatatableAfter | quote }}
   NEXT_PUBLIC_REFRESH_RECENT: {{ .Values.uiConfig.nextPublicRefreshRecent | quote  }}
   NEXT_PUBLIC_LOGGER_ENABLED: {{ .Values.uiConfig.nextPublicLoggerEnabled | quote  }}
   
   #
-  # Main API Agent Name
+  # API Agent Name
   #
   NEXT_PUBLIC_VELERO_API_NAME_1: {{ .Values.global.clusterName | quote  }}  
+  
   #  
-  # Main API Ingress
+  # API Ingress
   #
   {{- if .Values.uiIngress.enabled }}
   NEXT_PUBLIC_VELERO_API_URL_1: {{ printf "https://%s/api" (index (index .Values.uiIngress.spec.tls 0).hosts 0) | quote }}
   NEXT_PUBLIC_VELERO_API_WS_1: {{ printf "wss://%s" (index (index .Values.uiIngress.spec.tls 0).hosts 0) | quote }}
   {{- end }}
   #  
-  # Main API NodePort
+  # API NodePort
   #
   {{- if .Values.uiNp.enabled }}
   NEXT_PUBLIC_VELERO_API_URL_1: {{ printf "http://%s:%s/api" .Values.uiNp.ip .Values.uiNp.apiPort | quote }}
