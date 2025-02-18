@@ -1,6 +1,6 @@
 # vui
 
-![Version: 0.1.21](https://img.shields.io/badge/Version-0.1.21-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.19](https://img.shields.io/badge/AppVersion-0.1.19-informational?style=flat-square)
+![Version: 0.1.22](https://img.shields.io/badge/Version-0.1.22-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.20](https://img.shields.io/badge/AppVersion-0.1.20-informational?style=flat-square)
 
 Velero User Interface: a friendly UI and dashboard for Velero
 
@@ -27,7 +27,7 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | api.apiServer.affinity | object | `{}` | Operator affinity |
 | api.apiServer.image.registry | string | `"docker.io"` | Image Registry |
 | api.apiServer.image.repository | string | `"dserio83/velero-api"` | Image Repository |
-| api.apiServer.image.tag | string | `"0.1.22"` | Image Tag |
+| api.apiServer.image.tag | string | `"0.1.23"` | Image Tag |
 | api.apiServer.imagePullPolicy | string | `"IfNotPresent"` |  |
 | api.apiServer.imagePullSecrets | list | `[]` |  |
 | api.apiServer.nodeSelector | object | `{}` | Operator nodeSelector |
@@ -67,6 +67,21 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | apiConfig.veleroCliPathCustom | string | `"./velero-client-binary"` | Path where the user can store manually the binary file |
 | apiConfig.veleroCliVersion | string | `"v1.12.2"` | Name of the velero client release to be used |
 | apiSa.serviceAccount.annotations | object | `{}` |  |
+| authentication.enabled | string | `"True"` | Enable or disable authentication (true/false) |
+| authentication.ldap | object | `{"authz":{"authzAttribute":"","authzBaseDn":"cn=admins,ou=groups,dc=example,dc=com","authzFilter":"(&(objectClass=groupOfNames)(member={user_dn}))","authzValue":"","enabled":"True","strategy":"GROUP"},"baseDn":"dc=example,dc=com","bindDn":"cn=admin,dc=example,dc=com","bindPassword":"<secret>","uri":"ldaps://ldap.example.com:636","useSsl":"True","userSearchFilter":"(&(objectClass=person)(uid={username}))"}` | LDAP Configuration (used when Type is LDAP) |
+| authentication.ldap.authz.authzAttribute | string | `""` | LDAP Attribute for authorization (used when Strategy is ATTRIBUTE) |
+| authentication.ldap.authz.authzBaseDn | string | `"cn=admins,ou=groups,dc=example,dc=com"` | Base Distinguished Name (DN) for LDAP authorization through group membership |
+| authentication.ldap.authz.authzFilter | string | `"(&(objectClass=groupOfNames)(member={user_dn}))"` | LDAP Authorization Filter for groups (use {user_dn} as a placeholder) |
+| authentication.ldap.authz.authzValue | string | `""` | LDAP Attribute Value for authorization (used when Strategy is ATTRIBUTE) |
+| authentication.ldap.authz.enabled | string | `"True"` | Enable or disable LDAP authorization (true/false) |
+| authentication.ldap.authz.strategy | string | `"GROUP"` | Authorization strategy: GROUP or ATTRIBUTE |
+| authentication.ldap.baseDn | string | `"dc=example,dc=com"` | Base Distinguished Name (DN) for LDAP searches |
+| authentication.ldap.bindDn | string | `"cn=admin,dc=example,dc=com"` | LDAP Service Account: It is recommended to use a read-only account |
+| authentication.ldap.bindPassword | string | `"<secret>"` | LDAP Service Secret: **Should be stored securely using Kubernetes Secrets!** |
+| authentication.ldap.uri | string | `"ldaps://ldap.example.com:636"` | Complete LDAP URI, including protocol and port (e.g., ldaps://ldap.example.com:636) |
+| authentication.ldap.useSsl | string | `"True"` | Use SSL for LDAP connection (true/false) |
+| authentication.ldap.userSearchFilter | string | `"(&(objectClass=person)(uid={username}))"` | LDAP User Search Filter (use {username} as a placeholder) |
+| authentication.type | string | `"BUILT-IN"` | Type of authentication: BUILT-IN (default), LDAP |
 | clusterIpService.enabled | bool | `false` | Enable or disable ClusterIP services |
 | global.agentMode | bool | `false` | Agent mode: If true, the UI will not be installed |
 | global.clusterName | string | `"<cluster-name>"` | ClusterName |
@@ -97,7 +112,7 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | ui.webServer.affinity | object | `{}` | Operator affinity |
 | ui.webServer.image.registry | string | `"docker.io"` | Image Registry |
 | ui.webServer.image.repository | string | `"dserio83/velero-ui"` | Image Repository |
-| ui.webServer.image.tag | string | `"0.1.21"` | Image Tag |
+| ui.webServer.image.tag | string | `"0.1.22"` | Image Tag |
 | ui.webServer.imagePullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | ui.webServer.imagePullSecrets | list | `[]` |  |
 | ui.webServer.nodeSelector | object | `{}` | Operator nodeSelector |

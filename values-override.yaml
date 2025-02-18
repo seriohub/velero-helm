@@ -112,3 +112,38 @@ uiIngress:
 # Feedback and suggestions for improving this configuration are welcome.
 clusterIpService:
   enabled: false
+
+#
+# Authentication
+#
+# -- Enable or disable authentication (true/false)
+enabled: "True"
+# -- Type of authentication: BUILT-IN (default), LDAP
+type: "BUILT-IN"
+# -- LDAP Configuration (used when Type is LDAP)
+ldap:
+  # -- Complete LDAP URI, including protocol and port (e.g., ldaps://ldap.example.com:636)
+  uri: "ldaps://ldap.example.com:636"
+  # -- Use SSL for LDAP connection (true/false)
+  useSsl: "True"
+  # -- Base Distinguished Name (DN) for LDAP searches
+  baseDn: "dc=example,dc=com"
+  # -- LDAP Service Account: It is recommended to use a read-only account
+  bindDn: "cn=admin,dc=example,dc=com"
+  # -- LDAP Service Secret: **Should be stored securely using Kubernetes Secrets!**
+  bindPassword: "<secret>" 
+  # -- LDAP User Search Filter (use {username} as a placeholder)
+  userSearchFilter: "(&(objectClass=person)(uid={username}))"
+  authz:
+    # -- Enable or disable LDAP authorization (true/false)
+    enabled: "True"
+    # -- Authorization strategy: GROUP or ATTRIBUTE
+    strategy: "GROUP"
+    # -- Base Distinguished Name (DN) for LDAP authorization through group membership
+    authzBaseDn: "cn=admins,ou=groups,dc=example,dc=com"
+    # -- LDAP Authorization Filter for groups (use {user_dn} as a placeholder)
+    authzFilter: "(&(objectClass=groupOfNames)(member={user_dn}))"
+    # -- LDAP Attribute for authorization (used when Strategy is ATTRIBUTE), ex: department
+    authzAttribute: ""
+    # -- LDAP Attribute Value for authorization (used when Strategy is ATTRIBUTE), ex: IT
+    authzValue: ""

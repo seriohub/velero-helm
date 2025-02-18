@@ -22,7 +22,7 @@ api:
       # -- Image Repository
       repository: dserio83/velero-api
       # -- Image Tag
-      tag: 0.1.22
+      tag: 0.1.23
     imagePullPolicy: IfNotPresent
     imagePullSecrets: []
     # -- SecurityContext for Pod
@@ -157,7 +157,7 @@ ui:
       # -- Image Repository
       repository: dserio83/velero-ui
       # -- Image Tag
-      tag: 0.1.21
+      tag: 0.1.22
     # -- Image pull policy
     imagePullPolicy: IfNotPresent
     imagePullSecrets: []
@@ -444,3 +444,39 @@ watchdogConfig:
   slackEnable: "False"
   # -- Token for access to Slack via Http API
   slackToken: <token>
+
+#
+# Authentication
+#
+authentication:
+  # -- Enable or disable authentication (true/false)
+  enabled: "True"
+  # -- Type of authentication: BUILT-IN (default), LDAP
+  type: "BUILT-IN"
+  # -- LDAP Configuration (used when Type is LDAP)
+  ldap:
+    # -- Complete LDAP URI, including protocol and port (e.g., ldaps://ldap.example.com:636)
+    uri: "ldaps://ldap.example.com:636"
+    # -- Use SSL for LDAP connection (true/false)
+    useSsl: "True"
+    # -- Base Distinguished Name (DN) for LDAP searches
+    baseDn: "dc=example,dc=com"
+    # -- LDAP Service Account: It is recommended to use a read-only account
+    bindDn: "cn=admin,dc=example,dc=com"
+    # -- LDAP Service Secret: **Should be stored securely using Kubernetes Secrets!**
+    bindPassword: "<secret>"
+    # -- LDAP User Search Filter (use {username} as a placeholder)
+    userSearchFilter: "(&(objectClass=person)(uid={username}))"
+    authz:
+      # -- Enable or disable LDAP authorization (true/false)
+      enabled: "True"
+      # -- Authorization strategy: GROUP or ATTRIBUTE
+      strategy: "GROUP"
+      # -- Base Distinguished Name (DN) for LDAP authorization through group membership
+      authzBaseDn: "cn=admins,ou=groups,dc=example,dc=com"
+      # -- LDAP Authorization Filter for groups (use {user_dn} as a placeholder)
+      authzFilter: "(&(objectClass=groupOfNames)(member={user_dn}))"
+      # -- LDAP Attribute for authorization (used when Strategy is ATTRIBUTE)
+      authzAttribute: ""
+      # -- LDAP Attribute Value for authorization (used when Strategy is ATTRIBUTE)
+      authzValue: ""
