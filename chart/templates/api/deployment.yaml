@@ -41,7 +41,7 @@ spec:
             name: vui-helm-config
         - secretRef:
             name: {{ include "seriohub-velero.secretName" . }}
-        image: "{{ .Values.api.apiServer.image.registry | trimSuffix "/" }}/{{ .Values.api.apiServer.image.repository }}:{{ .Values.api.apiServer.image.tag }}"
+        image: {{ .Values.api.apiServer.image.registry | trimSuffix "/" }}/{{ .Values.api.apiServer.image.repository }}:{{ .Values.api.apiServer.image.tag }}
         imagePullPolicy: {{ .Values.api.apiServer.imagePullPolicy }}
         name: api-server
         ports:
@@ -93,4 +93,4 @@ spec:
         - name: data
           emptyDir: {}
       {{- end}}
-      serviceAccountName: {{ include "seriohub-velero.fullname" . }}-api-sa
+      serviceAccountName: {{ include "seriohub-velero.fullname" . }}-admin-sa

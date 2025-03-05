@@ -9,7 +9,7 @@ global:
   # -- ClusterName
   clusterName: <cluster-name>
   # -- Enable in cluster mode
-  k8SInclusterMode: "True"
+  k8SInclusterMode: "true"
 
 #
 # API
@@ -22,7 +22,7 @@ api:
       # -- Image Repository
       repository: dserio83/velero-api
       # -- Image Tag
-      tag: 0.1.23
+      tag: 0.2.0
     imagePullPolicy: IfNotPresent
     imagePullSecrets: []
     # -- SecurityContext for Pod
@@ -90,25 +90,17 @@ apiConfig:
   # -- Debug level info
   debugLevel: info
   # -- Destination folder when executing velero backup download
-  downloadTmpFolder: /tmp/velero-api
+  veleroInspectFolder: /tmp/velero-inspect-backups
   # -- Allowed origin
   origins1: '*'
   # -- Velero restic password
   resticPassword: static-passw0rd
-  # -- If True user can have a weak password, otherwise is required a strong password
+  # -- If true user can have a weak password, otherwise is required a strong password
   securityDisableUsersPwdRate: "1"
   # -- Path where create the SQL-Lite database used for storing the users credentials
   securityPathDatabase: ./data
   # Optional: Secret key used for JWT creation
   # securityTokenKey: <your-token>
-  # -- Path where to extract the velero executable file
-  veleroCliDestPath: /usr/local/bin
-  # -- Path where the compressed velero client archives are located
-  veleroCliPath: ./velero-client
-  # -- Path where the user can store manually the binary file
-  veleroCliPathCustom: ./velero-client-binary
-  # -- Name of the velero client release to be used
-  veleroCliVersion: v1.12.2
   # -- Default admin username
   defaultAdminUsername: admin
   # -- Default admin password
@@ -118,6 +110,8 @@ apiConfig:
   existingSecret:
   # <AWS_ACCESS_KEY_ID>,<AWS_SECRET_ACCESS_KEY>,<RESTIC_PASSWORD>,<SECURITY_PATH_DATABASE>,<DEFAULT_ADMIN_USERNAME>,<DEFAULT_ADMIN_PASSWORD>
   # Optional: <SECURITY_TOKEN_KEY>
+  # -- Enabled inspect backup feature: The inspect backup feature requires read permissions across the entire cluster. See ./template/rbac/admin/cluster_readonly_clusterrole.yaml for details.
+  inspectBackupEnabled: "false"
 
   # Storage Configuration
   storage:
@@ -157,7 +151,7 @@ ui:
       # -- Image Repository
       repository: dserio83/velero-ui
       # -- Image Tag
-      tag: 0.1.22
+      tag: 0.2.0
     # -- Image pull policy
     imagePullPolicy: IfNotPresent
     imagePullSecrets: []
@@ -393,29 +387,29 @@ watchdogConfig:
   # -- Socket bind port
   apiEndpointPort: "8001"
   # -- View debugging information.
-  debug: "False"
+  debug: "false"
   # -- Debug level information.
   debugLevel: info
   # -- Enable watcher for backups without schedule or last backup for each schedule
-  backupEnable: "True"
+  backupEnable: "true"
   # -- Enable watcher for schedule
-  scheduleEnable: "True"
+  scheduleEnable: "true"
   # -- Number of days to backup expiration below which to display a warning about the backup
   expiresDaysWarning: "29"
   # -- Cycle time (seconds)
   processCycleSec: "300"
   # -- Skip notification new completed backup
-  notificationSkipCompleted: "True"
+  notificationSkipCompleted: "true"
   # -- Skip notification new in progress backup
-  notificationSkipInProgress: "True"
+  notificationSkipInProgress: "true"
   # -- Skip notification backup removed
-  notificationSkipRemoved: "True"
+  notificationSkipRemoved: "true"
   # -- Skip notification backup deleting
-  notificationSkipDeleting: "True"
+  notificationSkipDeleting: "true"
   # -- User name account
   emailAccount: <email>
   # -- Enable email notification
-  emailEnable: "False"
+  emailEnable: "false"
   # -- Email password account
   emailPassword: <pwd>
   # -- Email recipients semicolon separated
@@ -425,13 +419,13 @@ watchdogConfig:
   # -- SMTP server
   emailSmtpServer: <smtp-server>
   # -- Send notification message at startup
-  sendStartMessage: "True"
+  sendStartMessage: "true"
   # -- Send report at startup
-  sendReportAtStartup: "False"
+  sendReportAtStartup: "false"
   # -- Telegram chat id where send the notifications
   telegramChatId: <chat-id>
   # -- Enable telegram notification
-  telegramEnable: "False"
+  telegramEnable: "false"
   # -- Token for access to Telegram bot via Http API
   telegramToken: <token>
   # -- Add a prefix to backup items in reports
@@ -441,7 +435,7 @@ watchdogConfig:
   # -- Channel id where sens the notification
   slackChannel: <channel-id>
   # -- Enable Slack notification
-  slackEnable: "False"
+  slackEnable: "false"
   # -- Token for access to Slack via Http API
   slackToken: <token>
 
@@ -450,7 +444,7 @@ watchdogConfig:
 #
 authentication:
   # -- Enable or disable authentication (true/false)
-  enabled: "True"
+  enabled: "true"
   # -- Type of authentication: BUILT-IN (default), LDAP
   type: "BUILT-IN"
   # -- LDAP Configuration (used when Type is LDAP)
@@ -458,7 +452,7 @@ authentication:
     # -- Complete LDAP URI, including protocol and port (e.g., ldaps://ldap.example.com:636)
     uri: "ldaps://ldap.example.com:636"
     # -- Use SSL for LDAP connection (true/false)
-    useSsl: "True"
+    useSsl: "true"
     # -- Base Distinguished Name (DN) for LDAP searches
     baseDn: "dc=example,dc=com"
     # -- LDAP Service Account: It is recommended to use a read-only account
@@ -469,7 +463,7 @@ authentication:
     userSearchFilter: "(&(objectClass=person)(uid={username}))"
     authz:
       # -- Enable or disable LDAP authorization (true/false)
-      enabled: "True"
+      enabled: "true"
       # -- Authorization strategy: GROUP or ATTRIBUTE
       strategy: "GROUP"
       # -- Base Distinguished Name (DN) for LDAP authorization through group membership

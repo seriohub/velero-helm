@@ -34,7 +34,12 @@ data:
   NEXT_PUBLIC_VELERO_API_WS_1: {{ printf "ws://%s:%s" .Values.uiNp.ip .Values.uiNp.apiPort | quote }}
   {{- end }}
   
-  #  
+  #
+  # Prototype Inspect Backups Features
+  #
+  NEXT_PUBLIC_INSPECT_BACKUP_ENABLED: {{ .Values.apiConfig.inspectBackupEnabled | quote  }}  
+
+  #
   # Experimental multiple clusters at the login without core
   #
   {{- if eq .Values.uiConfig.experimental true }}

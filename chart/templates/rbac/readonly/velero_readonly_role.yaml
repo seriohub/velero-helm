@@ -1,0 +1,48 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "seriohub-velero.fullname" . }}-velero-readonly
+  labels:
+  {{- include "seriohub-velero.labels" . | nindent 4 }}
+  namespace: {{ .Values.global.veleroNamespace }}
+rules:
+  # Grants permissions to create, update, and read ConfigMaps
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
+
+  # Grants read only access to all Velero-related resources
+  - apiGroups:
+      - velero.io
+    resources:
+      - "*"
+    verbs:
+      - get
+      - list
+      - watch
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "seriohub-velero.fullname" . }}-velero-readonly-binding
+  labels:
+  {{- include "seriohub-velero.labels" . | nindent 4 }}
+  namespace: {{ .Values.global.veleroNamespace }}
+
+# Binds the Role to a specific ServiceAccount within a namespace
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "seriohub-velero.fullname" . }}-velero-readonly
+
+subjects:
+- kind: ServiceAccount
+  name: {{ include "seriohub-velero.fullname" . }}-readonly-sa
+  namespace: {{ .Release.Namespace }}

@@ -54,7 +54,7 @@ spec:
                 name: vui-helm-config
             - secretRef:
                 name: velero-watchdog-config
-            image: "{{ .Values.report.veleroWatchdogReport.image.registry | trimSuffix "/" }}/{{ .Values.report.veleroWatchdogReport.image.repository }}:{{ .Values.report.veleroWatchdogReport.image.tag }}"
+            image: {{ .Values.report.veleroWatchdogReport.image.registry | trimSuffix "/" }}/{{ .Values.report.veleroWatchdogReport.image.repository }}:{{ .Values.report.veleroWatchdogReport.image.tag }}
             imagePullPolicy: {{ .Values.report.veleroWatchdogReport.imagePullPolicy }}
             name: velero-watchdog-report
             {{- if .Values.report.veleroWatchdogReport.securityContext.enabled }}
@@ -70,6 +70,6 @@ spec:
               {{- toYaml . | nindent 14 }}
             {{- end }}
           restartPolicy: Never
-          serviceAccountName: {{ include "seriohub-velero.fullname" . }}-k8s-read-only-service-account
+          serviceAccountName: {{ include "seriohub-velero.fullname" . }}-readonly-sa
   schedule: {{ .Values.report.schedule | quote }}
   successfulJobsHistoryLimit: {{ .Values.report.successfulJobsHistoryLimit }}

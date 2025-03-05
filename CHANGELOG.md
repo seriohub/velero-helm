@@ -6,6 +6,26 @@ To check the updates for each individual component, refer to the respective chan
 
 ***
 
+## [v0.1.23] - 2025-03-05
+
+🔄 Component Updates
+
+- 📦 Updated APP to Version  0.2.0
+- 🚀 Updated API to version 0.2.0
+- 🎨 Updated UI to version 0.2.0
+- 🛡️ Updated Watchdog to version 0.1.7
+
+📊 Helm Chart
+
+- ⚙️ Added inspection backups options
+
+## [v0.1.22] - 2025-02-118
+
+🔄 Component Updates
+
+- 🚀 Updated API to version 0.1.23
+- 🎨 Updated UI to version 0.1.22
+
 ## [v0.1.21] - 2025-02-07
 
 🔄 Component Updates
@@ -137,6 +157,10 @@ To check the updates for each individual component, refer to the respective chan
 ***
 
 ## Tags
+
+v0.1.23: [https://github.com/seriohub/velero-helm/releases/tag/v0.1.23](https://github.com/seriohub/velero-helm/releases/tag/v0.1.23)
+
+v0.1.22: [https://github.com/seriohub/velero-helm/releases/tag/v0.1.22](https://github.com/seriohub/velero-helm/releases/tag/v0.1.22)
 
 v0.1.21: [https://github.com/seriohub/velero-helm/releases/tag/v0.1.21](https://github.com/seriohub/velero-helm/releases/tag/v0.1.21)
 
