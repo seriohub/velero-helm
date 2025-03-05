@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: {{ include "seriohub-velero.fullname" . }}-api-sa
+  name: {{ include "seriohub-velero.fullname" . }}-admin-sa
   labels:
   {{- include "seriohub-velero.labels" . | nindent 4 }}
   annotations:

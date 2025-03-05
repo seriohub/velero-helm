@@ -65,7 +65,7 @@ spec:
             name: vui-helm-config
         - secretRef:
             name: velero-watchdog-config
-        image: "{{ .Values.watchdog.veleroMonitoring.image.registry | trimSuffix "/" }}/{{ .Values.watchdog.veleroMonitoring.image.repository }}:{{ .Values.watchdog.veleroMonitoring.image.tag }}"
+        image: {{ .Values.watchdog.veleroMonitoring.image.registry | trimSuffix "/" }}/{{ .Values.watchdog.veleroMonitoring.image.repository }}:{{ .Values.watchdog.veleroMonitoring.image.tag }}
         imagePullPolicy: {{ .Values.watchdog.veleroMonitoring.imagePullPolicy }}
         name: velero-monitoring
         {{- if .Values.watchdog.veleroMonitoring.securityContext.enabled }}
@@ -80,4 +80,4 @@ spec:
         volumeMounts:
           {{- toYaml . | nindent 10 }}
         {{- end }}
-      serviceAccountName: {{ include "seriohub-velero.fullname" . }}-k8s-read-only-service-account
+      serviceAccountName: {{ include "seriohub-velero.fullname" . }}-readonly-sa

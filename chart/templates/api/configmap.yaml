@@ -25,11 +25,7 @@ data:
   
   ORIGINS_1: {{ .origins1 | quote }}
   
-  VELERO_CLI_PATH: {{ .veleroCliPath | quote }}
-  VELERO_CLI_PATH_CUSTOM: {{ .veleroCliPathCustom | quote }}
-  VELERO_CLI_VERSION: {{ .veleroCliVersion | quote }}
-  VELERO_CLI_DEST_PATH: "/usr/local/bin"
-  DOWNLOAD_TMP_FOLDER:  "/tmp/velero-api"
+  DOWNLOAD_INSPECT_FOLDER:  {{ .veleroInspectFolder | quote }}
 
   WATCHDOG_URL: {{ include "seriohub-velero.fullname" $ }}-watchdog
   WATCHDOG_PORT: "{{ $.Values.watchdogClusterip.port }}"

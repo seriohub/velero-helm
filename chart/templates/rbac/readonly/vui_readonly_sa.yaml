@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: {{ include "seriohub-velero.fullname" . }}-k8s-read-only-service-account
+  name: {{ include "seriohub-velero.fullname" . }}-readonly-sa
   labels:
   {{- include "seriohub-velero.labels" . | nindent 4 }}
   annotations:

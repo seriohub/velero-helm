@@ -59,7 +59,7 @@ spec:
         envFrom:
         - configMapRef:
             name: velero-ui-config
-        image: "{{ .Values.ui.webServer.image.registry | trimSuffix "/" }}/{{ .Values.ui.webServer.image.repository }}:{{ .Values.ui.webServer.image.tag }}"
+        image: {{ .Values.ui.webServer.image.registry | trimSuffix "/" }}/{{ .Values.ui.webServer.image.repository }}:{{ .Values.ui.webServer.image.tag }}
         imagePullPolicy: {{ .Values.ui.webServer.imagePullPolicy }}
         name: webserver
         ports:

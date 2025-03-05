@@ -1,0 +1,49 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "seriohub-velero.fullname" . }}-readonly
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "seriohub-velero.labels" . | nindent 4 }}
+
+# Grants read-only access to ConfigMaps and Secrets within a specific namespace
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
+
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - get
+      - list
+      - watch
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "seriohub-velero.fullname" . }}-readonly-binding
+  labels:
+  {{- include "seriohub-velero.labels" . | nindent 4 }}
+  namespace: {{ .Release.Namespace }}
+
+# Binds the read-only Role to a specific ServiceAccount within the namespace
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "seriohub-velero.fullname" . }}-readonly
+
+subjects:
+  # Grants the defined Role permissions to the specified ServiceAccount
+  - kind: ServiceAccount
+    name: {{ include "seriohub-velero.fullname" . }}-readonly-sa
+    namespace: {{ .Release.Namespace }}

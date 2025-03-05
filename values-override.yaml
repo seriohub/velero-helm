@@ -6,8 +6,8 @@
 #
 global:
   veleroNamespace: velero
-  # agentMode: false # "True" for deployments in environments that use Velero-Core.
-  # clusterName: <your-cluster-name>
+  # agentMode: false # "true" for deployments in environments that use Velero-Core.
+  clusterName: seriok8s-dev
 
 #
 # API Config
@@ -17,15 +17,16 @@ apiConfig:
   # If not specified, it is automatically generated at startup
   # securityTokenKey:
   
-  # Specify the version of the Velero client you want to use.
-  veleroCliVersion: v1.13.2
-  
   # apiTokenExpirationMin: "30"
 
   storage:
     enabled: false
     storageClassName: <your-storage-class-name>
-
+  
+  # Enabled inspect backup feature
+  # The inspect backup feature requires read permissions across the entire cluster. 
+  # See chart/template/rbac/admin/cluster_readonly_clusterrole.yaml for details.
+  inspectBackupEnabled: "false"
 #
 # Watchdog Cron
 #
@@ -38,13 +39,13 @@ report:
 watchdogConfig:
   # processCycleSec: 300
   # expiresDaysWarning: 29
-  notificationSkipCompleted: "False"
-  # notificationSkipInProgress: "True"
-  # notificationSkipRemoved: "True"
-  # notificationSkipDeleting: "True"
+  notificationSkipCompleted: "false"
+  # notificationSkipInProgress: "true"
+  # notificationSkipRemoved: "true"
+  # notificationSkipDeleting: "true"
    
   # email
-  emailEnable: "False"
+  emailEnable: "false"
   emailAccount: "<your-email>"
   emailPassword: "<your-password>"
   emailRecipients: "<email-recipents-comma-saparted>"
@@ -52,12 +53,12 @@ watchdogConfig:
   emailSmtpServer: "<smtp-server>"
   
   # slack
-  slackEnable: "False"
+  slackEnable: "false"
   slackChannel: "<channel-id>"
   slackToken: "<token>"
   
   # telegram
-  telegramEnable: "False"
+  telegramEnable: "false"
   telegramChatId: "<telegram-chat-id>"
   telegramToken: "<telegram-token>"
 
@@ -117,7 +118,7 @@ clusterIpService:
 # Authentication
 #
 # -- Enable or disable authentication (true/false)
-enabled: "True"
+enabled: "true"
 # -- Type of authentication: BUILT-IN (default), LDAP
 type: "BUILT-IN"
 # -- LDAP Configuration (used when Type is LDAP)
@@ -125,7 +126,7 @@ ldap:
   # -- Complete LDAP URI, including protocol and port (e.g., ldaps://ldap.example.com:636)
   uri: "ldaps://ldap.example.com:636"
   # -- Use SSL for LDAP connection (true/false)
-  useSsl: "True"
+  useSsl: "true"
   # -- Base Distinguished Name (DN) for LDAP searches
   baseDn: "dc=example,dc=com"
   # -- LDAP Service Account: It is recommended to use a read-only account
@@ -136,7 +137,7 @@ ldap:
   userSearchFilter: "(&(objectClass=person)(uid={username}))"
   authz:
     # -- Enable or disable LDAP authorization (true/false)
-    enabled: "True"
+    enabled: "true"
     # -- Authorization strategy: GROUP or ATTRIBUTE
     strategy: "GROUP"
     # -- Base Distinguished Name (DN) for LDAP authorization through group membership

@@ -1,0 +1,72 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "seriohub-velero.fullname" . }}-admin
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "seriohub-velero.labels" . | nindent 4 }}
+rules:
+  # Grants full access to ConfigMaps in the namespace
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - "*"
+
+  # Grants full access to pod logs in the namespace
+  - apiGroups:
+      - ""
+    resources:
+      - pods/log
+    verbs:
+      - "*"
+
+  # Allows reading and monitoring of CronJobs
+  - apiGroups:
+      - batch
+    resources:
+      - cronjobs
+    verbs:
+      - get
+      - list
+      - watch
+
+  # Grants permissions to read, create, update, patch, and delete secrets
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - "*"
+
+  # Allows reading and patching Deployments
+  - apiGroups:
+      - apps
+    resources:
+      - deployments
+    verbs:
+      - get
+      - patch
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "seriohub-velero.fullname" . }}-admin-binding
+  labels:
+  {{- include "seriohub-velero.labels" . | nindent 4 }}
+  namespace: {{ .Release.Namespace }}
+
+# Binds the API management Role to a specific ServiceAccount
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "seriohub-velero.fullname" . }}-admin
+
+subjects:
+  # Grants the defined Role permissions to the specified ServiceAccount
+  - kind: ServiceAccount
+    name: {{ include "seriohub-velero.fullname" . }}-admin-sa
+    namespace: {{ .Release.Namespace }}
