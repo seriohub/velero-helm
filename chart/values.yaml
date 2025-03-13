@@ -22,7 +22,7 @@ api:
       # -- Image Repository
       repository: dserio83/velero-api
       # -- Image Tag
-      tag: 0.2.1
+      tag: 0.2.2
     imagePullPolicy: IfNotPresent
     imagePullSecrets: []
     # -- SecurityContext for Pod
@@ -151,7 +151,7 @@ ui:
       # -- Image Repository
       repository: dserio83/velero-ui
       # -- Image Tag
-      tag: 0.2.1
+      tag: 0.2.2
     # -- Image pull policy
     imagePullPolicy: IfNotPresent
     imagePullSecrets: []

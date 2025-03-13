@@ -6,6 +6,14 @@ To check the updates for each individual component, refer to the respective chan
 
 ***
 
+## [v0.1.25] - 2025-03-13
+
+🔄 Component Updates
+
+- 📦 Updated APP to Version  0.2.2
+- 🚀 Updated API component to version 0.2.2
+- 🎨 Updated UI component to version 0.2.2
+
 ## [v0.1.24] - 2025-03-06
 
 🔄 Component Updates
