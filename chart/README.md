@@ -25,12 +25,14 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | api.apiServer.affinity | object | `{}` | Operator affinity |
+| api.apiServer.annotations | object | `{}` | Add annotations to deployment |
 | api.apiServer.image.registry | string | `"docker.io"` | Image Registry |
 | api.apiServer.image.repository | string | `"dserio83/velero-api"` | Image Repository |
 | api.apiServer.image.tag | string | `"0.2.2"` | Image Tag |
 | api.apiServer.imagePullPolicy | string | `"IfNotPresent"` |  |
 | api.apiServer.imagePullSecrets | list | `[]` |  |
 | api.apiServer.nodeSelector | object | `{}` | Operator nodeSelector |
+| api.apiServer.podAnnotations | object | `{}` | Add annotations to pods |
 | api.apiServer.podSecurityContext | object | `{"enabled":false,"seccompProfile":{"type":"RuntimeDefault"}}` | SecurityContext for Pod |
 | api.apiServer.resources | object | `{}` | Resources for the Operator |
 | api.apiServer.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"enabled":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":65534}` | SecurityContext for Container |
@@ -89,12 +91,14 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | report.schedule | string | `"0 8 * * *"` | Cron for full report |
 | report.successfulJobsHistoryLimit | int | `0` |  |
 | report.veleroWatchdogReport.affinity | object | `{}` | Operator affinity |
+| report.veleroWatchdogReport.annotations | object | `{}` | Add annotations to cronjob |
 | report.veleroWatchdogReport.image.registry | string | `"docker.io"` | Image Registry |
 | report.veleroWatchdogReport.image.repository | string | `"dserio83/velero-watchdog"` | Image Repository |
 | report.veleroWatchdogReport.image.tag | string | `"0.1.7"` | Image Tag |
 | report.veleroWatchdogReport.imagePullPolicy | string | `"IfNotPresent"` |  |
 | report.veleroWatchdogReport.imagePullSecrets | list | `[]` |  |
 | report.veleroWatchdogReport.nodeSelector | object | `{}` | Operator nodeSelector |
+| report.veleroWatchdogReport.podAnnotations | object | `{}` | Add annotations to pods |
 | report.veleroWatchdogReport.podSecurityContext | object | `{"enabled":false,"seccompProfile":{"type":"RuntimeDefault"}}` | SecurityContext for Pod |
 | report.veleroWatchdogReport.resources | object | `{}` | Resources for the Operator |
 | report.veleroWatchdogReport.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"enabled":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":65534}` | SecurityContext for Container |
@@ -107,12 +111,14 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | ui.ports[0].targetPort | string | `"run"` |  |
 | ui.replicas | int | `1` |  |
 | ui.webServer.affinity | object | `{}` | Operator affinity |
+| ui.webServer.annotations | object | `{}` | Add annotations to deployment |
 | ui.webServer.image.registry | string | `"docker.io"` | Image Registry |
 | ui.webServer.image.repository | string | `"dserio83/velero-ui"` | Image Repository |
 | ui.webServer.image.tag | string | `"0.2.2"` | Image Tag |
 | ui.webServer.imagePullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | ui.webServer.imagePullSecrets | list | `[]` |  |
 | ui.webServer.nodeSelector | object | `{}` | Operator nodeSelector |
+| ui.webServer.podAnnotations | object | `{}` | Add annotations to pods |
 | ui.webServer.podSecurityContext | object | `{"enabled":false,"seccompProfile":{"type":"RuntimeDefault"}}` | SecurityContext for Pod |
 | ui.webServer.resources | object | `{}` | Resources for the Operator |
 | ui.webServer.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"enabled":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":65534}` | SecurityContext for Container |
@@ -138,12 +144,14 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | uiNp.uiPort | string | `"30002"` | UI port |
 | watchdog.replicas | int | `1` |  |
 | watchdog.veleroMonitoring.affinity | object | `{}` | Operator affinity |
+| watchdog.veleroMonitoring.annotations | object | `{}` | Add annotations to deployment |
 | watchdog.veleroMonitoring.image.registry | string | `"docker.io"` | Image Registry |
 | watchdog.veleroMonitoring.image.repository | string | `"dserio83/velero-watchdog"` | Image Repository |
 | watchdog.veleroMonitoring.image.tag | string | `"0.1.7"` | Image Tag |
 | watchdog.veleroMonitoring.imagePullPolicy | string | `"IfNotPresent"` |  |
 | watchdog.veleroMonitoring.imagePullSecrets | list | `[]` |  |
 | watchdog.veleroMonitoring.nodeSelector | object | `{}` | Operator nodeSelector |
+| watchdog.veleroMonitoring.podAnnotations | object | `{}` | Add annotations to pods |
 | watchdog.veleroMonitoring.podSecurityContext | object | `{"enabled":false,"seccompProfile":{"type":"RuntimeDefault"}}` | SecurityContext for Pod |
 | watchdog.veleroMonitoring.resources | object | `{"limits":{"cpu":"500m","memory":"1256Mi"},"requests":{"cpu":"250m","memory":"256Mi"}}` | Resources for the Operator |
 | watchdog.veleroMonitoring.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"enabled":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":65534}` | SecurityContext for Container |
