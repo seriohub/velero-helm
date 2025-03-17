@@ -8,6 +8,9 @@ metadata:
     layer: api
     tier: backend
   {{- include "seriohub-velero.labels" . | nindent 4 }}
+  {{- with .Values.api.apiServer.annotations }}
+  annotations: {{ toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   replicas: {{ .Values.api.replicas }}
   selector:
@@ -23,6 +26,9 @@ spec:
         layer: api
         tier: backend
       {{- include "seriohub-velero.selectorLabels" . | nindent 8 }}
+      {{- with .Values.api.apiServer.podAnnotations }}
+      annotations: {{ toYaml . | nindent 8 }}
+      {{- end }}
     spec:
       containers:
       - env:
