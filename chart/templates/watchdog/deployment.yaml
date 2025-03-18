@@ -7,6 +7,9 @@ metadata:
     app: velero-watchdog
     tier: backend
   {{- include "seriohub-velero.labels" . | nindent 4 }}
+  {{- with .Values.watchdog.veleroMonitoring.annotations }}
+  annotations: {{ toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   replicas: {{ .Values.watchdog.replicas }}
   selector:
@@ -19,6 +22,9 @@ spec:
         app: velero-watchdog
         tier: backend
       {{- include "seriohub-velero.selectorLabels" . | nindent 8 }}
+      {{- with .Values.watchdog.veleroMonitoring.annotations }}
+      annotations: {{ toYaml . | nindent 8 }}
+      {{- end }}
     spec:
       {{- with .Values.watchdog.veleroMonitoring.volumes }}
       volumes:

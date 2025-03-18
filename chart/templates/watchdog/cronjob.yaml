@@ -4,11 +4,18 @@ metadata:
   name: {{ include "seriohub-velero.fullname" . }}-report
   labels:
   {{- include "seriohub-velero.labels" . | nindent 4 }}
+  {{- with .Values.report.veleroWatchdogReport.annotations }}
+  annotations: {{ toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   failedJobsHistoryLimit: {{ .Values.report.failedJobsHistoryLimit }}
   jobTemplate:
     spec:
       template:
+        metadata:
+          {{- with .Values.report.veleroWatchdogReport.annotations }}
+          annotations: {{ toYaml . | nindent 8 }}
+          {{- end }}
         spec:
           {{- with .Values.report.veleroWatchdogReport.volumes }}
           volumes:
