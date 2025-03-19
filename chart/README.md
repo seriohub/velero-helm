@@ -28,7 +28,7 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | api.apiServer.annotations | object | `{}` | Add annotations to deployment |
 | api.apiServer.image.registry | string | `"docker.io"` | Image Registry |
 | api.apiServer.image.repository | string | `"dserio83/velero-api"` | Image Repository |
-| api.apiServer.image.tag | string | `"0.2.2"` | Image Tag |
+| api.apiServer.image.tag | string | `"0.2.3"` | Image Tag |
 | api.apiServer.imagePullPolicy | string | `"IfNotPresent"` |  |
 | api.apiServer.imagePullSecrets | list | `[]` |  |
 | api.apiServer.nodeSelector | object | `{}` | Operator nodeSelector |
@@ -114,7 +114,7 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | ui.webServer.annotations | object | `{}` | Add annotations to deployment |
 | ui.webServer.image.registry | string | `"docker.io"` | Image Registry |
 | ui.webServer.image.repository | string | `"dserio83/velero-ui"` | Image Repository |
-| ui.webServer.image.tag | string | `"0.2.2"` | Image Tag |
+| ui.webServer.image.tag | string | `"0.2.3"` | Image Tag |
 | ui.webServer.imagePullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | ui.webServer.imagePullSecrets | list | `[]` |  |
 | ui.webServer.nodeSelector | object | `{}` | Operator nodeSelector |
