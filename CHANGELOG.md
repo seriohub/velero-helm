@@ -6,6 +6,18 @@ To check the updates for each individual component, refer to the respective chan
 
 ***
 
+## [v0.1.26] - 2025-03-19
+
+🔄 Chart Updates
+
+- Added annotations and pod annotations
+
+🔄 Component Updates
+
+- 📦 Updated APP to Version  0.2.3
+- 🚀 Updated API component to version 0.2.3
+- 🎨 Updated UI component to version 0.2.3
+
 ## [v0.1.25] - 2025-03-13
 
 🔄 Component Updates
@@ -173,6 +185,10 @@ To check the updates for each individual component, refer to the respective chan
 ***
 
 ## Tags
+
+v0.1.26: [https://github.com/seriohub/velero-helm/releases/tag/v0.1.26](https://github.com/seriohub/velero-helm/releases/tag/v0.1.26)
+
+v0.1.25: [https://github.com/seriohub/velero-helm/releases/tag/v0.1.25](https://github.com/seriohub/velero-helm/releases/tag/v0.1.25)
 
 v0.1.24: [https://github.com/seriohub/velero-helm/releases/tag/v0.1.24](https://github.com/seriohub/velero-helm/releases/tag/v0.1.24)
 
