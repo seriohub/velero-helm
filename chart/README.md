@@ -1,6 +1,6 @@
 # vui
 
-![Version: 0.1.26](https://img.shields.io/badge/Version-0.1.26-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.2.3](https://img.shields.io/badge/AppVersion-0.2.3-informational?style=flat-square)
+![Version: 0.1.27](https://img.shields.io/badge/Version-0.1.27-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.2.4](https://img.shields.io/badge/AppVersion-0.2.4-informational?style=flat-square)
 
 Velero User Interface: a friendly UI and dashboard for Velero
 
@@ -28,7 +28,7 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | api.apiServer.annotations | object | `{}` | Add annotations to deployment |
 | api.apiServer.image.registry | string | `"docker.io"` | Image Registry |
 | api.apiServer.image.repository | string | `"dserio83/velero-api"` | Image Repository |
-| api.apiServer.image.tag | string | `"0.2.3"` | Image Tag |
+| api.apiServer.image.tag | string | `"0.2.4"` | Image Tag |
 | api.apiServer.imagePullPolicy | string | `"IfNotPresent"` |  |
 | api.apiServer.imagePullSecrets | list | `[]` |  |
 | api.apiServer.nodeSelector | object | `{}` | Operator nodeSelector |
@@ -114,7 +114,7 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | ui.webServer.annotations | object | `{}` | Add annotations to deployment |
 | ui.webServer.image.registry | string | `"docker.io"` | Image Registry |
 | ui.webServer.image.repository | string | `"dserio83/velero-ui"` | Image Repository |
-| ui.webServer.image.tag | string | `"0.2.3"` | Image Tag |
+| ui.webServer.image.tag | string | `"0.2.4"` | Image Tag |
 | ui.webServer.imagePullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | ui.webServer.imagePullSecrets | list | `[]` |  |
 | ui.webServer.nodeSelector | object | `{}` | Operator nodeSelector |
