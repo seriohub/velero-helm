@@ -1,0 +1,20 @@
+{{- if .Values.global.core }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: vui-nats
+  labels:
+    app: nats
+spec:
+  type: LoadBalancer
+  loadBalancerIP: {{ $.Values.nats.ip | quote }}
+  selector:
+    app: vui-nats
+  ports:
+  {{- range .Values.nats.ports }}
+    - name: {{ .name }}
+      port: {{ .port }}
+      targetPort: {{ .targetPort | default .port }}
+      protocol: {{ .protocol }}
+  {{- end }}
+{{- end }}

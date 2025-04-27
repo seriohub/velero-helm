@@ -1,38 +1,32 @@
+{{- if .Values.global.core }}
 {{- with .Values.apiConfig }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: vui-api-config
+  name: vui-core-config
   labels:
   {{- include "seriohub-velero.labels" $ | nindent 4 }}
 data:
+  API_ENABLE_DOCUMENTATION: {{ .apiEnableDocumentation | quote }}
   API_ENDPOINT_URL: {{ .apiEndpointUrl | quote }}
   API_ENDPOINT_PORT: {{ .apiEndpointPort | quote }}
+
+  API_RATE_LIMITER_CUSTOM_1: {{ .apiRateLimiterCustom1 | quote }}  
+  API_RATE_LIMITER_L1: {{ .apiRateLimiterL1 | quote }}
+  API_TOKEN_EXPIRATION_MIN: {{ .apiTokenExpirationMin | quote }}
+  API_TOKEN_REFRESH_EXPIRATION_DAYS: {{ .apiTokenRefreshExpirationDays | quote }}
+
+  BUILD_VERSION: dev
 
   DEBUG_LEVEL: {{ .debugLevel | quote }}
 
   CLUSTER_ID: {{ $.Values.global.clusterName | quote  }}   
+  
   K8S_IN_CLUSTER_MODE: {{ $.Values.global.k8SInclusterMode | quote  }} 
   K8S_VELERO_NAMESPACE: {{ $.Values.global.veleroNamespace }}
   K8S_VELERO_UI_NAMESPACE: {{ $.Release.Namespace }}
-
-  API_ENABLE_DOCUMENTATION: {{ .apiEnableDocumentation | quote }}
   
-  API_RATE_LIMITER_L1: {{ .apiRateLimiterL1 | quote }}
-  API_RATE_LIMITER_CUSTOM_1: {{ .apiRateLimiterCustom1 | quote }}  
-  API_TOKEN_EXPIRATION_MIN: {{ .apiTokenExpirationMin | quote }}
-  API_TOKEN_REFRESH_EXPIRATION_DAYS: {{ .apiTokenRefreshExpirationDays | quote }}
-  
-  ORIGINS_1: {{ .origins1 | quote }}
-  
-  DOWNLOAD_INSPECT_FOLDER:  {{ .veleroInspectFolder | quote }}
-
-  WATCHDOG_URL: {{ include "seriohub-velero.fullname" $ }}-watchdog
-  WATCHDOG_PORT: "{{ $.Values.watchdogClusterip.port }}"
-  WATCHDOG_REPORT_CRONJOB_NAME: {{ include "seriohub-velero.fullname" $ }}-report
-
-  SECURITY_PATH_DATABASE: "./data"
-  SECURITY_DISABLE_USERS_PWD_RATE: {{ .securityDisableUsersPwdRate | quote }}
+  NATS_ENDPOINT_URL:  {{ $.Values.nats.ip | quote }}
   
   #
   # AUTHENTICATION
@@ -56,24 +50,6 @@ data:
   LDAP_AUTHZ_VALUE: {{ $.Values.authentication.ldap.authz.authzValue | quote }}
   {{- end }}
   {{- end }}
-
-  {{- if $.Values.global.core }}
-  # nats endpoint core deployad along api
-  NATS_ENABLE: "true"
-  NATS_PROTOCOL: {{ $.Values.nats.protocol | quote }}
-  NATS_ENDPOINT_URL: {{ $.Values.nats.ip | quote }}
-  NATS_PORT_CLIENT: {{ index $.Values.nats.ports 0 "port" | quote }}
-  NATS_PORT_MONITORING: {{ index $.Values.nats.ports 1 "port" | quote }}
-  {{- end }}
-
-  {{- if not $.Values.global.core }}
-  {{- if $.Values.agent.nats.enabled }}
-  # nats endpoint deployed in other cluster
-  NATS_ENABLE: "true"
-  NATS_PROTOCOL: {{ $.Values.agent.protocol | quote }}
-  NATS_ENDPOINT_URL: {{ $.Values.agent.endpointUrl | quote }}
-  NATS_PORT_CLIENT: {{ $.Values.agent.portClient | quote }}
-  NATS_PORT_MONITORING: {{ $.Values.agent.portMonitoring | quote }}
-  {{- end }}
-  {{- end }}
+  
+{{- end }}
 {{- end }}

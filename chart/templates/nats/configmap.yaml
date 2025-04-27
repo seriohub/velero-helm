@@ -1,0 +1,29 @@
+{{- if .Values.global.core }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vui-nats-config
+  labels:
+    app: nats
+data:
+  nats-server.conf: |
+    authorization {
+      users = [
+        {
+          user = "user1"
+          password = "password1"
+        }
+        {
+          user = "user2"
+          password = "password2"
+        }
+      ]
+    }
+    server_name: "nats-server"
+    port: 4222
+    http_port: 8222
+    jetstream {
+      store_dir = "/var/lib/nats/jetstream"
+    }
+    max_payload: 8M
+{{- end }}

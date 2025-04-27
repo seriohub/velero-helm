@@ -106,9 +106,9 @@ uiIngress:
 #
 
 # For different ingress configurations, you can create a ClusterIP service.
-# REQUIRED: Manual configuration in the `velero-ui-configmap` for the variables 
+# REQUIRED: Manual configuration in the `vui-ui-configmap` for the variables 
 #           `NEXT_PUBLIC_VELERO_API_URL_1` and `NEXT_PUBLIC_VELERO_API_WS_1`.
-# OPTIONAL: Manual configuration in the `velero-api-configmap` for the variable `ORIGINS_1`.
+# OPTIONAL: Manual configuration in the `vui-api-configmap` for the variable `ORIGINS_1`.
 # 
 # Feedback and suggestions for improving this configuration are welcome.
 clusterIpService:

@@ -22,6 +22,7 @@ spec:
               number: 80
         path: /
         pathType: Prefix
+      {{- if eq .Values.global.core false }}
       - backend:
           service:
             name: '{{ include "seriohub-velero.fullname" . }}-api'
@@ -36,6 +37,23 @@ spec:
               number: 80
         path: /ws
         pathType: Prefix
+      {{- end }}
+      {{- if eq .Values.global.core true }}
+      - backend:
+          service:
+            name: '{{ include "seriohub-velero.fullname" . }}-core'
+            port:
+              number: 80
+        path: /api
+        pathType: Prefix
+      - backend:
+          service:
+            name: '{{ include "seriohub-velero.fullname" . }}-core'
+            port:
+              number: 80
+        path: /ws
+        pathType: Prefix
+        {{- end }}
   tls:
   {{- if .Values.uiIngress.spec.tls }}
     {{- .Values.uiIngress.spec.tls | toYaml | nindent 2 }}

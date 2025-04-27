@@ -1,0 +1,63 @@
+{{- if .Values.global.core }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "seriohub-velero.fullname" . }}-nats
+  labels:
+    app: vui-nats
+    layer: vui-core
+    tier: backend
+  {{- include "seriohub-velero.labels" . | nindent 4 }}
+  {{- with .Values.api.apiServer.annotations }}
+  annotations: {{ toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vui-nats
+      layer: vui-core
+      tier: backend
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: vui-nats
+        layer: vui-core
+        tier: backend
+    spec:
+      containers:
+        - name: nats
+          image: {{ .Values.nats.natsServer.image.registry | trimSuffix "/" }}/{{ .Values.nats.natsServer.image.repository }}:{{ .Values.nats.natsServer.image.tag }}
+          imagePullPolicy: {{ .Values.nats.natsServer.imagePullPolicy }}
+          command: ["nats-server"]
+          args: ["-c", "/etc/nats-server-conf"]
+          ports:
+            - name: client
+              containerPort: 4222
+              protocol: TCP
+            - name: monitoring
+              containerPort: 8222
+              protocol: TCP
+          volumeMounts:
+            - name: nats-config-volume
+              mountPath: /etc/nats-server-conf
+              subPath: nats-server.conf
+          {{- with .Values.nats.natsServer.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
+          {{- if .Values.nats.natsServer.podSecurityContext.enabled }}
+          securityContext:
+            {{- toYaml (omit .Values.nats.natsServer.podSecurityContext "enabled") | nindent 8 }}
+          {{- end }}
+      volumes:
+        - name: nats-config-volume
+          configMap:
+            name: vui-nats-config
+      restartPolicy: Always
+{{- end }}

@@ -4,8 +4,7 @@ metadata:
   name: {{ include "seriohub-velero.fullname" . }}-api
   # name: velero-api
   labels:
-    app: velero-api
-    layer: api
+    app: vui-api
     tier: backend
   {{- include "seriohub-velero.labels" . | nindent 4 }}
   {{- with .Values.api.apiServer.annotations }}
@@ -15,15 +14,13 @@ spec:
   replicas: {{ .Values.api.replicas }}
   selector:
     matchLabels:
-      app: velero-api
-      layer: api
+      app: vui-api
       tier: backend
     {{- include "seriohub-velero.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: velero-api
-        layer: api
+        app: vui-api
         tier: backend
       {{- include "seriohub-velero.selectorLabels" . | nindent 8 }}
       {{- with .Values.api.apiServer.podAnnotations }}
@@ -42,11 +39,11 @@ spec:
               fieldPath: metadata.namespace
         envFrom:
         - configMapRef:
-            name: velero-api-config
+            name: vui-api-config
         - configMapRef:
             name: vui-helm-config
         - secretRef:
-            name: {{ include "seriohub-velero.secretName" . }}
+            name: vui-api-secret
         image: {{ .Values.api.apiServer.image.registry | trimSuffix "/" }}/{{ .Values.api.apiServer.image.repository }}:{{ .Values.api.apiServer.image.tag }}
         imagePullPolicy: {{ .Values.api.apiServer.imagePullPolicy }}
         name: api-server

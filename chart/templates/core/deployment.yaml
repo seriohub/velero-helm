@@ -1,0 +1,85 @@
+{{- if .Values.global.core }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vui-core
+  labels:
+    app: vui-core
+    layer: vui-core
+    tier: backend
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+  selector:
+    matchLabels:
+      app:  vui-core
+      layer: vui-core
+      tier: backend
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app:  vui-core
+        layer: vui-core
+        tier: backend
+    spec:
+      serviceAccountName: {{ include "seriohub-velero.fullname" . }}-readonly-sa
+      containers:
+        - name: vui-core
+          image: {{ .Values.core.coreServer.image.registry | trimSuffix "/" }}/{{ .Values.core.coreServer.image.repository }}:{{ .Values.core.coreServer.image.tag }}
+          imagePullPolicy:  {{ .Values.core.coreServer.imagePullPolicy }}
+          envFrom:
+            - configMapRef:
+                name: vui-core-config
+            - secretRef:
+                name: vui-core-secret
+          ports:
+            - name: api
+              containerPort: 8001
+              protocol: TCP
+          {{- if .Values.core.coreServer.securityContext.enabled }}
+          securityContext:
+            {{- toYaml (omit .Values.core.coreServer.securityContext "enabled") | nindent 10 }}
+          {{- end }}
+          {{- with .Values.core.coreServer.resources }}
+          resources:
+            {{ . | toYaml | nindent 10 }}
+          {{- end }}
+          {{- with .Values.core.coreServer.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
+          {{- with .Values.core.coreServer.affinity }}
+          affinity:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
+          {{- with .Values.core.coreServer.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
+          volumes:
+          {{- with .Values.core.coreServer.volumes }}
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
+          {{- if .Values.apiConfig.storage.enabled }}
+            - name: data
+              persistentVolumeClaim:
+                claimName: pvc-api
+          {{- else }}
+            - name: data
+              emptyDir: {}
+          {{- end}}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      {{- with .Values.core.coreServer.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+{{- end }}

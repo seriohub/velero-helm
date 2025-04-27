@@ -1,0 +1,15 @@
+{{- if .Values.global.core }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: vui-core
+spec:
+  type: ClusterIP
+  selector:
+    app: vui-core
+  ports:
+    - name: vui-core
+      port: 80
+      targetPort: api
+      protocol: TCP
+{{- end }}

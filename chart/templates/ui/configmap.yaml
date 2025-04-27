@@ -1,8 +1,8 @@
-{{- if eq .Values.global.agentMode false }}
+{{- if not .Values.global.agentMode }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: velero-ui-config
+  name: vui-ui-config
   labels:
     {{- include "seriohub-velero.labels" . | nindent 4 }}
 data:
@@ -14,6 +14,7 @@ data:
   NEXT_PUBLIC_REFRESH_RECENT: {{ .Values.uiConfig.nextPublicRefreshRecent | quote  }}
   NEXT_PUBLIC_LOGGER_ENABLED: {{ .Values.uiConfig.nextPublicLoggerEnabled | quote  }}
   
+  {{- if not .Values.global.core }}
   #
   # API Agent Name
   #
@@ -33,19 +34,27 @@ data:
   NEXT_PUBLIC_VELERO_API_URL_1: {{ printf "http://%s:%s/api" .Values.uiNp.ip .Values.uiNp.apiPort | quote }}
   NEXT_PUBLIC_VELERO_API_WS_1: {{ printf "ws://%s:%s" .Values.uiNp.ip .Values.uiNp.apiPort | quote }}
   {{- end }}
-  
-  #
-  # Prototype Inspect Backups Features
-  #
-  NEXT_PUBLIC_INSPECT_BACKUP_ENABLED: {{ .Values.apiConfig.inspectBackupEnabled | quote  }}  
 
   #
   # Experimental multiple clusters at the login without core
   #
   {{- if eq .Values.uiConfig.experimental true }}
-  NEXT_PUBLIC_LOGIN_CLUSTERS_SWITCH: "true"
+  NEXT_PUBLIC_LOGIN_CLUSTERS_SWITCH: "false"
   NEXT_PUBLIC_VELERO_API_NAME_2: {{ .Values.uiConfig.exNextPublicVeleroApiName2 | quote  }}
   NEXT_PUBLIC_VELERO_API_URL_2: {{ .Values.uiConfig.exNextPublicVeleroApiUrl2 | quote  }}
   NEXT_PUBLIC_VELERO_API_WS_2: {{ .Values.uiConfig.exNextPublicVeleroApiWs2 | quote  }}
   {{- end }}
+  {{- end }}
+
+  {{- if .Values.global.core }}
+  NEXT_PUBLIC_LOGIN_CLUSTERS_SWITCH: "true"
+  NEXT_PUBLIC_VELERO_API_NAME_1: "{{ .Values.global.clusterName  }}-core"
+  NEXT_PUBLIC_VELERO_API_URL_1: {{ printf "https://%s/api" (index (index .Values.uiIngress.spec.tls 0).hosts 0) | quote }}
+  NEXT_PUBLIC_VELERO_API_WS_1: {{ printf "wss://%s" (index (index .Values.uiIngress.spec.tls 0).hosts 0) | quote }}
+  {{- end }}
+
+  #
+  # Prototype Inspect Backups Features
+  #
+  NEXT_PUBLIC_INSPECT_BACKUP_ENABLED: {{ .Values.apiConfig.inspectBackupEnabled | quote  }}
 {{- end }}

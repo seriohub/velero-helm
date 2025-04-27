@@ -8,9 +8,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: velero-api
-    layer: api
-    tier: backend
+    app: vui-api
   {{- include "seriohub-velero.selectorLabels" . | nindent 4 }}
   ports:
 	{{- .Values.api.ports | toYaml | nindent 2 }}

@@ -66,11 +66,11 @@ spec:
             name: velero-watchdog-user-config
         {{- end }}
         - configMapRef:
-            name: velero-watchdog-config
+            name: vui-watchdog-config
         - configMapRef:
             name: vui-helm-config
         - secretRef:
-            name: velero-watchdog-config
+            name: vui-watchdog-secret
         image: {{ .Values.watchdog.veleroMonitoring.image.registry | trimSuffix "/" }}/{{ .Values.watchdog.veleroMonitoring.image.repository }}:{{ .Values.watchdog.veleroMonitoring.image.tag }}
         imagePullPolicy: {{ .Values.watchdog.veleroMonitoring.imagePullPolicy }}
         name: velero-monitoring

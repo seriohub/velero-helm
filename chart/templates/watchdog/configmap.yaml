@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: velero-watchdog-config
+  name: vui-watchdog-config
   labels:
   {{- include "seriohub-velero.labels" $ | nindent 4 }}
 data:

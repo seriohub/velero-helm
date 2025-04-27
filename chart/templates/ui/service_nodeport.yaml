@@ -1,4 +1,4 @@
-{{- if eq .Values.global.agentMode false }}
+{{- if not .Values.global.agentMode }}
 {{- if .Values.uiNp.enabled }}
 apiVersion: v1
 kind: Service

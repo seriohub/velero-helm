@@ -4,6 +4,8 @@
 global:
   # -- Name of the namespace where vmware-tanzu/velero is deployed
   veleroNamespace: velero
+  # -- If true, the Core for multi-cluster management will be installed.
+  core: false
   # -- Agent mode: If true, the UI will not be installed
   agentMode: false
   # -- ClusterName
@@ -490,3 +492,131 @@ authentication:
       authzAttribute: ""
       # -- LDAP Attribute Value for authorization (used when Strategy is ATTRIBUTE)
       authzValue: ""
+
+#
+# Agent Mode
+#
+agent:
+  nats: 
+    enabled: false
+  protocol: "nats"
+  endpointUrl: ""
+  username: ""
+  password: ""
+  portClient: "4222"
+  portMonitoring: "8222"
+
+#
+# Core
+#
+core:
+  coreServer:
+    image:
+      # -- Image Registry
+      registry: ghcr.io
+      # -- Image Repository
+      repository: seriohub/vui-core-open
+      # -- Image Tag
+      tag: latest
+    imagePullPolicy: IfNotPresent
+    imagePullSecrets:
+      - name: vui-ghcr-login-secret
+    # -- SecurityContext for Pod
+    podSecurityContext:
+      enabled: false
+      seccompProfile:
+        type: RuntimeDefault
+    # -- SecurityContext for Container
+    securityContext:
+      enabled: false
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+      runAsUser: 65534
+    # -- Operator nodeSelector
+    nodeSelector: {}
+    # -- Operator tolerations
+    tolerations: []
+    # -- Operator affinity
+    affinity: {}
+    # -- Resources for the Operator
+    resources: {}
+    # requests:
+    #   cpu: 50m
+    #   memory: 128Mi
+    # limits:
+    #   cpu: 500m
+    #   memory: 512Mi
+    # -- VolumeMounts
+    volumeMounts:
+    # - name: vui-core
+    #   mountPath: /usr/local/bin
+    # -- Volumes
+    volumes:
+    # - name: vui-core
+    #   emptyDir: {}
+    # -- Add annotations to deployment
+    annotations: {}
+    # -- Add annotations to pods
+    podAnnotations: {}
+  ports:
+  - name: vui-core
+    port: 80
+    protocol: TCP
+    targetPort: api
+  replicas: 1
+
+coreConfig:
+  # -- Default admin username
+  defaultAdminUsername: admin
+  # -- Default admin password
+  defaultAdminPassword: admin
+  existingSecret:
+  # <AWS_ACCESS_KEY_ID>,<AWS_SECRET_ACCESS_KEY>,<RESTIC_PASSWORD>,<SECURITY_PATH_DATABASE>,<DEFAULT_ADMIN_USERNAME>,<DEFAULT_ADMIN_PASSWORD>
+  # Optional: <SECURITY_TOKEN_KEY>
+
+#
+# NATS Core
+#
+nats:
+  ip: ""
+  protocol: "nats"
+  username: ""
+  password: ""
+  natsServer:
+    image:
+      # -- Image Registry
+      registry: docker.io
+      # -- Image Repository
+      repository: nats
+      # -- Image Tag
+      tag: alpine3.20
+    imagePullPolicy: IfNotPresent
+    imagePullSecrets: []
+    # -- SecurityContext for Pod
+    podSecurityContext:
+      enabled: false
+      seccompProfile:
+        type: RuntimeDefault
+    # -- SecurityContext for Container
+    securityContext:
+      enabled: false
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+      runAsUser: 65534
+  ports:
+    - name: client
+      port: 4222
+      protocol: TCP
+      targetPort: client
+    - name: monitoring
+      port: 8222
+      protocol: TCP
+      targetPort: monitoring
