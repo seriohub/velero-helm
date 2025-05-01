@@ -4,7 +4,7 @@ metadata:
   name: {{ include "seriohub-velero.fullname" . }}-watchdog
   # name: velero-watchdog
   labels:
-    app: velero-watchdog
+    app: vui-watchdog
     tier: backend
   {{- include "seriohub-velero.labels" . | nindent 4 }}
   {{- with .Values.watchdog.veleroMonitoring.annotations }}
@@ -19,7 +19,7 @@ spec:
   template:
     metadata:
       labels:
-        app: velero-watchdog
+        app: vui-watchdog
         tier: backend
       {{- include "seriohub-velero.selectorLabels" . | nindent 8 }}
       {{- with .Values.watchdog.veleroMonitoring.annotations }}
@@ -61,9 +61,9 @@ spec:
             fieldRef:
               fieldPath: metadata.namespace
         envFrom:
-        {{- if lookup "v1" "ConfigMap" .Release.Namespace "velero-watchdog-user-config" }}
+        {{- if lookup "v1" "ConfigMap" .Release.Namespace "vui-watchdog-user-config" }}
         - configMapRef:
-            name: velero-watchdog-user-config
+            name: vui-watchdog-user-config
         {{- end }}
         - configMapRef:
             name: vui-watchdog-config

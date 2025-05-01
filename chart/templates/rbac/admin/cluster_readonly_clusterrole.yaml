@@ -35,7 +35,7 @@ rules:
       - watch
       - list
 
-{{- if eq ($.Values.apiConfig.inspectBackupEnabled | upper) "TRUE" }}
+{{- if .Values.apiConfig.inspectBackupEnabled }}
   # Grants read-only access to all Kubernetes resources, including custom resources (CRDs)
   - apiGroups:
       - "*"

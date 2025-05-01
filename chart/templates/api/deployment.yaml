@@ -91,7 +91,7 @@ spec:
       {{- if .Values.apiConfig.storage.enabled }}
         - name: data
           persistentVolumeClaim:
-            claimName: pvc-api
+            claimName: pvc-vui-api
       {{- else }}
         - name: data
           emptyDir: {}

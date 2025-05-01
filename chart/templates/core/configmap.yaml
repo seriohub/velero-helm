@@ -16,7 +16,7 @@ data:
   API_TOKEN_EXPIRATION_MIN: {{ .apiTokenExpirationMin | quote }}
   API_TOKEN_REFRESH_EXPIRATION_DAYS: {{ .apiTokenRefreshExpirationDays | quote }}
 
-  BUILD_VERSION: dev
+  ORIGINS_1: {{ .origins1 | quote }}
 
   DEBUG_LEVEL: {{ .debugLevel | quote }}
 
@@ -27,7 +27,9 @@ data:
   K8S_VELERO_UI_NAMESPACE: {{ $.Release.Namespace }}
   
   NATS_ENDPOINT_URL:  {{ $.Values.nats.ip | quote }}
-  
+  SECURITY_PATH_DATABASE: "./data"
+  SECURITY_DISABLE_USERS_PWD_RATE: {{ .securityDisableUsersPwdRate | quote }}
+
   #
   # AUTHENTICATION
   #
@@ -41,7 +43,7 @@ data:
   LDAP_BIND_DN: {{ $.Values.authentication.ldap.bindDn | quote }}
   LDAP_USER_SEARCH_FILTER: {{ $.Values.authentication.ldap.userSearchFilter | quote }}
   # LDAP authz
-  {{- if eq ($.Values.authentication.ldap.authz.enabled | upper) "TRUE" }}  
+  {{- if $.Values.authentication.ldap.authz.enabled }}  
   LDAP_AUTHZ_ENABLED: {{ $.Values.authentication.ldap.authz.enabled | quote }}
   LDAP_AUTHZ_STRATEGY: {{ $.Values.authentication.ldap.authz.strategy | quote }}
   LDAP_AUTHZ_BASE_DN: {{ $.Values.authentication.ldap.authz.authzBaseDn | quote }}

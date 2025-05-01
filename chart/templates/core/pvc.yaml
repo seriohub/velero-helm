@@ -1,9 +1,9 @@
-{{- if .Values.apiConfig.storage.enabled }}
-  {{- with .Values.apiConfig.storage }}
+{{- if .Values.coreConfig.storage.enabled }}
+  {{- with .Values.coreConfig.storage }}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: pvc-vui-api
+  name: pvc-vui-core
 spec:
   storageClassName: {{ .storageClassName }}
   {{- with .accessModes }}

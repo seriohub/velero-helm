@@ -30,12 +30,13 @@ spec:
         layer: vui-core
         tier: backend
     spec:
+      shareProcessNamespace: true
       containers:
         - name: nats
           image: {{ .Values.nats.natsServer.image.registry | trimSuffix "/" }}/{{ .Values.nats.natsServer.image.repository }}:{{ .Values.nats.natsServer.image.tag }}
           imagePullPolicy: {{ .Values.nats.natsServer.imagePullPolicy }}
           command: ["nats-server"]
-          args: ["-c", "/etc/nats-server-conf"]
+          args: ["-c", "/etc/nats/nats-server.conf"]
           ports:
             - name: client
               containerPort: 4222
@@ -44,9 +45,11 @@ spec:
               containerPort: 8222
               protocol: TCP
           volumeMounts:
-            - name: nats-config-volume
-              mountPath: /etc/nats-server-conf
+            - name: config
+              mountPath: /etc/nats/nats-server.conf
               subPath: nats-server.conf
+            - name: user-auth
+              mountPath: /etc/nats-auth
           {{- with .Values.nats.natsServer.imagePullSecrets }}
           imagePullSecrets:
             {{- toYaml . | nindent 8 }}
@@ -55,9 +58,30 @@ spec:
           securityContext:
             {{- toYaml (omit .Values.nats.natsServer.podSecurityContext "enabled") | nindent 8 }}
           {{- end }}
+
+        - name: nats-reloader
+          image: alpine:3.18
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              apk add --no-cache coreutils
+              sh /reload.sh
+          volumeMounts:
+            - name: user-auth
+              mountPath: /etc/nats-auth
+            - name: reload-script
+              mountPath: /reload.sh
+              subPath: reload.sh
+
       volumes:
-        - name: nats-config-volume
+        - name: config
           configMap:
             name: vui-nats-config
+        - name: user-auth
+          secret:
+            secretName: vui-nats-user-auth
+        - name: reload-script
+          configMap:
+            name: vui-nats-reload    
       restartPolicy: Always
 {{- end }}

@@ -22,7 +22,7 @@ spec:
               number: 80
         path: /
         pathType: Prefix
-      {{- if eq .Values.global.core false }}
+      {{- if not .Values.global.core }}
       - backend:
           service:
             name: '{{ include "seriohub-velero.fullname" . }}-api'
@@ -38,7 +38,7 @@ spec:
         path: /ws
         pathType: Prefix
       {{- end }}
-      {{- if eq .Values.global.core true }}
+      {{- if .Values.global.core }}
       - backend:
           service:
             name: '{{ include "seriohub-velero.fullname" . }}-core'

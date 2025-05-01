@@ -36,6 +36,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: vui-core-config
+            - configMapRef:
+                name: vui-helm-config
             - secretRef:
                 name: vui-core-secret
           ports:
@@ -50,36 +52,42 @@ spec:
           resources:
             {{ . | toYaml | nindent 10 }}
           {{- end }}
-          {{- with .Values.core.coreServer.nodeSelector }}
-          nodeSelector:
-            {{- toYaml . | nindent 8 }}
+          volumeMounts:
+          {{- with .Values.core.coreServer.volumeMounts }}
+            {{- toYaml . | nindent 10 }}
           {{- end }}
-          {{- with .Values.core.coreServer.affinity }}
-          affinity:
-            {{- toYaml . | nindent 8 }}
-          {{- end }}
-          {{- with .Values.core.coreServer.tolerations }}
-          tolerations:
-            {{- toYaml . | nindent 8 }}
-          {{- end }}
-          volumes:
-          {{- with .Values.core.coreServer.volumes }}
-            {{- toYaml . | nindent 8 }}
-          {{- end }}
-          {{- if .Values.apiConfig.storage.enabled }}
             - name: data
-              persistentVolumeClaim:
-                claimName: pvc-api
-          {{- else }}
-            - name: data
-              emptyDir: {}
-          {{- end}}
-          terminationMessagePath: /dev/termination-log
-          terminationMessagePolicy: File
+              mountPath: /app/data
       {{- with .Values.core.coreServer.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      restartPolicy: Always
-      terminationGracePeriodSeconds: 30
+      {{- if .Values.api.apiServer.podSecurityContext.enabled }}
+      securityContext:
+        {{- toYaml (omit .Values.api.apiServer.podSecurityContext "enabled") | nindent 8 }}
+      {{- end }}
+      {{- with .Values.core.coreServer.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.core.coreServer.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.core.coreServer.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+      {{- with .Values.core.coreServer.volumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.coreConfig.storage.enabled }}
+        - name: data
+          persistentVolumeClaim:
+            claimName: pvc-vui-core
+      {{- else }}
+        - name: data
+          emptyDir: {}
+      {{- end}}
 {{- end }}

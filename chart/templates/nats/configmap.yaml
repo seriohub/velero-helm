@@ -8,16 +8,7 @@ metadata:
 data:
   nats-server.conf: |
     authorization {
-      users = [
-        {
-          user = "user1"
-          password = "password1"
-        }
-        {
-          user = "user2"
-          password = "password2"
-        }
-      ]
+      include "../nats-auth/users.conf"
     }
     server_name: "nats-server"
     port: 4222

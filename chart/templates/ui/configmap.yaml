@@ -38,8 +38,8 @@ data:
   #
   # Experimental multiple clusters at the login without core
   #
-  {{- if eq .Values.uiConfig.experimental true }}
-  NEXT_PUBLIC_LOGIN_CLUSTERS_SWITCH: "false"
+  {{- if .Values.uiConfig.experimental }}
+  NEXT_PUBLIC_LOGIN_CLUSTERS_SWITCH: "true"
   NEXT_PUBLIC_VELERO_API_NAME_2: {{ .Values.uiConfig.exNextPublicVeleroApiName2 | quote  }}
   NEXT_PUBLIC_VELERO_API_URL_2: {{ .Values.uiConfig.exNextPublicVeleroApiUrl2 | quote  }}
   NEXT_PUBLIC_VELERO_API_WS_2: {{ .Values.uiConfig.exNextPublicVeleroApiWs2 | quote  }}
