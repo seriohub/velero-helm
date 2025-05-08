@@ -6,19 +6,19 @@
 global:
   # -- Namespace where the VMware Tanzu Velero instance is deployed
   veleroNamespace: velero
-  
+
   # -- If true, the Core for multi-cluster management will be installed.
   core: false
-  
+
   # -- If true, the UI will not be installed
   agentMode: false
-  
+
    # -- Name of the cluster where the chart is being deployed
   clusterName: <cluster-name>
-  
+
   # -- If true, enables in-cluster mode for Kubernetes
   k8SInclusterMode: true
-  
+
   serviceAccounts:
     k8SReadOnlyServiceAccount:
       # Annotations to apply to the Kubernetes service account
@@ -28,10 +28,8 @@ global:
       # Annotations to apply to the Kubernetes service account
       annotations: {}
 
-
 # API Service configuration
 apiService:
-  
   # Deployment settings for the API service
   deployment:
     image:
@@ -41,18 +39,18 @@ apiService:
       repository: dserio83/velero-api
       # -- Tag of the API service container image
       tag: 0.2.5
-    
+
     # -- Image pull policy (e.g., Always, IfNotPresent)
     imagePullPolicy: IfNotPresent
     # -- Secrets to use when pulling images from private registries
     imagePullSecrets: []
-    
+
     # -- Pod security context settings
     podSecurityContext:
       enabled: false
       seccompProfile:
         type: RuntimeDefault
-    
+
     # -- Container-level security context
     securityContext:
       enabled: false
@@ -63,7 +61,7 @@ apiService:
       readOnlyRootFilesystem: true
       runAsNonRoot: true
       runAsUser: 65534
-    
+
     # -- Node selector for scheduling the pod
     nodeSelector: {}
     # -- Tolerations for the pod
@@ -93,7 +91,7 @@ apiService:
     annotations: {}
     # -- Annotations to apply to the pods
     podAnnotations: {}
-    
+
     # Storage configuration for the API
     storage:
       # -- Enable persistent volume for the API
@@ -172,10 +170,9 @@ apiService:
     portClient: 4222
     # -- Monitoring port for NATS
     portMonitoring: 8222
-    
+
 # UI Service configuration
 uiService:
-
   # Deployment settings for the UI
   deployment:
     image:
@@ -196,7 +193,7 @@ uiService:
       enabled: false
       seccompProfile:
         type: RuntimeDefault
-    
+
     # -- Container-level security context
     securityContext:
       enabled: false
@@ -233,12 +230,12 @@ uiService:
     # - name: velero-api
     #   emptyDir: {}
     # -- Add annotations to deployment
-    
+
     # -- Annotations to apply to the deployment
     annotations: {}
     # -- Annotations to apply to the pods
     podAnnotations: {}
-    
+
     # -- Number of replicas of the UI deployment
     replicas: 1
 
@@ -257,7 +254,6 @@ uiService:
 
 # Watchdog Service configuration
 watchdogService:
-  
   # Deployment settings for the Watchdog service
   deployment:
     image:
@@ -278,7 +274,7 @@ watchdogService:
       enabled: false
       seccompProfile:
         type: RuntimeDefault
-    
+
     # -- Container-level security context
     securityContext:
       enabled: false
@@ -403,17 +399,16 @@ watchdogService:
 
 # CronJobs configuration
 cronJobs:
-  
   report:
     # -- Maximum number of failed job histories to retain
     failedJobsHistoryLimit: 0
-    
+
     # -- Cron schedule expression for generating full reports
     schedule: "0 8 * * *"
-    
+
     # -- Maximum number of successful job histories to retain
     successfulJobsHistoryLimit: 0
-    
+
     # Job specification for the cron job
     jobSpec:
       image:
@@ -445,7 +440,7 @@ cronJobs:
         readOnlyRootFilesystem: true
         runAsNonRoot: true
         runAsUser: 65534
-      
+
       # -- Node selector for scheduling the cron job pod
       nodeSelector: {}
       # -- Tolerations for the cron job pod
@@ -478,7 +473,6 @@ cronJobs:
 
 # Core Service configuration
 coreService:
-
   # Deployment settings for the Core service
   deployment:
     image:
@@ -488,7 +482,7 @@ coreService:
       repository: vui-core-open/vui-core-open
       # -- Tag of the Core service container image
       tag: 0.1.0
-    
+
     # -- Image pull policy (e.g., Always, IfNotPresent)
     imagePullPolicy: IfNotPresent
     # -- Secrets to use when pulling images from private registries
@@ -527,7 +521,7 @@ coreService:
     # limits:
     #   cpu: 500m
     #   memory: 512Mi
-    
+
     # -- Volume mounts for the Core container
     volumeMounts: []
     # - name: vui-core
@@ -578,7 +572,7 @@ coreService:
     securityDisableUsersPwdRate: 1
     # -- Path to SQLite database file used to store data
     securityPathDatabase: ./data
-  
+
   # Secrets used by the Core service
   secret:
     # -- Optional: Name of existing Kubernetes Secret 
@@ -598,10 +592,10 @@ coreService:
 natsService:
   # -- Static IP address to assign to the LoadBalancer service. This must be pre-reserved in your cloud provider or infrastructure.
   loadBalancerIP:
-  
+
   # -- Protocol used by the NATS service
   protocol: nats
-  
+
   # Deployment settings for the NATS service
   deployment:
     image:
@@ -616,7 +610,7 @@ natsService:
     imagePullPolicy: IfNotPresent
     # -- Secrets to use when pulling images from private registries
     imagePullSecrets: []
-    
+
     # -- Pod security context settings
     podSecurityContext:
       enabled: false
@@ -665,7 +659,7 @@ auth:
     bindPassword: <secret>
     # -- LDAP User Search Filter (use {username} as a placeholder)
     userSearchFilter: (&(objectClass=person)(uid={username}))
-    
+
     # Authorization settings
     authz:
       # -- Enable or disable LDAP authorization (true/false)
@@ -702,12 +696,12 @@ exposure:
   ingress:
     # -- Name of the ingress class (e.g., nginx, traefik)
     ingressClassName: nginx
-    
+
     metadata:
       annotations:
         # -- Optional annotations for the ingress resource
         # cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    
+
     spec:
       tls:
         # List of hosts to be covered by TLS
