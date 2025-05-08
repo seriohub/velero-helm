@@ -6,7 +6,7 @@ metadata:
   labels:
     {{- include "seriohub-velero.labels" . | nindent 4 }}
 rules:
-  # Grants full access to ConfigMaps in the namespace
+  # Grants full access (create, read, update, delete) to ConfigMaps in the namespace
   - apiGroups:
       - ""
     resources:
@@ -14,7 +14,15 @@ rules:
     verbs:
       - "*"
 
-  # Grants full access to pod logs in the namespace
+  # Grants full access to Pods in the namespace
+  - apiGroups: 
+      - ""
+    resources: 
+      - "pods"
+    verbs: 
+      - "*"
+
+  # Grants full access to Pod logs in the namespace
   - apiGroups:
       - ""
     resources:
@@ -22,7 +30,7 @@ rules:
     verbs:
       - "*"
 
-  # Allows reading and monitoring of CronJobs
+  # Allows read-only access to CronJobs for monitoring purposes
   - apiGroups:
       - batch
     resources:
@@ -32,7 +40,7 @@ rules:
       - list
       - watch
 
-  # Grants permissions to read, create, update, patch, and delete secrets
+  # Grants full access to Secrets in the namespace
   - apiGroups:
       - ""
     resources:
@@ -40,7 +48,7 @@ rules:
     verbs:
       - "*"
 
-  # Allows reading and patching Deployments
+  # Allows reading and patching Deployments (e.g. for updating images)
   - apiGroups:
       - apps
     resources:
@@ -59,14 +67,14 @@ metadata:
   {{- include "seriohub-velero.labels" . | nindent 4 }}
   namespace: {{ .Release.Namespace }}
 
-# Binds the API management Role to a specific ServiceAccount
+# Binds the admin Role to the specified ServiceAccount in the same namespace
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
   name: {{ include "seriohub-velero.fullname" . }}-admin
 
 subjects:
-  # Grants the defined Role permissions to the specified ServiceAccount
+  # Assigns the Role permissions to the specified ServiceAccount
   - kind: ServiceAccount
     name: {{ include "seriohub-velero.fullname" . }}-admin-sa
     namespace: {{ .Release.Namespace }}

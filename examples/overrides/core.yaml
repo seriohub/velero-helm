@@ -1,0 +1,65 @@
+# This file defines the minimum set of required configuration keys for a core deployment with built-in authentication.
+# For the complete list, you can refer to the values.yaml file.
+
+# ------------------------
+# Global
+# ------------------------
+global:
+  veleroNamespace: <SET_ME>
+  clusterName: <SET_ME>
+  core: true
+
+# ------------------------
+# API Service
+# ------------------------
+apiService:
+  secret:
+    defaultAdminUsername: <SET_ME>
+    defaultAdminPassword: <SET_ME>
+    natsUsername: <SET_ME>
+    natsPassword: <SET_ME>
+
+# ------------------------
+# Exsposed Services
+# ------------------------
+exposure:
+  mode: ingress # one of: nodePort, ingress, clusterIP
+  
+  # nodePort:
+    # ip: 10.10.0.100
+    # apiPort: 30101
+    # uiPort: 30102
+
+  ingress:
+    # ingressClassName: nginx
+
+    # metadata:
+      # annotations:
+        # cert-manager.io/cluster-issuer: letsencrypt-prod
+        # nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+        # nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+        # ingress.kubernetes.io/proxy-connect-timeout: "3600"
+    spec:
+      tls:
+      - hosts:
+        - vui-core.yourdomain.com
+        # secretName: vui-tls
+
+# ------------------------
+# Core Service
+# ------------------------
+coreService:
+
+  secret:
+    clientKey: <SET_ME>
+    defaultAdminUsername: <SET_ME>
+    defaultAdminPassword: <SET_ME>
+    natsUsername: <SET_ME>
+    natsPassword: <SET_ME>
+
+# ------------------------
+# Nats Service
+# ------------------------
+natsService:
+  loadBalancerIP: <SET_ME>
+  protocol: nats

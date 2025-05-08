@@ -6,7 +6,7 @@ metadata:
   {{- include "seriohub-velero.labels" . | nindent 4 }}
   namespace: {{ .Values.global.veleroNamespace }}
 rules:
-  # Grants permissions to create, update, and read ConfigMaps
+  # Allows create, update, and read access to ConfigMaps in the namespace
   - apiGroups:
       - ""
     resources:
@@ -17,7 +17,7 @@ rules:
       - get
       - list
 
-  # Grants read-only access to Secrets
+  # Allows create, update, and read access to Secrets in the namespace
   - apiGroups:
       - ""
     resources:
@@ -28,7 +28,7 @@ rules:
       - get
       - list
 
-  # Grants permissions to read and monitor Pods
+  # Allows read-only access to Pods for monitoring purposes
   - apiGroups:
       - ""
     resources:
@@ -38,11 +38,19 @@ rules:
       - list
       - watch
   
-  # Grants full access to all Velero-related resources
+ # Grants full permissions to all Velero-related custom resources
   - apiGroups:
       - velero.io
     resources:
       - "*"
+    verbs:
+      - "*"
+
+  # Grants full access to view and manage Pod logs
+  - apiGroups:
+      - ""
+    resources:
+      - pods/log
     verbs:
       - "*"
 
@@ -56,13 +64,14 @@ metadata:
   {{- include "seriohub-velero.labels" . | nindent 4 }}
   namespace: {{ .Values.global.veleroNamespace }}
 
-# Binds the Role to a specific ServiceAccount within a namespace
+# Binds the Role to the specified ServiceAccount within the Velero namespace
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
   name: {{ include "seriohub-velero.fullname" . }}-velero-admin
 
 subjects:
-- kind: ServiceAccount
-  name: {{ include "seriohub-velero.fullname" . }}-admin-sa
-  namespace: {{ .Release.Namespace }}
+  # Grants the Role permissions to the ServiceAccount
+  - kind: ServiceAccount
+    name: {{ include "seriohub-velero.fullname" . }}-admin-sa
+    namespace: {{ .Release.Namespace }}

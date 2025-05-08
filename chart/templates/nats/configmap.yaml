@@ -1,0 +1,18 @@
+{{- if .Values.global.core }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "seriohub-velero.fullname" $ }}-nats-config
+data:
+  nats-server.conf: |
+    authorization {
+      include "../nats-auth/users.conf"
+    }
+    server_name: "nats-server"
+    port: 4222
+    http_port: 8222
+    jetstream {
+      store_dir = "/var/lib/nats/jetstream"
+    }
+    max_payload: 8M
+{{- end }}

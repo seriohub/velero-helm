@@ -1,15 +1,15 @@
 {{- if eq .Values.exposure.mode "nodePort" }}
-{{- if not .Values.global.core }}
+{{- if .Values.global.core }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "seriohub-velero.fullname" . }}-api-nodeport-svc
+  name: {{ include "seriohub-velero.fullname" . }}-core-nodeport-svc
   labels:
   {{- include "seriohub-velero.labels" . | nindent 4 }}
 spec:
   type: NodePort
   selector:
-    component: api
+    component: core
   {{- include "seriohub-velero.selectorLabels" . | nindent 4 }}
   ports:
     - nodePort: {{ .Values.exposure.nodePort.apiPort }}

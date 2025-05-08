@@ -1,17 +1,20 @@
-{{- if eq .Values.global.agentMode false }}
-{{- if or .Values.uiIngress.enabled .Values.clusterIpService.enabled}}
+{{- if not .Values.global.agentMode }}
+{{- if or (eq .Values.exposure.mode "ingress") (eq .Values.exposure.mode "clusterIP")}}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "seriohub-velero.fullname" . }}-ui
+  name: {{ include "seriohub-velero.fullname" . }}-ui-clusterip-svc
   labels:
   {{- include "seriohub-velero.labels" . | nindent 4 }}
 spec:
   type: ClusterIP
   selector:
-    layer: webserver
+    component: ui
   {{- include "seriohub-velero.selectorLabels" . | nindent 4 }}
   ports:
-	{{- .Values.ui.ports | toYaml | nindent 2 }}
+    - name: vui-ui
+      port: 80
+      protocol: TCP
+      targetPort: run
 {{- end }}
 {{- end }}

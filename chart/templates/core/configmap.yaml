@@ -1,0 +1,60 @@
+{{- if .Values.global.core }}
+{{- with .Values.coreService.config }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "seriohub-velero.fullname" $ }}-core-config
+  labels:
+  {{- include "seriohub-velero.labels" $ | nindent 4 }}
+data:
+  API_ENDPOINT_URL: {{ .apiEndpointUrl | quote }}
+  API_ENDPOINT_PORT: {{ .apiEndpointPort | quote }}
+
+  API_RATE_LIMITER_CUSTOM_1: {{ .apiRateLimiterCustom1 | quote }}
+  API_RATE_LIMITER_L1: {{ .apiRateLimiterL1 | quote }}
+  API_TOKEN_EXPIRATION_MIN: {{ .apiTokenExpirationMin | quote }}
+  API_TOKEN_REFRESH_EXPIRATION_DAYS: {{ .apiTokenRefreshExpirationDays | quote }}
+
+  ORIGINS_1: {{ .origins1 | quote }}
+
+  DEBUG_LEVEL: {{ .debugLevel | quote }}
+
+  CLUSTER_ID: {{ $.Values.global.clusterName | quote  }}
+  
+  K8S_IN_CLUSTER_MODE: {{ $.Values.global.k8SInclusterMode | quote  }} 
+  K8S_VELERO_NAMESPACE: {{ $.Values.global.veleroNamespace }}
+  K8S_VELERO_UI_NAMESPACE: {{ $.Release.Namespace }}
+  
+  NATS_ENDPOINT_URL:  {{ $.Values.natsService.loadBalancerIP | quote }}
+  NATS_PROTOCOL: {{ $.Values.natsService.protocol | quote }}
+  NATS_PORT_CLIENT: {{ index $.Values.natsService.deployment.ports 0 "port" | quote }}
+  NATS_PORT_MONITORING: {{ index $.Values.natsService.deployment.ports 1 "port" | quote }}
+
+  SECURITY_PATH_DATABASE: {{ .securityPathDatabase | quote }}
+  SECURITY_DISABLE_USERS_PWD_RATE: {{ .securityDisableUsersPwdRate | quote }}
+
+  #
+  # AUTHENTICATION
+  #
+  AUTH_ENABLED: {{ $.Values.auth.enabled | quote }}
+  AUTH_TYPE: {{ $.Values.auth.mode | quote }}
+  {{- if eq ($.Values.auth.mode | upper) "LDAP" }}
+  # LDAP authentication
+  LDAP_URI: {{ $.Values.auth.ldap.uri | quote }}
+  LDAP_USE_SSL: {{ $.Values.auth.ldap.useSsl | quote }}
+  LDAP_BASE_DN: {{ $.Values.auth.ldap.baseDn | quote }}
+  LDAP_BIND_DN: {{ $.Values.auth.ldap.bindDn | quote }}
+  LDAP_USER_SEARCH_FILTER: {{ $.Values.auth.ldap.userSearchFilter | quote }}
+  # LDAP authz
+  {{- if $.Values.auth.ldap.authz.enabled }}  
+  LDAP_AUTHZ_ENABLED: {{ $.Values.auth.ldap.authz.enabled | quote }}
+  LDAP_AUTHZ_STRATEGY: {{ $.Values.auth.ldap.authz.strategy | quote }}
+  LDAP_AUTHZ_BASE_DN: {{ $.Values.auth.ldap.authz.authzBaseDn | quote }}
+  LDAP_AUTHZ_FILTER: {{ $.Values.auth.ldap.authz.authzFilter | quote }}
+  LDAP_AUTHZ_ATTRIBUTE: {{ $.Values.auth.ldap.authz.authzAttribute | quote }}
+  LDAP_AUTHZ_VALUE: {{ $.Values.auth.ldap.authz.authzValue | quote }}
+  {{- end }}
+  {{- end }}
+  
+{{- end }}
+{{- end }}

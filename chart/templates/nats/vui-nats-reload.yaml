@@ -1,0 +1,25 @@
+{{- if .Values.global.core }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "seriohub-velero.fullname" $ }}-nats-reload-config
+data:
+  reload.sh: |
+    #!/bin/sh
+    echo "Starting nats reload watcher"
+    PREV_HASH=""
+    while true; do
+      HASH=$(sha256sum /etc/nats-auth/users.conf | awk '{print $1}')
+      if [ "$HASH" != "$PREV_HASH" ]; then
+        echo "Reload triggered by change in users.conf"
+        PREV_HASH=$HASH
+        NATS_PID=$(pidof nats-server)
+        if [ -n "$NATS_PID" ]; then
+          kill -HUP "$NATS_PID"
+        else
+          echo "nats-server not running?"
+        fi
+      fi
+      sleep 10
+    done
+{{- end }}

@@ -1,36 +1,57 @@
-#
+# Optional: Override the default name of the release
+# -- Name of the overall release
+# fullnameOverride: "my-release-name"
+
 # Global
-#
 global:
-  # -- Name of the namespace where vmware-tanzu/velero is deployed
+  # -- Namespace where the VMware Tanzu Velero instance is deployed
   veleroNamespace: velero
-  # -- Agent mode: If true, the UI will not be installed
+
+  # -- If true, the Core for multi-cluster management will be installed.
+  core: false
+
+  # -- If true, the UI will not be installed
   agentMode: false
-  # -- ClusterName
+
+   # -- Name of the cluster where the chart is being deployed
   clusterName: <cluster-name>
-  # -- Enable in cluster mode
-  k8SInclusterMode: "true"
 
-#
-# API
-#
-api:
-  apiServer:
+  # -- If true, enables in-cluster mode for Kubernetes
+  k8SInclusterMode: true
+
+  serviceAccounts:
+    k8SReadOnlyServiceAccount:
+      # Annotations to apply to the Kubernetes service account
+      annotations: {}
+
+    adminServiceAccount:
+      # Annotations to apply to the Kubernetes service account
+      annotations: {}
+
+# API Service configuration
+apiService:
+  # Deployment settings for the API service
+  deployment:
     image:
-      # -- Image Registry
+      # -- Registry of the API service container image
       registry: docker.io
-      # -- Image Repository
+      # -- Repository of the API service container image
       repository: dserio83/velero-api
-      # -- Image Tag
-      tag: 0.2.4
+      # -- Tag of the API service container image
+      tag: 0.2.5
+
+    # -- Image pull policy (e.g., Always, IfNotPresent)
     imagePullPolicy: IfNotPresent
+    # -- Secrets to use when pulling images from private registries
     imagePullSecrets: []
-    # -- SecurityContext for Pod
+
+    # -- Pod security context settings
     podSecurityContext:
       enabled: false
       seccompProfile:
         type: RuntimeDefault
-    # -- SecurityContext for Container
+
+    # -- Container-level security context
     securityContext:
       enabled: false
       allowPrivilegeEscalation: false
@@ -40,12 +61,14 @@ api:
       readOnlyRootFilesystem: true
       runAsNonRoot: true
       runAsUser: 65534
-    # -- Operator nodeSelector
+
+    # -- Node selector for scheduling the pod
     nodeSelector: {}
-    # -- Operator tolerations
+    # -- Tolerations for the pod
     tolerations: []
-    # -- Operator affinity
+    # -- Affinity rules for the pod
     affinity: {}
+
     # -- Resources for the Operator
     resources: {}
     # requests:
@@ -54,117 +77,124 @@ api:
     # limits:
     #   cpu: 500m
     #   memory: 512Mi
-    # -- VolumeMounts
-    volumeMounts:
+
+    # -- volumeMounts for additional volumes
+    volumeMounts: []
     # - name: velero-api
     #   mountPath: /usr/local/bin
-    # -- Volumes
-    volumes:
+    # -- Volumes definitions
+    volumes: []
     # - name: velero-api
     #   emptyDir: {}
-    # -- Add annotations to deployment
+
+    # -- Annotations to apply to the deployment
     annotations: {}
-    # -- Add annotations to pods
+    # -- Annotations to apply to the pods
     podAnnotations: {}
-  ports:
-  - name: velero-api
-    port: 80
-    protocol: TCP
-    targetPort: api
-  replicas: 1
 
-#
-# API Config
-#
-apiConfig:
-  # -- Token validity after the creation (minutes)
-  apiTokenExpirationMin: "60"
-  # -- Token validity after the creation (days)
-  apiTokenRefreshExpirationDays: "7"
-  # -- Enabled/Disabled the fastapi documentation user interfaces
-  apiEnableDocumentation: "1"
-  # -- Socket bind port
-  apiEndpointPort: "8001"
-  # -- Socket bind host
-  apiEndpointUrl: 0.0.0.0
-  # -- Custom security rate limiter: 60 seconds max requests 10
-  apiRateLimiterCustom1: Security:xxx:60:100
-  # -- Rate limiter: 60 seconds max requests 10
-  apiRateLimiterL1: "60:100"
-  # -- Debug level info
-  debugLevel: info
-  # -- Destination folder when executing velero backup download
-  veleroInspectFolder: /tmp/velero-inspect-backups
-  # -- Allowed origin
-  origins1: '*'
-  # -- Velero restic password
-  resticPassword: static-passw0rd
-  # -- If true user can have a weak password, otherwise is required a strong password
-  securityDisableUsersPwdRate: "1"
-  # -- Path where create the SQL-Lite database used for storing the users credentials
-  securityPathDatabase: ./data
-  # Optional: Secret key used for JWT creation
-  # securityTokenKey: <your-token>
-  # -- Default admin username
-  defaultAdminUsername: admin
-  # -- Default admin password
-  defaultAdminPassword: admin
-  # Optional: Name of pre-existing Secret, must include subsequent secrets
-  # -- Reference to own secret
-  existingSecret:
-  # <AWS_ACCESS_KEY_ID>,<AWS_SECRET_ACCESS_KEY>,<RESTIC_PASSWORD>,<SECURITY_PATH_DATABASE>,<DEFAULT_ADMIN_USERNAME>,<DEFAULT_ADMIN_PASSWORD>
-  # Optional: <SECURITY_TOKEN_KEY>
-  # -- Enabled inspect backup feature: The inspect backup feature requires read permissions across the entire cluster. See ./template/rbac/admin/cluster_readonly_clusterrole.yaml for details.
-  inspectBackupEnabled: "false"
+    # Storage configuration for the API
+    storage:
+      # -- Enable persistent volume for the API
+      enabled: false
+      # -- Storage class name to use
+      storageClassName: ""
+      # -- Access modes for the volume
+      accessModes:
+        - ReadWriteOnce
+      # -- Storage requests (size)
+      resources:
+        requests:
+          storage: 100Mi
 
-  # Storage Configuration
-  storage:
-    # -- Enable persistence for API
+    # -- Number of replicas of the API deployment
+    replicas: 1
+
+  # ConConfiguration parameters for the API logicfig
+  config:
+    # -- Token expiration in minutes after creation
+    apiTokenExpirationMin: 60
+    # -- Token refresh expiration in days
+    apiTokenRefreshExpirationDays: 7
+    # -- Enable or disable FastAPI documentation (Swagger/Redoc)
+    apiEnableDocumentation: false
+    # -- Port for the API socket binding
+    apiEndpointPort: 8001
+    # -- Host address for the API socket binding
+    apiEndpointUrl: 0.0.0.0
+    # -- Custom rate limiter rule 1 (format: label:type:seconds:max_requests)
+    apiRateLimiterCustom1: Security:xxx:60:100
+    # -- Rate limiter level 1 (format: seconds:max_requests)
+    apiRateLimiterL1: "60:100"
+    # -- Debug log level (debug, info, warning, error, critical)
+    debugLevel: info
+    # -- Destination folder for Velero backup inspection
+    veleroInspectFolder: /tmp/velero-inspect-backups
+    # -- Allowed origins for CORS
+    origins1: '*'
+    # -- If true, weak passwords are accepted
+    securityDisableUsersPwdRate: 1
+    # -- Path to SQLite database file used to store data
+    securityPathDatabase: ./data
+    # -- Enable Velero backup inspection feature
+    inspectBackupEnabled: false
+
+  # Secret values used by the API
+  secret:
+    # -- Unique client key
+    clientKey:
+    # -- Optional: Name of existing Kubernetes Secret (optional)
+    existingSecret: ""
+    # -- Default admin username (used for first login)
+    defaultAdminUsername: <REPLACE_ME>
+    # -- Default admin password (used for first login)
+    defaultAdminPassword: <REPLACE_ME>
+    # -- Password used by Velero restic integration
+    resticPassword: static-passw0rd
+    # -- Optional: Secret key used for JWT token signing
+    securityTokenKey:
+    # Optional: Username for connecting to the NATS serve
+    natsUsername: ""
+    # Optional: Password for connecting to the NATS server
+    natsPassword: ""
+    # bindPassword
+
+  # NATS configuration for agent communication
+  nats:
+    # -- Enable NATS integration
     enabled: false
-    # -- StorageClassName
-    storageClassName: ""
-    # -- Storage AccessMode
-    accessModes:
-      - ReadWriteOnce
-    # -- Storage requested resources
-    resources:
-      requests:
-        storage: 100Mi
+    # -- Protocol used for NATS
+    protocol: nats
+    # -- URL of the NATS server
+    endpointUrl: ""
+    # -- Client port for NATS
+    portClient: 4222
+    # -- Monitoring port for NATS
+    portMonitoring: 8222
 
-#
-# API Service Account
-#
-apiSa:
-  serviceAccount:
-    annotations: {}
-
-#
-# UI Image
-#
-ui:
-  ports:
-  - name: velero-ui
-    port: 80
-    protocol: TCP
-    targetPort: run
-  replicas: 1
-  webServer:
+# UI Service configuration
+uiService:
+  # Deployment settings for the UI
+  deployment:
     image:
-      # -- Image Registry
+      # -- Registry of the UI container image
       registry: docker.io
-      # -- Image Repository
+      # -- Repository of the UI container image
       repository: dserio83/velero-ui
-      # -- Image Tag
-      tag: 0.2.4
-    # -- Image pull policy
+      # -- Tag of the UI container image
+      tag: 0.2.5
+
+    # -- Image pull policy (e.g., Always, IfNotPresent)
     imagePullPolicy: IfNotPresent
+    # -- Secrets to use when pulling images from private registries
     imagePullSecrets: []
-    # -- SecurityContext for Pod
+
+    # -- Pod security context settings
     podSecurityContext:
       enabled: false
       seccompProfile:
         type: RuntimeDefault
-    # -- SecurityContext for Container
+
+    # -- Container-level security context
     securityContext:
       enabled: false
       allowPrivilegeEscalation: false
@@ -174,13 +204,15 @@ ui:
       readOnlyRootFilesystem: true
       runAsNonRoot: true
       runAsUser: 65534
-    # -- Operator nodeSelector
+
+    # -- Node selector for scheduling the UI pod
     nodeSelector: {}
-    # -- Operator tolerations
+    # -- Tolerations for the UI pod
     tolerations: []
-    # -- Operator affinity
+    # -- Affinity rules for the UI pod
     affinity: {}
-    # -- Resources for the Operator
+
+    # -- Resource requests and limits for the UI pod
     resources: {}
     # requests:
     #   cpu: 50m
@@ -188,112 +220,62 @@ ui:
     # limits:
     #   cpu: 500m
     #   memory: 512Mi
-    # -- VolumeMounts
-    volumeMounts:
+
+    # -- Volume mounts for the UI container
+    volumeMounts: []
     # - name: velero-api
     #   mountPath: /usr/local/bin
-    # -- Volumes
-    volumes:
+    # -- Volumes definitions for the UI pod
+    volumes: []
     # - name: velero-api
     #   emptyDir: {}
     # -- Add annotations to deployment
+
+    # -- Annotations to apply to the deployment
     annotations: {}
-    # -- Add annotations to pods
+    # -- Annotations to apply to the pods
     podAnnotations: {}
 
-#
-# UI Config
-#
-uiConfig:
-  # -- Milliseconds delay for datatable update after each operation
-  nextPublicRefreshDatatableAfter: "1500"
-  # -- Polling task in progress updates in milliseconds
-  nextPublicRefreshRecent: "5000"
-  # -- Url to http velero-api project
-  nextPublicVeleroApiUrl: http://10.10.0.100
-  # -- Url to ws velero-api project
-  nextPublicVeleroApiWs: ws://10.10.0.100
-  # -- Enabled UI logger
-  nextPublicLoggerEnabled: false
-  #
-  # Experimental
-  #
-  experimental: false
-  # -- Cluster name where velero-api 2 is deployed
-  exNextPublicVeleroApiName2: ""
-  # -- Url to http velero-api 2 project
-  exNextPublicVeleroApiUrl2: ""
-  # -- Url to ws velero-api 2 project
-  exNextPublicVeleroApiWs2: ""
+    # -- Number of replicas of the UI deployment
+    replicas: 1
 
-#
-# VUI access with nodeport
-#
-uiNp:
-  # -- Enable or disable nodeport
-  enabled: true
-  # -- Any ip address of your cluster
-  ip: ""
-  # -- API port
-  apiPort: "30001"
-  # -- UI port
-  uiPort: "30002"
+  # Configuration parameters for the UI behavior
+  config:
+    # -- Delay (in milliseconds) before refreshing datatable after actions
+    nextPublicRefreshDatatableAfter: 1500
+    # -- Interval (in milliseconds) for polling running tasks updates
+    nextPublicRefreshRecent: 5000
+    # -- HTTP URL of the Velero API backend
+    nextPublicVeleroApiUrl: http://10.10.0.100
+    # -- WebSocket URL of the Velero API backend
+    nextPublicVeleroApiWs: ws://10.10.0.100
+    # -- Enable or disable the UI logger
+    nextPublicLoggerEnabled: false
 
-#
-# VUI access with ingress
-#
-uiIngress:
-  # -- Enable or disable ingress
-  enabled: false
-  # -- Ingress class name
-  ingressClassName: nginx
-  metadata:
-    annotations:
-      # cert-manager.io/cluster-issuer: "letsencrypt-prod"
-  spec:
-    tls:
-    # - hosts:
-    #   - velero-ui.domain.com
-    #   secretName: velero-ui-tls
-
-#
-# VUI custom service, create ClusterIpOnly
-#
-clusterIpService:
-  # -- Enable or disable ClusterIP services
-  enabled: false
-
-#
-# Service Account
-#
-k8SReadOnlyServiceAccount:
-  serviceAccount:
-    annotations: {}
-
-#
-# Watchdog Cron
-#
-report:
-  failedJobsHistoryLimit: 0
-  # -- Cron for full report
-  schedule: 0 8 * * *
-  successfulJobsHistoryLimit: 0
-  veleroWatchdogReport:
+# Watchdog Service configuration
+watchdogService:
+  # Deployment settings for the Watchdog service
+  deployment:
     image:
-      # -- Image Registry
+      # -- Registry of the watchdog container image
       registry: docker.io
-      # -- Image Repository
+      # -- Repository of the watchdog container image
       repository: dserio83/velero-watchdog
-      # -- Image Tag
-      tag: 0.1.7
+      # -- Tag of the watchdog container image
+      tag: 0.1.8
+
+    # -- Image pull policy (e.g., Always, IfNotPresent)
     imagePullPolicy: IfNotPresent
+    # -- Secrets to use when pulling images from private registries
     imagePullSecrets: []
-    # -- SecurityContext for Pod
+
+    # -- Pod security context settings
     podSecurityContext:
       enabled: false
       seccompProfile:
         type: RuntimeDefault
-    # -- SecurityContext for Container
+
+    # -- Container-level security context
     securityContext:
       enabled: false
       allowPrivilegeEscalation: false
@@ -303,13 +285,235 @@ report:
       readOnlyRootFilesystem: true
       runAsNonRoot: true
       runAsUser: 65534
-    # -- Operator nodeSelector
+
+    # -- Node selector for scheduling the watchdog pod
     nodeSelector: {}
-    # -- Operator tolerations
+    # -- Tolerations for the watchdog pod
     tolerations: []
-    # -- Operator affinity
+    # -- Affinity rules for the watchdog pod
     affinity: {}
-    # -- Resources for the Operator
+
+    # -- Resource requests and limits for the watchdog container
+    resources: {}
+    #  requests:
+    #    cpu: 250m
+    #    memory: 256Mi
+    #  limits:
+    #    cpu: 500m
+    #    memory: 1256Mi
+
+    # -- Volume mounts for the watchdog container
+    volumeMounts: []
+    # - name: velero-api
+    #   mountPath: /usr/local/bin
+    # -- Volumes
+    volumes: []
+    # - name: velero-api
+    #   emptyDir: {}
+
+    # -- Annotations to apply to the deployment
+    annotations: {}
+    # -- Annotations to apply to the pods
+    podAnnotations: {}
+
+    # -- Number of replicas of the watchdog deployment
+    replicas: 1
+
+    # -- Ports exposed by the watchdog service
+    ports:
+    - name: watchdog-api
+      port: 8001
+      protocol: TCP
+      targetPort: 8001
+
+  # Configuration parameters for watchdog logic
+  config:
+    # -- Host address for API socket binding
+    apiEndpointUrl: 0.0.0.0
+    # -- Port for API socket binding
+    apiEndpointPort: 8001
+    # -- VEnable debug output
+    debug: false
+    # -- Log level for debugging (e.g., debug, info, warning, error, critical)
+    debugLevel: info
+
+    # -- Enable backup monitoring
+    backupEnable: true
+    # -- Enable schedule monitoring
+    scheduleEnable: true
+    # -- Number of days before expiration to trigger a backup warning
+    expiresDaysWarning: 29
+    # -- Cycle time (in seconds) for processing backup/schedule states
+    processCycleSec: 300
+
+    # -- Skip notifications for completed backups
+    notificationSkipCompleted: true
+    # -- Skip notifications for in-progress backups
+    notificationSkipInProgress: true
+    # -- Skip notifications for removed backups
+    notificationSkipRemoved: true
+    # -- Skip notifications for backups being deleted
+    notificationSkipDeleting: true
+
+    # -- Send a notification message at startup
+    sendStartMessage: true
+    # -- Send report at startup
+    sendReportAtStartup: false
+
+    # -- Add a prefix to backup items in reports
+    reportBackupItemPrefix: ""
+    # -- Add a prefix to schedule items in reports
+    reportScheduleItemPrefix: ""
+
+    # -- [DEPRECATED] Email username for account (no longer used, will be removed in future versions)
+    emailAccount: <email>
+    # -- [DEPRECATED] Enable email notifications (no longer used, will be removed in future versions)
+    emailEnable: false
+    # -- [DEPRECATED] Email account password account (no longer used, will be removed in future versions)
+    emailPassword: <pwd>
+    # -- [DEPRECATED] Recipients for email notifications (semicolon-separated) (no longer used, will be removed in future versions)
+    emailRecipients: <recipients>
+    # -- [DEPRECATED] SMTP port (no longer used, will be removed in future versions)
+    emailSmtpPort: <smtp-port>
+    # -- [DEPRECATED] SMTP server address (no longer used, will be removed in future versions)
+    emailSmtpServer: <smtp-server>
+
+    # -- [DEPRECATED] Telegram chat ID for notifications(no longer used, will be removed in future versions)
+    telegramChatId: <chat-id>
+    # -- [DEPRECATED] Enable Telegram notifications (no longer used, will be removed in future versions)
+    telegramEnable: false
+    # -- [DEPRECATED] Token to access Telegram Bot API (no longer used, will be removed in future versions)
+    telegramToken: <token>
+
+    # -- [DEPRECATED] Slack channel ID for notifications (no longer used, will be removed in future versions)
+    slackChannel: <channel-id>
+    # -- [DEPRECATED] Enable Slack notifications (no longer used, will be removed in future versions)
+    slackEnable: false
+    # -- [DEPRECATED] Token to access Slack API (no longer used, will be removed in future versions)
+    slackToken: <token>
+
+  # secret
+  secret:
+    # Optional: Name of pre-existing Secret, must include subsequent secrets
+    existingSecret: ""
+
+# CronJobs configuration
+cronJobs:
+  report:
+    # -- Maximum number of failed job histories to retain
+    failedJobsHistoryLimit: 0
+
+    # -- Cron schedule expression for generating full reports
+    schedule: "0 8 * * *"
+
+    # -- Maximum number of successful job histories to retain
+    successfulJobsHistoryLimit: 0
+
+    # Job specification for the cron job
+    jobSpec:
+      image:
+        # -- Registry of the container image used in the cron job
+        registry: docker.io
+        # -- Repository of the container image used in the cron job
+        repository: dserio83/velero-watchdog
+        # -- Tag of the container image used in the cron job
+        tag: 0.1.8
+
+      # -- Image pull policy (e.g., Always, IfNotPresent)
+      imagePullPolicy: IfNotPresent
+      # -- Secrets to use when pulling images from private registries
+      imagePullSecrets: []
+
+      # -- Pod security context settings
+      podSecurityContext:
+        enabled: false
+        seccompProfile:
+          type: RuntimeDefault
+
+      # -- Container-level security context
+      securityContext:
+        enabled: false
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        runAsUser: 65534
+
+      # -- Node selector for scheduling the cron job pod
+      nodeSelector: {}
+      # -- Tolerations for the cron job pod
+      tolerations: []
+      # -- Affinity rules for the cron job pod
+      affinity: {}
+
+      # -- Resource requests and limits for the cron job container
+      resources: {}
+      # requests:
+      #   cpu: 50m
+      #   memory: 128Mi
+      # limits:
+      #   cpu: 500m
+      #   memory: 512Mi
+
+      # -- Volume mounts for the cron job container
+      volumeMounts: []
+      # - name: velero-api
+      #   mountPath: /usr/local/bin
+      # -- Volumes definitions for the cron job pod
+      volumes: []
+      # - name: velero-api
+      #   emptyDir: {}
+
+      # -- Annotations to apply to the cron job
+      annotations: {}
+      # -- Annotations to apply to the pods created by the cron job
+      podAnnotations: {}
+
+# Core Service configuration
+coreService:
+  # Deployment settings for the Core service
+  deployment:
+    image:
+      # -- Registry of the Core service container image
+      registry: hub.serio.cloud
+      # -- Repository of the Core service container image
+      repository: vui-core-open/vui-core-open
+      # -- Tag of the Core service container image
+      tag: 0.1.0
+
+    # -- Image pull policy (e.g., Always, IfNotPresent)
+    imagePullPolicy: IfNotPresent
+    # -- Secrets to use when pulling images from private registries
+    imagePullSecrets:
+      - name: vui-core-login-secret
+
+    # -- Pod security context settings
+    podSecurityContext:
+      enabled: false
+      seccompProfile:
+        type: RuntimeDefault
+
+    # -- Container-level security context
+    securityContext:
+      enabled: false
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+      runAsUser: 65534
+
+    # -- Node selector for scheduling the Core pod
+    nodeSelector: {}
+    # -- Tolerations for the Core pod
+    tolerations: []
+    # -- Affinity rules for the Core pod
+    affinity: {}
+
+    # -- Resource requests and limits for the Core container
     resources: {}
     # requests:
     #   cpu: 50m
@@ -317,40 +521,103 @@ report:
     # limits:
     #   cpu: 500m
     #   memory: 512Mi
-    # -- VolumeMounts
-    volumeMounts:
-    # - name: velero-api
+
+    # -- Volume mounts for the Core container
+    volumeMounts: []
+    # - name: vui-core
     #   mountPath: /usr/local/bin
-    # -- Volumes
-    volumes:
-    # - name: velero-api
+    # -- Volumes definitions for the Core pod
+    volumes: []
+    # - name: vui-core
     #   emptyDir: {}
-    # -- Add annotations to cronjob
+
+    # -- Annotations to apply to the deployment
     annotations: {}
-    # -- Add annotations to pods
+    # -- Annotations to apply to the pods
     podAnnotations: {}
 
-#
-# Watchdog Daemon
-#
-watchdog:
-  replicas: 1
-  veleroMonitoring:
+    # Storage configuration for Core
+    storage:
+      # -- Enable persistent volume for Core
+      enabled: false
+      # -- Storage class name to use
+      storageClassName: ""
+      # -- Access modes for the volume
+      accessModes:
+        - ReadWriteOnce
+      # -- Storage requests (size)
+      resources:
+        requests:
+          storage: 100M
+
+  # ConConfiguration parameters for the API logicfig
+  config:
+    # -- Token expiration in minutes after creation
+    apiTokenExpirationMin: 60
+    # -- Token refresh expiration in days
+    apiTokenRefreshExpirationDays: 7
+    # -- Port for the API socket binding
+    apiEndpointPort: 8001
+    # -- Host address for the API socket binding
+    apiEndpointUrl: 0.0.0.0
+    # -- Custom rate limiter rule 1 (format: label:type:seconds:max_requests)
+    apiRateLimiterCustom1: Security:xxx:60:100
+    # -- Rate limiter level 1 (format: seconds:max_requests)
+    apiRateLimiterL1: "60:100"
+    # -- Debug log level (debug, info, warning, error, critical)
+    debugLevel: info
+    # -- Allowed origins for CORS
+    origins1: '*'
+    # -- If true, weak passwords are accepted
+    securityDisableUsersPwdRate: 1
+    # -- Path to SQLite database file used to store data
+    securityPathDatabase: ./data
+
+  # Secrets used by the Core service
+  secret:
+    # -- Optional: Name of existing Kubernetes Secret
+    existingSecret: ""
+    # -- Default admin username (used for first login)
+    defaultAdminUsername: <REPLACE_ME>
+    # -- Default admin password (used for first login)
+    defaultAdminPassword: <REPLACE_ME>
+    # -- Username for connecting to the NATS server
+    natsUsername: ""
+    # -- Password for connecting to the NATS server
+    natsPassword: ""
+    # bindPassword
+
+
+# NATS Service configuration
+natsService:
+  # -- Static IP address to assign to the LoadBalancer service. This must be pre-reserved in your cloud provider or infrastructure.
+  loadBalancerIP:
+
+  # -- Protocol used by the NATS service
+  protocol: nats
+
+  # Deployment settings for the NATS service
+  deployment:
     image:
-      # -- Image Registry
+      # -- Registry of the NATS container image
       registry: docker.io
-      # -- Image Repository
-      repository: dserio83/velero-watchdog
-      # -- Image Tag
-      tag: 0.1.7
+      # -- Repository of the NATS container image
+      repository: nats
+      # -- Tag of the NATS container image
+      tag: alpine3.20
+
+    # -- Image pull policy (e.g., Always, IfNotPresent)
     imagePullPolicy: IfNotPresent
+    # -- Secrets to use when pulling images from private registries
     imagePullSecrets: []
-    # -- SecurityContext for Pod
+
+    # -- Pod security context settings
     podSecurityContext:
       enabled: false
       seccompProfile:
         type: RuntimeDefault
-    # -- SecurityContext for Container
+
+    # -- Container-level security context
     securityContext:
       enabled: false
       allowPrivilegeEscalation: false
@@ -360,133 +627,85 @@ watchdog:
       readOnlyRootFilesystem: true
       runAsNonRoot: true
       runAsUser: 65534
-    # -- Operator nodeSelector
-    nodeSelector: {}
-    # -- Operator tolerations
-    tolerations: []
-    # -- Operator affinity
-    affinity: {}
-    # -- Resources for the Operator
-    resources:
-      limits:
-        cpu: 500m
-        memory: 1256Mi
-      requests:
-        cpu: 250m
-        memory: 256Mi
-    # -- VolumeMounts
-    volumeMounts:
-    # - name: velero-api
-    #   mountPath: /usr/local/bin
-    # -- Volumes
-    volumes:
-    # - name: velero-api
-    #   emptyDir: {}
-    # -- Add annotations to deployment
-    annotations: {}
-    # -- Add annotations to pods
-    podAnnotations: {}
 
-#
-# Watchdog Cluster IP
-#
-watchdogClusterip:
-  port: 8001
-  targetPort: 8001
+    # -- Ports exposed by the NATS container
+    ports:
+      - name: client
+        port: 4222
+        protocol: TCP
+        targetPort: client
+      - name: monitoring
+        port: 8222
+        protocol: TCP
+        targetPort: monitoring
 
-#
-# Watchdog Config
-#
-watchdogConfig:
-  # -- Socket bind host
-  apiEndpointURL: "0.0.0.0"
-  # -- Socket bind port
-  apiEndpointPort: "8001"
-  # -- View debugging information.
-  debug: "false"
-  # -- Debug level information.
-  debugLevel: info
-  # -- Enable watcher for backups without schedule or last backup for each schedule
-  backupEnable: "true"
-  # -- Enable watcher for schedule
-  scheduleEnable: "true"
-  # -- Number of days to backup expiration below which to display a warning about the backup
-  expiresDaysWarning: "29"
-  # -- Cycle time (seconds)
-  processCycleSec: "300"
-  # -- Skip notification new completed backup
-  notificationSkipCompleted: "true"
-  # -- Skip notification new in progress backup
-  notificationSkipInProgress: "true"
-  # -- Skip notification backup removed
-  notificationSkipRemoved: "true"
-  # -- Skip notification backup deleting
-  notificationSkipDeleting: "true"
-  # -- User name account
-  emailAccount: <email>
-  # -- Enable email notification
-  emailEnable: "false"
-  # -- Email password account
-  emailPassword: <pwd>
-  # -- Email recipients semicolon separated
-  emailRecipients: <recipients>
-  # -- SMTP port
-  emailSmtpPort: <smtp-port>
-  # -- SMTP server
-  emailSmtpServer: <smtp-server>
-  # -- Send notification message at startup
-  sendStartMessage: "true"
-  # -- Send report at startup
-  sendReportAtStartup: "false"
-  # -- Telegram chat id where send the notifications
-  telegramChatId: <chat-id>
-  # -- Enable telegram notification
-  telegramEnable: "false"
-  # -- Token for access to Telegram bot via Http API
-  telegramToken: <token>
-  # -- Add a prefix to backup items in reports
-  reportBackupItemPrefix: ""
-  # -- Add a prefix to schedule items in reports
-  reportScheduleItemPrefix: ""
-  # -- Channel id where sens the notification
-  slackChannel: <channel-id>
-  # -- Enable Slack notification
-  slackEnable: "false"
-  # -- Token for access to Slack via Http API
-  slackToken: <token>
-
-#
-# Authentication
-#
-authentication:
+# Authentication Configuration
+auth:
   # -- Enable or disable authentication (true/false)
-  enabled: "true"
+  enabled: true
   # -- Type of authentication: BUILT-IN (default), LDAP
-  type: "BUILT-IN"
-  # -- LDAP Configuration (used when Type is LDAP)
+  mode: BUILT-IN
+  # LDAP Configuration (used when Type is LDAP)
   ldap:
     # -- Complete LDAP URI, including protocol and port (e.g., ldaps://ldap.example.com:636)
-    uri: "ldaps://ldap.example.com:636"
+    uri: ldaps://ldap.example.com:636
     # -- Use SSL for LDAP connection (true/false)
-    useSsl: "true"
+    useSsl: true
     # -- Base Distinguished Name (DN) for LDAP searches
-    baseDn: "dc=example,dc=com"
+    baseDn: dc=example,dc=com
     # -- LDAP Service Account: It is recommended to use a read-only account
-    bindDn: "cn=admin,dc=example,dc=com"
+    bindDn: cn=admin,dc=example,dc=com
     # -- LDAP Service Secret: **Should be stored securely using Kubernetes Secrets!**
-    bindPassword: "<secret>"
+    bindPassword: <secret>
     # -- LDAP User Search Filter (use {username} as a placeholder)
-    userSearchFilter: "(&(objectClass=person)(uid={username}))"
+    userSearchFilter: (&(objectClass=person)(uid={username}))
+
+    # Authorization settings
     authz:
       # -- Enable or disable LDAP authorization (true/false)
-      enabled: "true"
+      enabled: true
       # -- Authorization strategy: GROUP or ATTRIBUTE
-      strategy: "GROUP"
+      strategy: GROUP
       # -- Base Distinguished Name (DN) for LDAP authorization through group membership
-      authzBaseDn: "cn=admins,ou=groups,dc=example,dc=com"
+      authzBaseDn: cn=admins,ou=groups,dc=example,dc=com
       # -- LDAP Authorization Filter for groups (use {user_dn} as a placeholder)
-      authzFilter: "(&(objectClass=groupOfNames)(member={user_dn}))"
+      authzFilter: (&(objectClass=groupOfNames)(member={user_dn}))
       # -- LDAP Attribute for authorization (used when Strategy is ATTRIBUTE)
       authzAttribute: ""
       # -- LDAP Attribute Value for authorization (used when Strategy is ATTRIBUTE)
       authzValue: ""
+
+# Exposure method for the services (one of: nodePort, ingress, clusterIP)
+exposure:
+  # -- Exposure mode: nodePort, ingress, or clusterIP
+  mode: clusterIP
+
+  # -- ClusterIP configuration (used if mode is clusterIP)
+  clusterIP: {}
+
+  # NodePort configuration (used if mode is nodePort)
+  nodePort:
+    # -- IP address of the node where the service is exposed (used in nodePort mode). This must be set manually.
+    ip:
+    # -- NodePort to expose the API service
+    apiPort: 30001
+    # -- NodePort to expose the UI service
+    uiPort: 30002
+
+  # Ingress configuration (used if mode is ingress)
+  ingress:
+    # -- Name of the ingress class (e.g., nginx, traefik)
+    ingressClassName: nginx
+
+    metadata:
+      annotations:
+        # -- Optional annotations for the ingress resource
+        # cert-manager.io/cluster-issuer: "letsencrypt-prod"
+
+    spec:
+      tls:
+        # List of hosts to be covered by TLS
+        - hosts:
+            - vui.local.dev
+        # -- Optional: name of the Kubernetes TLS secret
+        # secretName: velero-ui-tls

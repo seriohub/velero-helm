@@ -1,0 +1,20 @@
+{{- if .Values.global.core }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "seriohub-velero.fullname" $ }}-nats-loadbalancer
+  labels:
+    {{- include "seriohub-velero.labels" . | nindent 4 }}
+spec:
+  type: LoadBalancer
+  loadBalancerIP: {{ $.Values.natsService.loadBalancerIP | quote }}
+  selector:
+    component: broker
+  ports:
+  {{- range .Values.natsService.deployment.ports }}
+    - name: {{ .name }}
+      port: {{ .port }}
+      targetPort: {{ .targetPort | default .port }}
+      protocol: {{ .protocol }}
+  {{- end }}
+{{- end }}

@@ -1,88 +1,90 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "seriohub-velero.fullname" . }}-watchdog
+  name: {{ include "seriohub-velero.fullname" . }}-watchdog-deploy
   # name: velero-watchdog
   labels:
-    app: velero-watchdog
-    tier: backend
+    component: watchdog
   {{- include "seriohub-velero.labels" . | nindent 4 }}
-  {{- with .Values.watchdog.veleroMonitoring.annotations }}
+  {{- with .Values.watchdogService.deployment.annotations }}
   annotations: {{ toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  replicas: {{ .Values.watchdog.replicas }}
+  replicas: {{ .Values.watchdogService.deployment.replicas }}
   selector:
     matchLabels:
-      tier: backend
+      component: watchdog
     {{- include "seriohub-velero.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: velero-watchdog
-        tier: backend
+        component: watchdog
       {{- include "seriohub-velero.selectorLabels" . | nindent 8 }}
-      {{- with .Values.watchdog.veleroMonitoring.annotations }}
+      {{- with .Values.watchdogService.deployment.annotations }}
       annotations: {{ toYaml . | nindent 8 }}
       {{- end }}
     spec:
-      {{- with .Values.watchdog.veleroMonitoring.volumes }}
+      {{- with .Values.watchdogService.deployment.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.watchdog.veleroMonitoring.imagePullSecrets }}
+      {{- with .Values.watchdogService.deployment.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if .Values.watchdog.veleroMonitoring.podSecurityContext.enabled }}
+      {{- if .Values.watchdogService.deployment.podSecurityContext.enabled }}
       securityContext:
-        {{- toYaml (omit .Values.watchdog.veleroMonitoring.podSecurityContext "enabled") | nindent 8 }}
+        {{- toYaml (omit .Values.watchdogService.deployment.podSecurityContext "enabled") | nindent 8 }}
       {{- end }}
-      {{- with .Values.watchdog.veleroMonitoring.nodeSelector }}
+      {{- with .Values.watchdogService.deployment.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.watchdog.veleroMonitoring.affinity }}
+      {{- with .Values.watchdogService.deployment.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.watchdog.veleroMonitoring.tolerations }}
+      {{- with .Values.watchdogService.deployment.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-      - env:
-        - name: POD_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
-        - name: POD_NAMESPACE
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.namespace
+      - name: velero-monitoring
+        image: {{ .Values.watchdogService.deployment.image.registry | trimSuffix "/" }}/{{ .Values.watchdogService.deployment.image.repository }}:{{ .Values.watchdogService.deployment.image.tag }}
+        imagePullPolicy: {{ .Values.watchdogService.deployment.imagePullPolicy }}        
+        env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
         envFrom:
-        {{- if lookup "v1" "ConfigMap" .Release.Namespace "velero-watchdog-user-config" }}
-        - configMapRef:
-            name: velero-watchdog-user-config
-        {{- end }}
-        - configMapRef:
-            name: velero-watchdog-config
-        - configMapRef:
-            name: vui-helm-config
-        - secretRef:
-            name: velero-watchdog-config
-        image: {{ .Values.watchdog.veleroMonitoring.image.registry | trimSuffix "/" }}/{{ .Values.watchdog.veleroMonitoring.image.repository }}:{{ .Values.watchdog.veleroMonitoring.image.tag }}
-        imagePullPolicy: {{ .Values.watchdog.veleroMonitoring.imagePullPolicy }}
-        name: velero-monitoring
-        {{- if .Values.watchdog.veleroMonitoring.securityContext.enabled }}
+          - configMapRef:
+              name: {{ include "seriohub-velero.fullname" . }}-helm-config
+          - configMapRef:
+              name: {{ include "seriohub-velero.fullname" $ }}-watchdog-config
+          {{- if not .Values.watchdogService.secret.existingSecret }}
+          - secretRef:
+              name: {{ include "seriohub-velero.fullname" $ }}-watchdog-secret
+          {{- else }}
+          - secretRef:
+              name: {{ .Values.watchdogService.secret.existingSecret }}
+          {{- end }}
+        ports:
+          - name: api
+            containerPort: 8001
+        {{- if .Values.watchdogService.deployment.securityContext.enabled }}
         securityContext:
-          {{- toYaml (omit .Values.watchdog.veleroMonitoring.securityContext "enabled") | nindent 10 }}
+          {{- toYaml (omit .Values.watchdogService.deployment.securityContext "enabled") | nindent 10 }}
         {{- end }}
-        {{- with .Values.watchdog.veleroMonitoring.resources }}
+        {{- with .Values.watchdogService.deployment.resources }}
         resources:
           {{ . | toYaml | nindent 10 }}
         {{- end }}
-        {{- with .Values.watchdog.veleroMonitoring.volumeMounts }}
+        {{- with .Values.watchdogService.deployment.volumeMounts }}
         volumeMounts:
           {{- toYaml . | nindent 10 }}
         {{- end }}

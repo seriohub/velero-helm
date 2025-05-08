@@ -1,9 +1,9 @@
-{{- if .Values.apiService.deployment.storage.enabled }}
-{{- with .Values.apiService.deployment.storage }}
+{{- if .Values.coreService.deployment.storage.enabled }}
+  {{- with .Values.coreService.config.storage }}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ include "seriohub-velero.fullname" $ }}-vui-api-pvc
+  name: {{ include "seriohub-velero.fullname" $ }}-core-pvc
 spec:
   storageClassName: {{ .storageClassName }}
   {{- with .accessModes }}
@@ -12,5 +12,5 @@ spec:
   {{- end }}
   resources:
     {{- toYaml .resources | nindent 4 }}
-{{- end }}
+  {{- end }}
 {{- end }}

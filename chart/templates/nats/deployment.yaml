@@ -1,0 +1,91 @@
+{{- if .Values.global.core }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "seriohub-velero.fullname" . }}-nats
+  labels:
+    component: broker
+  {{- include "seriohub-velero.labels" . | nindent 4 }}
+  {{- with .Values.apiService.deployment.annotations }}
+  annotations: {{ toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: broker
+    {{- include "seriohub-velero.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        component: broker
+      {{- include "seriohub-velero.selectorLabels" . | nindent 8 }}
+    spec:
+      shareProcessNamespace: true
+      containers:
+        - name: nats
+          image: {{ .Values.natsService.deployment.image.registry | trimSuffix "/" }}/{{ .Values.natsService.deployment.image.repository }}:{{ .Values.natsService.deployment.image.tag }}
+          imagePullPolicy: {{ .Values.natsService.deployment.imagePullPolicy }}
+          command: ["nats-server"]
+          args: ["-c", "/etc/nats/nats-server.conf"]
+          ports:
+            - name: client
+              containerPort: 4222
+              protocol: TCP
+            - name: monitoring
+              containerPort: 8222
+              protocol: TCP
+          volumeMounts:
+            - name: config
+              mountPath: /etc/nats/nats-server.conf
+              subPath: nats-server.conf
+            - name: user-auth
+              mountPath: /etc/nats-auth
+          {{- with .Values.natsService.deployment.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
+          {{- if .Values.natsService.deployment.securityContext.enabled }}
+          securityContext:
+            {{- toYaml (omit .Values.natsService.deployment.securityContext "enabled") | nindent 10 }}
+          {{- end }}
+
+        - name: nats-reloader
+          image: alpine:3.18
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              apk add --no-cache coreutils
+              sh /reload.sh
+          volumeMounts:
+            - name: user-auth
+              mountPath: /etc/nats-auth
+            - name: reload-script
+              mountPath: /reload.sh
+              subPath: reload.sh
+
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include "seriohub-velero.fullname" $ }}-nats-config
+        - name: user-auth
+          secret:
+            secretName: vui-nats-user-auth
+        - name: reload-script
+          configMap:
+            name: {{ include "seriohub-velero.fullname" $ }}-nats-reload-config   
+      
+      restartPolicy: Always
+
+      {{- if .Values.natsService.deployment.podSecurityContext.enabled }}
+      securityContext:
+        {{- toYaml (omit .Values.natsService.deployment.podSecurityContext "enabled") | nindent 8 }}
+      {{- end }}
+
+
+{{- end }}
