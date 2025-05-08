@@ -115,7 +115,7 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | coreService.deployment.volumes | list | `[]` | Volumes definitions for the Core pod |
 | coreService.secret.defaultAdminPassword | string | `"<REPLACE_ME>"` | Default admin password (used for first login) |
 | coreService.secret.defaultAdminUsername | string | `"<REPLACE_ME>"` | Default admin username (used for first login) |
-| coreService.secret.existingSecret | string | `""` | Optional: Name of existing Kubernetes Secret  |
+| coreService.secret.existingSecret | string | `""` | Optional: Name of existing Kubernetes Secret |
 | coreService.secret.natsPassword | string | `""` | Password for connecting to the NATS server |
 | coreService.secret.natsUsername | string | `""` | Username for connecting to the NATS server |
 | cronJobs.report.failedJobsHistoryLimit | int | `0` | Maximum number of failed job histories to retain |
