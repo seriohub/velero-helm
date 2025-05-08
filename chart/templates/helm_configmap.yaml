@@ -1,18 +1,19 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: vui-helm-config
+  name: {{ include "seriohub-velero.fullname" . }}-helm-config
   labels:
   {{- include "seriohub-velero.labels" $ | nindent 4 }}
 data:
   HELM_VERSION: {{ $.Chart.Version }}
   HELM_APP_VERSION: {{ $.Chart.AppVersion }}
   {{- if $.Values.global.core }}
-  HELM_CORE: {{ $.Values.core.coreServer.image.tag }}
+  HELM_CORE: {{ $.Values.coreService.deployment.image.tag }}
   {{- end }}
-  HELM_API: {{ $.Values.api.apiServer.image.tag }}
-  HELM_UI: {{ $.Values.ui.webServer.image.tag }}
-  HELM_WATCHDOG: {{ $.Values.watchdog.veleroMonitoring.image.tag }}
+  HELM_API: {{ $.Values.apiService.deployment.image.tag }}
+  HELM_UI: {{ $.Values.uiService.deployment.image.tag }}
+  HELM_WATCHDOG: {{ $.Values.watchdogService.deployment.image.tag }}
+  HELM_RELEASE_NAME: {{ include "seriohub-velero.fullname" $ }}
   
   CORE: {{ $.Values.global.core | quote }}
   AGENT_MODE: {{ $.Values.global.agentMode | quote }}

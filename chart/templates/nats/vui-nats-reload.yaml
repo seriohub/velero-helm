@@ -1,7 +1,8 @@
+{{- if .Values.global.core }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: vui-nats-reload
+  name: {{ include "seriohub-velero.fullname" $ }}-nats-reload-config
 data:
   reload.sh: |
     #!/bin/sh
@@ -21,3 +22,4 @@ data:
       fi
       sleep 10
     done
+{{- end }}

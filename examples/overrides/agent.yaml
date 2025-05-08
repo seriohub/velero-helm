@@ -1,0 +1,25 @@
+# This file defines the minimum set of required configuration keys for a agent deployment.
+# For the complete list, you can refer to the values.yaml file.
+
+# ------------------------
+# Global
+# ------------------------
+global:
+  veleroNamespace: <SET_ME> # Namespace where the VMware Tanzu Velero instance is deployed
+  agentMode: true
+  clusterName: <SET_ME>
+
+# ------------------------
+# API Service
+# ------------------------
+apiService:
+  secret:
+    defaultAdminUsername: <SET_ME>
+    defaultAdminPassword: <SET_ME>
+    natsUsername: <SET_ME>
+    natsPassword: <SET_ME>
+  
+  nats:
+    enabled: true
+    protocol: nats
+    endpointUrl: <SET_ME>

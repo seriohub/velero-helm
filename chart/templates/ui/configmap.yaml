@@ -2,59 +2,36 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: vui-ui-config
+  name: {{ include "seriohub-velero.fullname" $ }}-ui-config
   labels:
     {{- include "seriohub-velero.labels" . | nindent 4 }}
 data:
-  #
   # Configuration
-  #
-  NEXT_PUBLIC_AUTH_ENABLED: {{ .Values.authentication.enabled | quote }}
-  NEXT_PUBLIC_REFRESH_DATATABLE_AFTER: {{ .Values.uiConfig.nextPublicRefreshDatatableAfter | quote }}
-  NEXT_PUBLIC_REFRESH_RECENT: {{ .Values.uiConfig.nextPublicRefreshRecent | quote  }}
-  NEXT_PUBLIC_LOGGER_ENABLED: {{ .Values.uiConfig.nextPublicLoggerEnabled | quote  }}
+  NEXT_PUBLIC_AUTH_ENABLED: {{ .Values.auth.enabled | quote }}
+  NEXT_PUBLIC_REFRESH_DATATABLE_AFTER: {{ .Values.uiService.config.nextPublicRefreshDatatableAfter | quote }}
+  NEXT_PUBLIC_REFRESH_RECENT: {{ .Values.uiService.config.nextPublicRefreshRecent | quote  }}
+  NEXT_PUBLIC_LOGGER_ENABLED: {{ .Values.uiService.config.nextPublicLoggerEnabled | quote  }}
   
   {{- if not .Values.global.core }}
-  #
   # API Agent Name
-  #
   NEXT_PUBLIC_VELERO_API_NAME_1: {{ .Values.global.clusterName | quote  }}  
-  
-  #  
-  # API Ingress
-  #
-  {{- if .Values.uiIngress.enabled }}
-  NEXT_PUBLIC_VELERO_API_URL_1: {{ printf "https://%s/api" (index (index .Values.uiIngress.spec.tls 0).hosts 0) | quote }}
-  NEXT_PUBLIC_VELERO_API_WS_1: {{ printf "wss://%s" (index (index .Values.uiIngress.spec.tls 0).hosts 0) | quote }}
-  {{- end }}
-  #  
-  # API NodePort
-  #
-  {{- if .Values.uiNp.enabled }}
-  NEXT_PUBLIC_VELERO_API_URL_1: {{ printf "http://%s:%s/api" .Values.uiNp.ip .Values.uiNp.apiPort | quote }}
-  NEXT_PUBLIC_VELERO_API_WS_1: {{ printf "ws://%s:%s" .Values.uiNp.ip .Values.uiNp.apiPort | quote }}
-  {{- end }}
-
-  #
-  # Experimental multiple clusters at the login without core
-  #
-  {{- if .Values.uiConfig.experimental }}
-  NEXT_PUBLIC_LOGIN_CLUSTERS_SWITCH: "true"
-  NEXT_PUBLIC_VELERO_API_NAME_2: {{ .Values.uiConfig.exNextPublicVeleroApiName2 | quote  }}
-  NEXT_PUBLIC_VELERO_API_URL_2: {{ .Values.uiConfig.exNextPublicVeleroApiUrl2 | quote  }}
-  NEXT_PUBLIC_VELERO_API_WS_2: {{ .Values.uiConfig.exNextPublicVeleroApiWs2 | quote  }}
-  {{- end }}
-  {{- end }}
-
-  {{- if .Values.global.core }}
+  {{- else }}
   NEXT_PUBLIC_LOGIN_CLUSTERS_SWITCH: "true"
   NEXT_PUBLIC_VELERO_API_NAME_1: "{{ .Values.global.clusterName  }}-core"
-  NEXT_PUBLIC_VELERO_API_URL_1: {{ printf "https://%s/api" (index (index .Values.uiIngress.spec.tls 0).hosts 0) | quote }}
-  NEXT_PUBLIC_VELERO_API_WS_1: {{ printf "wss://%s" (index (index .Values.uiIngress.spec.tls 0).hosts 0) | quote }}
   {{- end }}
 
-  #
+  # Exposure Ingress
+  {{- if eq .Values.exposure.mode "ingress" }}
+  NEXT_PUBLIC_VELERO_API_URL_1: {{ printf "https://%s/api" (index (index .Values.exposure.ingress.spec.tls 0).hosts 0) | quote }}
+  NEXT_PUBLIC_VELERO_API_WS_1: {{ printf "wss://%s" (index (index .Values.exposure.ingress.spec.tls 0).hosts 0) | quote }}
+  {{- end }}
+  
+  # Exposure NodePort
+  {{- if eq .Values.exposure.mode "nodePort" }}
+  NEXT_PUBLIC_VELERO_API_URL_1: {{ printf "http://%s:%s/api" .Values.exposure.nodePort.ip (toString .Values.exposure.nodePort.apiPort) | quote }}
+  NEXT_PUBLIC_VELERO_API_WS_1: {{ printf "ws://%s:%s" .Values.exposure.nodePort.ip (toString .Values.exposure.nodePort.apiPort) | quote }}
+  {{- end }}
+
   # Prototype Inspect Backups Features
-  #
-  NEXT_PUBLIC_INSPECT_BACKUP_ENABLED: {{ .Values.apiConfig.inspectBackupEnabled | quote  }}
+  NEXT_PUBLIC_INSPECT_BACKUP_ENABLED: {{ .Values.apiService.config.inspectBackupEnabled | quote  }}
 {{- end }}

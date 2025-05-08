@@ -4,20 +4,17 @@ kind: Deployment
 metadata:
   name: {{ include "seriohub-velero.fullname" . }}-nats
   labels:
-    app: vui-nats
-    layer: vui-core
-    tier: backend
+    component: broker
   {{- include "seriohub-velero.labels" . | nindent 4 }}
-  {{- with .Values.api.apiServer.annotations }}
+  {{- with .Values.apiService.deployment.annotations }}
   annotations: {{ toYaml . | nindent 4 }}
   {{- end }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: vui-nats
-      layer: vui-core
-      tier: backend
+      component: broker
+    {{- include "seriohub-velero.selectorLabels" . | nindent 6 }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -26,15 +23,14 @@ spec:
   template:
     metadata:
       labels:
-        app: vui-nats
-        layer: vui-core
-        tier: backend
+        component: broker
+      {{- include "seriohub-velero.selectorLabels" . | nindent 8 }}
     spec:
       shareProcessNamespace: true
       containers:
         - name: nats
-          image: {{ .Values.nats.natsServer.image.registry | trimSuffix "/" }}/{{ .Values.nats.natsServer.image.repository }}:{{ .Values.nats.natsServer.image.tag }}
-          imagePullPolicy: {{ .Values.nats.natsServer.imagePullPolicy }}
+          image: {{ .Values.natsService.deployment.image.registry | trimSuffix "/" }}/{{ .Values.natsService.deployment.image.repository }}:{{ .Values.natsService.deployment.image.tag }}
+          imagePullPolicy: {{ .Values.natsService.deployment.imagePullPolicy }}
           command: ["nats-server"]
           args: ["-c", "/etc/nats/nats-server.conf"]
           ports:
@@ -50,13 +46,13 @@ spec:
               subPath: nats-server.conf
             - name: user-auth
               mountPath: /etc/nats-auth
-          {{- with .Values.nats.natsServer.imagePullSecrets }}
+          {{- with .Values.natsService.deployment.imagePullSecrets }}
           imagePullSecrets:
             {{- toYaml . | nindent 8 }}
           {{- end }}
-          {{- if .Values.nats.natsServer.podSecurityContext.enabled }}
+          {{- if .Values.natsService.deployment.securityContext.enabled }}
           securityContext:
-            {{- toYaml (omit .Values.nats.natsServer.podSecurityContext "enabled") | nindent 8 }}
+            {{- toYaml (omit .Values.natsService.deployment.securityContext "enabled") | nindent 10 }}
           {{- end }}
 
         - name: nats-reloader
@@ -76,12 +72,20 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: vui-nats-config
+            name: {{ include "seriohub-velero.fullname" $ }}-nats-config
         - name: user-auth
           secret:
             secretName: vui-nats-user-auth
         - name: reload-script
           configMap:
-            name: vui-nats-reload    
+            name: {{ include "seriohub-velero.fullname" $ }}-nats-reload-config   
+      
       restartPolicy: Always
+
+      {{- if .Values.natsService.deployment.podSecurityContext.enabled }}
+      securityContext:
+        {{- toYaml (omit .Values.natsService.deployment.podSecurityContext "enabled") | nindent 8 }}
+      {{- end }}
+
+
 {{- end }}

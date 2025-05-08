@@ -2,11 +2,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: vui-core
+  name: {{ include "seriohub-velero.fullname" . }}-core-clusterip-svc
+  labels:
+    {{- include "seriohub-velero.labels" . | nindent 4 }}
 spec:
   type: ClusterIP
   selector:
-    app: vui-core
+    component: core
   ports:
     - name: vui-core
       port: 80

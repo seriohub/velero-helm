@@ -1,9 +1,9 @@
-{{- if .Values.coreConfig.storage.enabled }}
-  {{- with .Values.coreConfig.storage }}
+{{- if .Values.coreService.deployment.storage.enabled }}
+  {{- with .Values.coreService.config.storage }}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: pvc-vui-core
+  name: {{ include "seriohub-velero.fullname" $ }}-core-pvc
 spec:
   storageClassName: {{ .storageClassName }}
   {{- with .accessModes }}

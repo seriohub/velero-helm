@@ -5,4 +5,4 @@ metadata:
   labels:
   {{- include "seriohub-velero.labels" . | nindent 4 }}
   annotations:
-    {{- toYaml .Values.apiSa.serviceAccount.annotations | nindent 4 }}
+    {{- toYaml .Values.global.serviceAccounts.adminServiceAccount.annotations | nindent 4 }}

@@ -1,8 +1,8 @@
-{{- with .Values.apiConfig }}
+{{- with .Values.apiService.config }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: vui-api-config
+  name: {{ include "seriohub-velero.fullname" $ }}-api-config
   labels:
   {{- include "seriohub-velero.labels" $ | nindent 4 }}
 data:
@@ -16,8 +16,7 @@ data:
   K8S_VELERO_NAMESPACE: {{ $.Values.global.veleroNamespace }}
   K8S_VELERO_UI_NAMESPACE: {{ $.Release.Namespace }}
 
-  API_ENABLE_DOCUMENTATION: {{ .apiEnableDocumentation | quote }}
-  
+  API_ENABLE_DOCUMENTATION: {{ .apiEnableDocumentation | quote }}  
   API_RATE_LIMITER_L1: {{ .apiRateLimiterL1 | quote }}
   API_RATE_LIMITER_CUSTOM_1: {{ .apiRateLimiterCustom1 | quote }}  
   API_TOKEN_EXPIRATION_MIN: {{ .apiTokenExpirationMin | quote }}
@@ -27,53 +26,53 @@ data:
   
   DOWNLOAD_INSPECT_FOLDER:  {{ .veleroInspectFolder | quote }}
 
-  WATCHDOG_URL: {{ include "seriohub-velero.fullname" $ }}-watchdog
-  WATCHDOG_PORT: "{{ $.Values.watchdogClusterip.port }}"
-  WATCHDOG_REPORT_CRONJOB_NAME: {{ include "seriohub-velero.fullname" $ }}-report
+  WATCHDOG_URL: {{ include "seriohub-velero.fullname" $ }}-watchdog-clusterip-svc
+  WATCHDOG_PORT: {{ index $.Values.watchdogService.deployment.ports 0 "port" | quote }}
+  WATCHDOG_REPORT_CRONJOB_NAME: {{ include "seriohub-velero.fullname" $ }}-report-cronjob
 
-  SECURITY_PATH_DATABASE: "./data"
+  SECURITY_PATH_DATABASE: {{ .securityPathDatabase | quote }}
   SECURITY_DISABLE_USERS_PWD_RATE: {{ .securityDisableUsersPwdRate | quote }}
   
   #
   # AUTHENTICATION
   #
-  AUTH_ENABLED: {{ $.Values.authentication.enabled | quote }}
-  AUTH_TYPE: {{ $.Values.authentication.type | quote }}
-  {{- if eq ($.Values.authentication.type | upper) "LDAP" }}
+  AUTH_ENABLED: {{ $.Values.auth.enabled | quote }}
+  AUTH_TYPE: {{ $.Values.auth.mode | quote }}
+  {{- if eq ($.Values.auth.mode | upper) "LDAP" }}
   # LDAP authentication
-  LDAP_URI: {{ $.Values.authentication.ldap.uri | quote }}
-  LDAP_USE_SSL: {{ $.Values.authentication.ldap.useSsl | quote }}
-  LDAP_BASE_DN: {{ $.Values.authentication.ldap.baseDn | quote }}
-  LDAP_BIND_DN: {{ $.Values.authentication.ldap.bindDn | quote }}
-  LDAP_USER_SEARCH_FILTER: {{ $.Values.authentication.ldap.userSearchFilter | quote }}
+  LDAP_URI: {{ $.Values.auth.ldap.uri | quote }}
+  LDAP_USE_SSL: {{ $.Values.auth.ldap.useSsl | quote }}
+  LDAP_BASE_DN: {{ $.Values.auth.ldap.baseDn | quote }}
+  LDAP_BIND_DN: {{ $.Values.auth.ldap.bindDn | quote }}
+  LDAP_USER_SEARCH_FILTER: {{ $.Values.auth.ldap.userSearchFilter | quote }}
   # LDAP authz
-  {{- if $.Values.authentication.ldap.authz.enabled  }}  
-  LDAP_AUTHZ_ENABLED: {{ $.Values.authentication.ldap.authz.enabled | quote }}
-  LDAP_AUTHZ_STRATEGY: {{ $.Values.authentication.ldap.authz.strategy | quote }}
-  LDAP_AUTHZ_BASE_DN: {{ $.Values.authentication.ldap.authz.authzBaseDn | quote }}
-  LDAP_AUTHZ_FILTER: {{ $.Values.authentication.ldap.authz.authzFilter | quote }}
-  LDAP_AUTHZ_ATTRIBUTE: {{ $.Values.authentication.ldap.authz.authzAttribute | quote }}
-  LDAP_AUTHZ_VALUE: {{ $.Values.authentication.ldap.authz.authzValue | quote }}
+  {{- if $.Values.auth.ldap.authz.enabled  }}  
+  LDAP_AUTHZ_ENABLED: {{ $.Values.auth.ldap.authz.enabled | quote }}
+  LDAP_AUTHZ_STRATEGY: {{ $.Values.auth.ldap.authz.strategy | quote }}
+  LDAP_AUTHZ_BASE_DN: {{ $.Values.auth.ldap.authz.authzBaseDn | quote }}
+  LDAP_AUTHZ_FILTER: {{ $.Values.auth.ldap.authz.authzFilter | quote }}
+  LDAP_AUTHZ_ATTRIBUTE: {{ $.Values.auth.ldap.authz.authzAttribute | quote }}
+  LDAP_AUTHZ_VALUE: {{ $.Values.auth.ldap.authz.authzValue | quote }}
   {{- end }}
   {{- end }}
 
   {{- if $.Values.global.core }}
-  # nats endpoint core deployad along api
+  # nats endpoint core deployad along API
   NATS_ENABLE: "true"
-  NATS_PROTOCOL: {{ $.Values.nats.protocol | quote }}
-  NATS_ENDPOINT_URL: {{ $.Values.nats.ip | quote }}
-  NATS_PORT_CLIENT: {{ index $.Values.nats.ports 0 "port" | quote }}
-  NATS_PORT_MONITORING: {{ index $.Values.nats.ports 1 "port" | quote }}
+  NATS_PROTOCOL: {{ $.Values.natsService.protocol | quote }}
+  NATS_ENDPOINT_URL: {{ $.Values.natsService.loadBalancerIP | quote }}
+  NATS_PORT_CLIENT: {{ index $.Values.natsService.deployment.ports 0 "port" | quote }}
+  NATS_PORT_MONITORING: {{ index $.Values.natsService.deployment.ports 1 "port" | quote }}
   {{- end }}
 
   {{- if not $.Values.global.core }}
-  {{- if $.Values.agent.nats.enabled }}
-  # nats endpoint deployed in other cluster
+  {{- if $.Values.apiService.nats.enabled }}
+  # nats server deployed not along API
   NATS_ENABLE: "true"
-  NATS_PROTOCOL: {{ $.Values.agent.protocol | quote }}
-  NATS_ENDPOINT_URL: {{ $.Values.agent.endpointUrl | quote }}
-  NATS_PORT_CLIENT: {{ $.Values.agent.portClient | quote }}
-  NATS_PORT_MONITORING: {{ $.Values.agent.portMonitoring | quote }}
+  NATS_PROTOCOL: {{ $.Values.apiService.nats.protocol | quote }}
+  NATS_ENDPOINT_URL: {{ $.Values.apiService.nats.endpointUrl | quote }}
+  NATS_PORT_CLIENT: {{ $.Values.apiService.nats.portClient | quote }}
+  NATS_PORT_MONITORING: {{ $.Values.apiService.nats.portMonitoring | quote }}
   {{- end }}
   {{- end }}
 {{- end }}

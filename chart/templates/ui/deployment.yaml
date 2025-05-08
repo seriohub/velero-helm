@@ -2,53 +2,50 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "seriohub-velero.fullname" . }}-ui
+  name: {{ include "seriohub-velero.fullname" . }}-ui-deploy
   # name: velero-ui
   labels:
-    app:  vui-ui
-    tier: frontend
+    component: ui
   {{- include "seriohub-velero.labels" . | nindent 4 }}
-  {{- with .Values.ui.webServer.annotations }}
+  {{- with .Values.uiService.deployment.annotations }}
   annotations: {{ toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  replicas: {{ .Values.ui.replicas }}
+  replicas: {{ .Values.uiService.deployment.replicas }}
   selector:
     matchLabels:
-      app:  vui-ui
-      tier: frontend
+      component: ui
     {{- include "seriohub-velero.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app:  vui-ui
-        tier: frontend
+        component: ui
       {{- include "seriohub-velero.selectorLabels" . | nindent 8 }}
-      {{- with .Values.ui.webServer.annotations }}
+      {{- with .Values.uiService.deployment.annotations }}
       annotations: {{ toYaml . | nindent 8 }}
       {{- end }}
     spec:
-      {{- with .Values.ui.webServer.volumes }}
+      {{- with .Values.uiService.deployment.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.ui.webServer.imagePullSecrets }}
+      {{- with .Values.uiService.deployment.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if .Values.ui.webServer.podSecurityContext.enabled }}
+      {{- if .Values.uiService.deployment.podSecurityContext.enabled }}
       securityContext:
-        {{- toYaml (omit .Values.ui.webServer.podSecurityContext "enabled") | nindent 8 }}
+        {{- toYaml (omit .Values.uiService.deployment.podSecurityContext "enabled") | nindent 8 }}
       {{- end }}
-      {{- with .Values.ui.webServer.nodeSelector }}
+      {{- with .Values.uiService.deployment.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.ui.webServer.affinity }}
+      {{- with .Values.uiService.deployment.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.ui.webServer.tolerations }}
+      {{- with .Values.uiService.deployment.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -64,22 +61,22 @@ spec:
               fieldPath: metadata.namespace
         envFrom:
         - configMapRef:
-            name: vui-ui-config
-        image: {{ .Values.ui.webServer.image.registry | trimSuffix "/" }}/{{ .Values.ui.webServer.image.repository }}:{{ .Values.ui.webServer.image.tag }}
-        imagePullPolicy: {{ .Values.ui.webServer.imagePullPolicy }}
+            name: {{ include "seriohub-velero.fullname" $ }}-ui-config
+        image: {{ .Values.uiService.deployment.image.registry | trimSuffix "/" }}/{{ .Values.uiService.deployment.image.repository }}:{{ .Values.uiService.deployment.image.tag }}
+        imagePullPolicy: {{ .Values.uiService.deployment.imagePullPolicy }}
         name: webserver
         ports:
         - containerPort: 3000
           name: run
-        {{- if .Values.ui.webServer.securityContext.enabled }}
+        {{- if .Values.uiService.deployment.securityContext.enabled }}
         securityContext:
-          {{- toYaml (omit .Values.ui.webServer.securityContext "enabled") | nindent 10 }}
+          {{- toYaml (omit .Values.uiService.deployment.securityContext "enabled") | nindent 10 }}
         {{- end }}
-        {{- with .Values.ui.webServer.resources }}
+        {{- with .Values.uiService.deployment.resources }}
         resources:
           {{- . | toYaml | nindent 10 }}
         {{- end }}
-        {{- with .Values.ui.webServer.volumeMounts }}
+        {{- with .Values.uiService.deployment.volumeMounts }}
         volumeMounts:
           {{- toYaml . | nindent 10 }}
         {{- end }}

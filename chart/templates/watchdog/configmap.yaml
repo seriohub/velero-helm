@@ -1,12 +1,12 @@
-{{- with .Values.watchdogConfig }}
+{{- with .Values.watchdogService.config }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: vui-watchdog-config
+  name: {{ include "seriohub-velero.fullname" $ }}-watchdog-config
   labels:
   {{- include "seriohub-velero.labels" $ | nindent 4 }}
 data:
-  API_ENDPOINT_URL: {{ .apiEndpointURL | quote }}
+  API_ENDPOINT_URL: {{ .apiEndpointUrl | quote }}
   API_ENDPOINT_PORT: {{ .apiEndpointPort | quote }}
   
   DEBUG: {{ .debugLevel | quote }}  

@@ -1,23 +1,23 @@
-{{- if .Values.uiIngress.enabled }}
+{{- if eq .Values.exposure.mode "ingress" }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ include "seriohub-velero.fullname" . }}-ingress
   labels:
   {{- include "seriohub-velero.labels" . | nindent 4 }}
-  {{- with .Values.uiIngress.metadata.annotations }}
+  {{- with .Values.exposure.ingress.metadata.annotations }}
   annotations:
     {{- . | toYaml | nindent 4}}
   {{- end }}
 spec:
-  ingressClassName: {{ .Values.uiIngress.ingressClassName }}
+  ingressClassName: {{ .Values.exposure.ingress.ingressClassName }}
   rules:
-  - host: {{ (index (index .Values.uiIngress.spec.tls 0).hosts 0) }}
+  - host: {{ (index (index .Values.exposure.ingress.spec.tls 0).hosts 0) }}
     http:
       paths:
       - backend:
           service:
-            name: '{{ include "seriohub-velero.fullname" . }}-ui'
+            name: {{ include "seriohub-velero.fullname" . }}-ui-clusterip-svc
             port:
               number: 80
         path: /
@@ -25,14 +25,14 @@ spec:
       {{- if not .Values.global.core }}
       - backend:
           service:
-            name: '{{ include "seriohub-velero.fullname" . }}-api'
+            name: {{ include "seriohub-velero.fullname" . }}-api-clusterip-svc
             port:
               number: 80
         path: /api
         pathType: Prefix
       - backend:
           service:
-            name: '{{ include "seriohub-velero.fullname" . }}-api'
+            name: {{ include "seriohub-velero.fullname" . }}-api-clusterip-svc
             port:
               number: 80
         path: /ws
@@ -41,21 +41,21 @@ spec:
       {{- if .Values.global.core }}
       - backend:
           service:
-            name: '{{ include "seriohub-velero.fullname" . }}-core'
+            name: {{ include "seriohub-velero.fullname" . }}-core-clusterip-svc
             port:
               number: 80
         path: /api
         pathType: Prefix
       - backend:
           service:
-            name: '{{ include "seriohub-velero.fullname" . }}-core'
+            name: {{ include "seriohub-velero.fullname" . }}-core-clusterip-svc
             port:
               number: 80
         path: /ws
         pathType: Prefix
         {{- end }}
   tls:
-  {{- if .Values.uiIngress.spec.tls }}
-    {{- .Values.uiIngress.spec.tls | toYaml | nindent 2 }}
+  {{- if .Values.exposure.ingress.spec.tls }}
+    {{- .Values.exposure.ingress.spec.tls | toYaml | nindent 2 }}
   {{- end }}
 {{- end }}

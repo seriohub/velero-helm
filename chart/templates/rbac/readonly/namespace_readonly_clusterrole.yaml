@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "seriohub-velero.labels" . | nindent 4 }}
 
-# Grants read-only access to all namespaces in the cluster
+# Defines a ClusterRole that grants read-only access to all namespaces in the cluster
 rules:
   - apiGroups:
       - ""
@@ -24,14 +24,14 @@ metadata:
   labels:
   {{- include "seriohub-velero.labels" . | nindent 4 }}
 
-# Binds the read-only ClusterRole to a specific ServiceAccount
+# Binds the namespace-readonly ClusterRole to a specific ServiceAccount
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: {{ include "seriohub-velero.fullname" . }}-namespace-readonly
 
 subjects:
-  # Grants the read-only ClusterRole permissions to the specified ServiceAccount
+  # Assigns the read-only ClusterRole permissions to the specified ServiceAccount
   - kind: ServiceAccount
     name: {{ include "seriohub-velero.fullname" . }}-readonly-sa
     namespace: {{ .Release.Namespace }}

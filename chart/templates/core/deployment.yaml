@@ -2,20 +2,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: vui-core
+  name: {{ include "seriohub-velero.fullname" $ }}-core-deploy
   labels:
-    app: vui-core
-    layer: vui-core
-    tier: backend
+    component: core
+  {{- include "seriohub-velero.labels" . | nindent 4 }}
 spec:
   replicas: 1
   revisionHistoryLimit: 10
   progressDeadlineSeconds: 600
   selector:
     matchLabels:
-      app:  vui-core
-      layer: vui-core
-      tier: backend
+      component: core
+    {{- include "seriohub-velero.selectorLabels" . | nindent 6 }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -24,68 +22,67 @@ spec:
   template:
     metadata:
       labels:
-        app:  vui-core
-        layer: vui-core
-        tier: backend
+        component: core
+      {{- include "seriohub-velero.selectorLabels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "seriohub-velero.fullname" . }}-readonly-sa
       containers:
         - name: vui-core
-          image: {{ .Values.core.coreServer.image.registry | trimSuffix "/" }}/{{ .Values.core.coreServer.image.repository }}:{{ .Values.core.coreServer.image.tag }}
-          imagePullPolicy:  {{ .Values.core.coreServer.imagePullPolicy }}
+          image: {{ .Values.coreService.deployment.image.registry | trimSuffix "/" }}/{{ .Values.coreService.deployment.image.repository }}:{{ .Values.coreService.deployment.image.tag }}
+          imagePullPolicy:  {{ .Values.coreService.deployment.imagePullPolicy }}
           envFrom:
             - configMapRef:
-                name: vui-core-config
+                name:  {{ include "seriohub-velero.fullname" $ }}-core-config
             - configMapRef:
-                name: vui-helm-config
+                name: {{ include "seriohub-velero.fullname" . }}-helm-config
             - secretRef:
-                name: vui-core-secret
+                name:  {{ include "seriohub-velero.fullname" $ }}-core-secret
           ports:
             - name: api
               containerPort: 8001
               protocol: TCP
-          {{- if .Values.core.coreServer.securityContext.enabled }}
+          {{- if .Values.coreService.deployment.securityContext.enabled }}
           securityContext:
-            {{- toYaml (omit .Values.core.coreServer.securityContext "enabled") | nindent 10 }}
+            {{- toYaml (omit .Values.coreService.deployment.securityContext "enabled") | nindent 10 }}
           {{- end }}
-          {{- with .Values.core.coreServer.resources }}
+          {{- with .Values.coreService.deployment.resources }}
           resources:
             {{ . | toYaml | nindent 10 }}
           {{- end }}
           volumeMounts:
-          {{- with .Values.core.coreServer.volumeMounts }}
+          {{- with .Values.coreService.deployment.volumeMounts }}
             {{- toYaml . | nindent 10 }}
           {{- end }}
             - name: data
               mountPath: /app/data
-      {{- with .Values.core.coreServer.imagePullSecrets }}
+      {{- with .Values.coreService.deployment.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if .Values.api.apiServer.podSecurityContext.enabled }}
+      {{- if .Values.apiService.deployment.podSecurityContext.enabled }}
       securityContext:
-        {{- toYaml (omit .Values.api.apiServer.podSecurityContext "enabled") | nindent 8 }}
+        {{- toYaml (omit .Values.apiService.deployment.podSecurityContext "enabled") | nindent 8 }}
       {{- end }}
-      {{- with .Values.core.coreServer.nodeSelector }}
+      {{- with .Values.coreService.deployment.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.core.coreServer.affinity }}
+      {{- with .Values.coreService.deployment.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.core.coreServer.tolerations }}
+      {{- with .Values.coreService.deployment.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-      {{- with .Values.core.coreServer.volumes }}
+      {{- with .Values.coreService.deployment.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if .Values.coreConfig.storage.enabled }}
+      {{- if .Values.coreService.deployment.storage.enabled }}
         - name: data
           persistentVolumeClaim:
-            claimName: pvc-vui-core
+            claimName: {{ include "seriohub-velero.fullname" $ }}-core-pvc
       {{- else }}
         - name: data
           emptyDir: {}

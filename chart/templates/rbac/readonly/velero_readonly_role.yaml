@@ -6,7 +6,7 @@ metadata:
   {{- include "seriohub-velero.labels" . | nindent 4 }}
   namespace: {{ .Values.global.veleroNamespace }}
 rules:
-  # Grants permissions to create, update, and read ConfigMaps
+  # Grants read-only access to ConfigMaps in the Velero namespace
   - apiGroups:
       - ""
     resources:
@@ -16,7 +16,7 @@ rules:
       - list
       - watch
 
-  # Grants read only access to all Velero-related resources
+  # Grants read-only access to all Velero-related custom resources in the namespace
   - apiGroups:
       - velero.io
     resources:
@@ -36,13 +36,14 @@ metadata:
   {{- include "seriohub-velero.labels" . | nindent 4 }}
   namespace: {{ .Values.global.veleroNamespace }}
 
-# Binds the Role to a specific ServiceAccount within a namespace
+# Binds the velero-readonly Role to a specific ServiceAccount in the Velero namespace
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
   name: {{ include "seriohub-velero.fullname" . }}-velero-readonly
 
 subjects:
-- kind: ServiceAccount
-  name: {{ include "seriohub-velero.fullname" . }}-readonly-sa
-  namespace: {{ .Release.Namespace }}
+  # # Assigns the Role permissions to the specified ServiceAccount
+  - kind: ServiceAccount
+    name: {{ include "seriohub-velero.fullname" . }}-readonly-sa
+    namespace: {{ .Release.Namespace }}

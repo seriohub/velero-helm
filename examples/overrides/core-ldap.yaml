@@ -1,0 +1,98 @@
+# This file defines the minimum set of required configuration keys for a core deployment with ldap authentication.
+# For the complete list, you can refer to the values.yaml file.
+
+# ------------------------
+# Global
+# ------------------------
+global:
+  veleroNamespace: <SET_ME>
+  clusterName: <SET_ME>
+  core: true
+
+# ------------------------
+# API Service
+# ------------------------
+apiService:
+  secret:
+    natsUsername: <SET_ME>
+    natsPassword: <SET_ME>
+
+# ------------------------
+# Exsposed Services
+# ------------------------
+exposure:
+  mode: ingress # one of: nodePort, ingress, clusterIP
+  
+  # nodePort:
+    # ip: 192.168.40.100
+    # apiPort: 30101
+    # uiPort: 30102
+
+  ingress:
+    # ingressClassName: nginx
+
+    # metadata:
+      # annotations:
+        # cert-manager.io/cluster-issuer: letsencrypt-prod
+        # nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+        # nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+        # ingress.kubernetes.io/proxy-connect-timeout: "3600"
+    spec:
+      tls:
+      - hosts:
+        - vui-core.yourdomain.com
+        # secretName: vui-tls
+
+# ------------------------
+# Core Service
+# ------------------------
+coreService:
+
+  secret:
+    clientKey: <SET_ME>
+    natsUsername: <SET_ME>
+    natsPassword: <SET_ME>
+
+# ------------------------
+# Nats Service
+# ------------------------
+natsService:
+  loadBalancerIP: <SET_ME>
+  protocol: nats
+
+# ------------------------
+# Authentication
+# ------------------------
+auth:
+  enabled: true
+  # -- Type of authentication: BUILT-IN (default), LDAP
+  mode: LDAP
+  # -- LDAP Configuration (used when Type is LDAP)
+  ldap:
+    # -- Complete LDAP URI, including protocol and port (e.g., ldaps://ldap.example.com:636)
+    uri: ldaps://ldap.example.com:636
+    # -- Use SSL for LDAP connection (true/false)
+    useSsl: true
+    # -- Base Distinguished Name (DN) for LDAP searches
+    baseDn: dc=example,dc=com
+    # -- LDAP Service Account: It is recommended to use a read-only account
+    bindDn: cn=admin,dc=example,dc=com
+    # -- LDAP Service Secret: **Should be stored securely using Kubernetes Secrets!**
+    bindPassword: <secret>
+    # -- LDAP User Search Filter (use {username} as a placeholder)
+    userSearchFilter: (&(objectClass=person)(uid={username}))
+    
+    # Authorization settings
+    authz:
+      # -- Enable or disable LDAP authorization (true/false)
+      enabled: true
+      # -- Authorization strategy: GROUP or ATTRIBUTE
+      strategy: GROUP
+      # -- Base Distinguished Name (DN) for LDAP authorization through group membership
+      authzBaseDn: cn=admins,ou=groups,dc=example,dc=com
+      # -- LDAP Authorization Filter for groups (use {user_dn} as a placeholder)
+      authzFilter: (&(objectClass=groupOfNames)(member={user_dn}))
+      # -- LDAP Attribute for authorization (used when Strategy is ATTRIBUTE), ex: department
+      # authzAttribute: ""
+      # -- LDAP Attribute Value for authorization (used when Strategy is ATTRIBUTE), ex: IT
+      # authzValue: ""
