@@ -268,7 +268,7 @@ watchdogService:
     imagePullPolicy: IfNotPresent
     # -- Secrets to use when pulling images from private registries
     imagePullSecrets: []
-    
+
     # -- Pod security context settings
     podSecurityContext:
       enabled: false
@@ -310,7 +310,7 @@ watchdogService:
     volumes: []
     # - name: velero-api
     #   emptyDir: {}
-    
+
     # -- Annotations to apply to the deployment
     annotations: {}
     # -- Annotations to apply to the pods
@@ -336,7 +336,7 @@ watchdogService:
     debug: false
     # -- Log level for debugging (e.g., debug, info, warning, error, critical)
     debugLevel: info
-    
+
     # -- Enable backup monitoring
     backupEnable: true
     # -- Enable schedule monitoring
@@ -359,7 +359,7 @@ watchdogService:
     sendStartMessage: true
     # -- Send report at startup
     sendReportAtStartup: false
-    
+
     # -- Add a prefix to backup items in reports
     reportBackupItemPrefix: ""
     # -- Add a prefix to schedule items in reports
@@ -384,7 +384,7 @@ watchdogService:
     telegramEnable: false
     # -- [DEPRECATED] Token to access Telegram Bot API (no longer used, will be removed in future versions)
     telegramToken: <token>
-    
+
     # -- [DEPRECATED] Slack channel ID for notifications (no longer used, will be removed in future versions)
     slackChannel: <channel-id>
     # -- [DEPRECATED] Enable Slack notifications (no longer used, will be removed in future versions)
@@ -429,7 +429,7 @@ cronJobs:
         enabled: false
         seccompProfile:
           type: RuntimeDefault
-      
+
       # -- Container-level security context
       securityContext:
         enabled: false
@@ -575,7 +575,7 @@ coreService:
 
   # Secrets used by the Core service
   secret:
-    # -- Optional: Name of existing Kubernetes Secret 
+    # -- Optional: Name of existing Kubernetes Secret
     existingSecret: ""
     # -- Default admin username (used for first login)
     defaultAdminUsername: <REPLACE_ME>
@@ -676,10 +676,10 @@ auth:
       authzValue: ""
 
 # Exposure method for the services (one of: nodePort, ingress, clusterIP)
-exposure: 
+exposure:
   # -- Exposure mode: nodePort, ingress, or clusterIP
   mode: clusterIP
-  
+
   # -- ClusterIP configuration (used if mode is clusterIP)
   clusterIP: {}
 
