@@ -6,6 +6,17 @@ To check the updates for each individual component, refer to the respective chan
 
 ***
 
+## [v1.0.1] - 2025-05-08
+
+🛠️ **Fixes**
+
+- Resolved an issue with version control availability in the new release.
+
+🔄 **Component Updates**
+
+- 📦 Updated **appVersion** to ``0.3.1``
+- 🎨 Updated **UI** to version `0.2.6`
+
 ## [v1.0.0] - 2025-05-07
 
 🚨 Breaking Changes

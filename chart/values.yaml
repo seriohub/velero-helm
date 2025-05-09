@@ -181,7 +181,7 @@ uiService:
       # -- Repository of the UI container image
       repository: dserio83/velero-ui
       # -- Tag of the UI container image
-      tag: 0.2.5
+      tag: 0.2.6
 
     # -- Image pull policy (e.g., Always, IfNotPresent)
     imagePullPolicy: IfNotPresent
@@ -479,7 +479,7 @@ coreService:
       # -- Registry of the Core service container image
       registry: hub.serio.cloud
       # -- Repository of the Core service container image
-      repository: vui-core-open/vui-core-open
+      repository: vui/vui-core
       # -- Tag of the Core service container image
       tag: 0.1.0
 
