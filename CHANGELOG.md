@@ -6,6 +6,17 @@ To check the updates for each individual component, refer to the respective chan
 
 ***
 
+## [v1.0.2] - 2025-05-10
+
+🛡️ Security Fix
+
+- A potential security issue was identified and resolved. Please update to v1.0.2 to ensure continued security and stability.
+
+🔄 Component Updates
+
+- 🧩 Updated **Core** to version ``0.1.1``
+- 🚀 Updated **API** to version ``0.2.6``
+
 ## [v1.0.1] - 2025-05-08
 
 🛠️ **Fixes**

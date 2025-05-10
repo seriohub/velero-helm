@@ -4,10 +4,10 @@ entries:
   - annotations:
       contributors: https://github.com/seriohub/velero-helm/contributors
     apiVersion: v2
-    appVersion: 0.3.1
-    created: "2025-05-09T11:23:43.452000643+02:00"
+    appVersion: 0.3.2
+    created: "2025-05-10T11:14:50.377147398+02:00"
     description: 'Velero User Interface: a friendly UI and dashboard for Velero'
-    digest: 6ca76f50770951d505dfc72e59348dc0aa0f5e4baf74fe297093d397d6aa4c71
+    digest: c447d0e0ea2b0748297aa64fc8e5d2368293778f17aebb50aeb0e7d6c90ef9a3
     home: https://github.com/seriohub/velero-ui
     keywords:
     - kubernetes
@@ -28,42 +28,13 @@ entries:
     - https://github.com/seriohub/velero-helm
     type: application
     urls:
-    - https://seriohub.github.io/velero-helm/vui-1.0.1.tgz
-    version: 1.0.1
-  - annotations:
-      contributors: https://github.com/seriohub/velero-helm/contributors
-    apiVersion: v2
-    appVersion: 0.3.0
-    created: "2025-05-09T11:23:43.442369053+02:00"
-    description: 'Velero User Interface: a friendly UI and dashboard for Velero'
-    digest: 54be2b23dd738380e526402bb2466688d7e244919fb4b895259a100648b0fd9b
-    home: https://github.com/seriohub/velero-ui
-    keywords:
-    - kubernetes
-    - velero
-    - ui
-    - gui
-    - dashboard
-    maintainers:
-    - name: Davide Serio
-      url: https://github.com/davideserio
-    - name: Luciano Serio
-      url: https://github.com/lucianoserio
-    name: vui
-    sources:
-    - https://github.com/seriohub/velero-ui
-    - https://github.com/seriohub/velero-api
-    - https://github.com/seriohub/velero-watchdog
-    - https://github.com/seriohub/velero-helm
-    type: application
-    urls:
-    - https://seriohub.github.io/velero-helm/vui-1.0.0.tgz
-    version: 1.0.0
+    - https://seriohub.github.io/velero-helm/vui-1.0.2.tgz
+    version: 1.0.2
   - annotations:
       contributors: https://github.com/seriohub/velero-helm/contributors
     apiVersion: v2
     appVersion: 0.2.4
-    created: "2025-05-09T11:23:43.385440493+02:00"
+    created: "2025-05-10T11:14:50.318291093+02:00"
     description: 'Velero User Interface: a friendly UI and dashboard for Velero'
     digest: 60ab778d53406319236eabac623ac1a0f6fbb6ccfdf7f2e942c0691815e04847
     home: https://github.com/seriohub/velero-ui
@@ -92,7 +63,7 @@ entries:
       contributors: https://github.com/seriohub/velero-helm/contributors
     apiVersion: v2
     appVersion: 0.2.3
-    created: "2025-05-09T11:23:43.376247113+02:00"
+    created: "2025-05-10T11:14:50.30952208+02:00"
     description: 'Velero User Interface: a friendly UI and dashboard for Velero'
     digest: 2ccb8a7d63ba93f5a8b6ab833bcc825c68aee076c534b9dfd5fb381900c2f4c5
     home: https://github.com/seriohub/velero-ui
@@ -121,7 +92,7 @@ entries:
       contributors: https://github.com/seriohub/velero-helm/contributors
     apiVersion: v2
     appVersion: 0.2.2
-    created: "2025-05-09T11:23:43.363480397+02:00"
+    created: "2025-05-10T11:14:50.299864005+02:00"
     description: 'Velero User Interface: a friendly UI and dashboard for Velero'
     digest: 650c62d2a3e063dc2416f42f1064c0976a4df3c04827221beb338e5cf5a9bbe9
     home: https://github.com/seriohub/velero-ui
@@ -150,7 +121,7 @@ entries:
       contributors: https://github.com/seriohub/velero-helm/contributors
     apiVersion: v2
     appVersion: 0.2.1
-    created: "2025-05-09T11:23:43.353904579+02:00"
+    created: "2025-05-10T11:14:50.29105349+02:00"
     description: 'Velero User Interface: a friendly UI and dashboard for Velero'
     digest: 788a5660831bc534325dea24c212ae0a2d83dc90e68126661c8788f9fbeb758d
     home: https://github.com/seriohub/velero-ui
@@ -179,7 +150,7 @@ entries:
       contributors: https://github.com/seriohub/velero-helm/contributors
     apiVersion: v2
     appVersion: 0.2.0
-    created: "2025-05-09T11:23:43.345512635+02:00"
+    created: "2025-05-10T11:14:50.282706302+02:00"
     description: 'Velero User Interface: a friendly UI and dashboard for Velero'
     digest: 643071fa56e2343e44c30c4d438aab82ed2f9b000131c26650aebbbfd33abfe0
     home: https://github.com/seriohub/velero-ui
@@ -208,7 +179,7 @@ entries:
       contributors: https://github.com/seriohub/velero-helm/contributors
     apiVersion: v2
     appVersion: 0.1.20
-    created: "2025-05-09T11:23:43.323890467+02:00"
+    created: "2025-05-10T11:14:50.271734514+02:00"
     description: 'Velero User Interface: a friendly UI and dashboard for Velero'
     digest: 23c9522a22bb1087b998d44ff12e8cf99a82f81e0ccefc75d70a1ee75ca28087
     home: https://github.com/seriohub/velero-ui
@@ -237,7 +208,7 @@ entries:
       contributors: https://github.com/seriohub/velero-helm/contributors
     apiVersion: v2
     appVersion: 0.1.19
-    created: "2025-05-09T11:23:43.302267279+02:00"
+    created: "2025-05-10T11:14:50.250973451+02:00"
     description: 'Velero User Interface: a friendly UI and dashboard for Velero'
     digest: 265510a61c5066e82179372649971e10c4da8cabc32e3fa0388d8424f1cf4771
     home: https://github.com/seriohub/velero-ui
@@ -266,7 +237,7 @@ entries:
       contributors: https://github.com/seriohub/velero-helm/contributors
     apiVersion: v2
     appVersion: 0.1.18
-    created: "2025-05-09T11:23:43.292275298+02:00"
+    created: "2025-05-10T11:14:50.241216657+02:00"
     description: 'Velero User Interface: a friendly UI and dashboard for Velero'
     digest: 4428bf9075052e492985dcbc7d2cdf91c664472a44971ef66421031f9202161c
     home: https://github.com/seriohub/velero-ui
@@ -295,7 +266,7 @@ entries:
       contributors: https://github.com/seriohub/velero-helm/contributors
     apiVersion: v2
     appVersion: 0.1.17
-    created: "2025-05-09T11:23:43.264164273+02:00"
+    created: "2025-05-10T11:14:50.225795988+02:00"
     description: 'Velero User Interface: a friendly UI and dashboard for Velero'
     digest: 8f6c7ecf6dc9e2cd15b1114122bb08ffb30973c2ecf022805085545b1acc21ef
     home: https://github.com/seriohub/velero-ui
@@ -324,7 +295,7 @@ entries:
       contributors: https://github.com/seriohub/velero-helm/contributors
     apiVersion: v2
     appVersion: 0.1.16
-    created: "2025-05-09T11:23:43.245216742+02:00"
+    created: "2025-05-10T11:14:50.202543177+02:00"
     description: 'Velero User Interface: a friendly UI and dashboard for Velero'
     digest: 517e2739829a1baf41f495098854f129d164a32816f027ef8bde76f87cc6ba0e
     home: https://github.com/seriohub/velero-ui
@@ -353,7 +324,7 @@ entries:
       contributors: https://github.com/seriohub/velero-helm/contributors
     apiVersion: v2
     appVersion: 0.1.15
-    created: "2025-05-09T11:23:43.233708812+02:00"
+    created: "2025-05-10T11:14:50.190829245+02:00"
     description: 'Velero User Interface: a friendly UI and dashboard for Velero'
     digest: 1458fb35011da0fb9276e3eb4329746ed26b8aa7f0ed19a340addf4b2463d3de
     home: https://github.com/seriohub/velero-ui
@@ -382,7 +353,7 @@ entries:
       contributors: https://github.com/seriohub/velero-helm/contributors
     apiVersion: v2
     appVersion: 0.1.14
-    created: "2025-05-09T11:23:43.224664028+02:00"
+    created: "2025-05-10T11:14:50.180982893+02:00"
     description: 'Velero User Interface: a friendly UI and dashboard for Velero'
     digest: 42d692b7cd1bdbbfe423457fa3127ac04fa96a57debd64ef3868d12d95403f29
     home: https://github.com/seriohub/velero-ui
@@ -411,7 +382,7 @@ entries:
       contributors: https://github.com/seriohub/velero-helm/contributors
     apiVersion: v2
     appVersion: 0.1.14
-    created: "2025-05-09T11:23:43.216396963+02:00"
+    created: "2025-05-10T11:14:50.172339755+02:00"
     description: 'Velero User Interface: a friendly UI and dashboard for Velero'
     digest: c1e4572f8e64c805d125f309fb623ffb5307b329fb02f61a8096f08f477a0e07
     home: https://github.com/seriohub/velero-ui
@@ -440,7 +411,7 @@ entries:
       contributors: https://github.com/seriohub/velero-helm/contributors
     apiVersion: v2
     appVersion: 0.1.14
-    created: "2025-05-09T11:23:43.205561601+02:00"
+    created: "2025-05-10T11:14:50.162261776+02:00"
     description: 'Velero User Interface: a friendly UI and dashboard for Velero'
     digest: 8aad7e1c3e7b3e69760b7cfedce741ea1f488d447e56c1f9a3ef839e7455bcda
     home: https://github.com/seriohub/velero-ui
@@ -469,7 +440,7 @@ entries:
       contributors: https://github.com/seriohub/velero-helm/contributors
     apiVersion: v2
     appVersion: 0.1.13
-    created: "2025-05-09T11:23:43.181546894+02:00"
+    created: "2025-05-10T11:14:50.153799074+02:00"
     description: 'Velero User Interface: a friendly UI and dashboard for Velero'
     digest: 58e704c24b7a475dfa1face84d42843c7e99952c5ad29faea6b42760bb6b737b
     home: https://github.com/seriohub/velero-ui
@@ -498,7 +469,7 @@ entries:
       contributors: https://github.com/seriohub/velero-helm/contributors
     apiVersion: v2
     appVersion: 0.1.12
-    created: "2025-05-09T11:23:43.173681063+02:00"
+    created: "2025-05-10T11:14:50.144040356+02:00"
     description: 'Velero User Interface: a friendly UI and dashboard for Velero'
     digest: a6e02c32b9bed001e74376ad3f26f028e371985f7961158115be5d7bb35aa45e
     home: https://github.com/seriohub/velero-ui
@@ -527,7 +498,7 @@ entries:
       contributors: https://github.com/seriohub/velero-helm/contributors
     apiVersion: v2
     appVersion: 0.1.11
-    created: "2025-05-09T11:23:43.166356738+02:00"
+    created: "2025-05-10T11:14:50.129055267+02:00"
     description: 'Velero User Interface: a friendly UI and dashboard for Velero'
     digest: b07ec2c797d2c2cc6efb82918a3862ae3e8ac7f7646b23cb06706f493caa66f1
     home: https://github.com/seriohub/velero-ui
@@ -556,7 +527,7 @@ entries:
       contributors: https://github.com/seriohub/velero-helm/contributors
     apiVersion: v2
     appVersion: 0.1.10
-    created: "2025-05-09T11:23:43.158668171+02:00"
+    created: "2025-05-10T11:14:50.121866358+02:00"
     description: 'Velero User Interface: a friendly UI and dashboard for Velero'
     digest: ba379f55758ad5862b08b4d97aa2966ddabf596ad8921e6fbce087c98e7cf142
     home: https://github.com/seriohub/velero-ui
@@ -585,7 +556,7 @@ entries:
       contributors: https://github.com/seriohub/velero-helm/contributors
     apiVersion: v2
     appVersion: 0.1.9
-    created: "2025-05-09T11:23:43.431113786+02:00"
+    created: "2025-05-10T11:14:50.365074013+02:00"
     description: 'Velero User Interface: a friendly UI and dashboard for Velero'
     digest: c91506c8fc92efbe82fa6ede635055545442bdec6c40c4e9c1ffc441cb95ca46
     home: https://github.com/seriohub/velero-ui
@@ -612,7 +583,7 @@ entries:
     version: 0.1.9
   - apiVersion: v2
     appVersion: 0.1.8
-    created: "2025-05-09T11:23:43.421252686+02:00"
+    created: "2025-05-10T11:14:50.352784835+02:00"
     description: 'Velero User Interface: a friendly UI and dashboard for Velero'
     digest: 49ce81d267bce66318ba725e1af64773c25c76498c369717d175f2bec4dce2bd
     home: https://github.com/seriohub/velero-ui
@@ -639,7 +610,7 @@ entries:
     version: 0.1.8
   - apiVersion: v2
     appVersion: 0.1.7
-    created: "2025-05-09T11:23:43.412165385+02:00"
+    created: "2025-05-10T11:14:50.343841322+02:00"
     description: 'Velero User Interface: a friendly UI and dashboard for Velero'
     digest: 4bbd70dd4341b217d9ae3322e757d8a02c29fc30857c3805484f2c576a791567
     home: https://github.com/seriohub/velero-ui
@@ -666,7 +637,7 @@ entries:
     version: 0.1.7
   - apiVersion: v2
     appVersion: 0.1.6
-    created: "2025-05-09T11:23:43.402315657+02:00"
+    created: "2025-05-10T11:14:50.335161208+02:00"
     description: 'Velero User Interface: a friendly UI and dashboard for Velero'
     digest: 61fe9ad1683674c92cb5cb3fe4a08b5d7b3e4ead4818b6c795702c596427535a
     home: https://github.com/seriohub/velero-ui
@@ -691,4 +662,4 @@ entries:
     urls:
     - https://seriohub.github.io/velero-helm/vui-0.1.6.tgz
     version: 0.1.6
-generated: "2025-05-09T11:23:43.150792063+02:00"
+generated: "2025-05-10T11:14:50.114774241+02:00"

@@ -38,7 +38,7 @@ apiService:
       # -- Repository of the API service container image
       repository: dserio83/velero-api
       # -- Tag of the API service container image
-      tag: 0.2.5
+      tag: 0.2.6
 
     # -- Image pull policy (e.g., Always, IfNotPresent)
     imagePullPolicy: IfNotPresent
@@ -481,7 +481,7 @@ coreService:
       # -- Repository of the Core service container image
       repository: vui/vui-core
       # -- Tag of the Core service container image
-      tag: 0.1.0
+      tag: 0.1.1
 
     # -- Image pull policy (e.g., Always, IfNotPresent)
     imagePullPolicy: IfNotPresent
