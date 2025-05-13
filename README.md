@@ -4,6 +4,8 @@ Velero-Helm is part of the VUI project.
 
 [Read VUI project documentation](https://vui.seriohub.com/)
 
+[See the Installation Scenario for details](https://vui.seriohub.com/docs/getting-started/installation/scenarios/overview)
+
 ## Acknowledgements
 
 A huge thank you to everyone who:
