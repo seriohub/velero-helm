@@ -6,6 +6,15 @@ To check the updates for each individual component, refer to the respective chan
 
 ***
 
+## [v1.0.3] - 2025-05-16
+
+🔧 Helm Chart
+
+- 🛠️ Removed the fields `uiService.config.nextPublicVeleroApiUrl` and `uiService.config.nextPublicVeleroApiWs`, as they were not used in the templates.
+- 🌐 Added support for configuring API access when `exposure.mode` is set to `ClusterIP` via the new fields:
+  - `exposure.clusterIP.localAddress`
+  - `exposure.clusterIP.apiPort`
+
 ## [v1.0.2] - 2025-05-10
 
 🛡️ Security Fix

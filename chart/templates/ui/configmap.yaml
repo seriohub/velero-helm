@@ -20,16 +20,22 @@ data:
   NEXT_PUBLIC_VELERO_API_NAME_1: "{{ .Values.global.clusterName  }}-core"
   {{- end }}
 
-  # Exposure Ingress
+  # Exposure ingress
   {{- if eq .Values.exposure.mode "ingress" }}
   NEXT_PUBLIC_VELERO_API_URL_1: {{ printf "https://%s/api" (index (index .Values.exposure.ingress.spec.tls 0).hosts 0) | quote }}
   NEXT_PUBLIC_VELERO_API_WS_1: {{ printf "wss://%s" (index (index .Values.exposure.ingress.spec.tls 0).hosts 0) | quote }}
   {{- end }}
   
-  # Exposure NodePort
+  # Exposure nodePort
   {{- if eq .Values.exposure.mode "nodePort" }}
   NEXT_PUBLIC_VELERO_API_URL_1: {{ printf "http://%s:%s/api" .Values.exposure.nodePort.ip (toString .Values.exposure.nodePort.apiPort) | quote }}
   NEXT_PUBLIC_VELERO_API_WS_1: {{ printf "ws://%s:%s" .Values.exposure.nodePort.ip (toString .Values.exposure.nodePort.apiPort) | quote }}
+  {{- end }}
+
+  # Exposure clusterIP
+  {{- if eq .Values.exposure.mode "clusterIP" }}
+  NEXT_PUBLIC_VELERO_API_URL_1: "http://{{ .Values.exposure.clusterIP.localAddress }}:{{ .Values.exposure.clusterIP.apiPort }}/api"
+  NEXT_PUBLIC_VELERO_API_WS_1: "ws://{{ .Values.exposure.clusterIP.localAddress }}:{{ .Values.exposure.clusterIP.apiPort }}"
   {{- end }}
 
   # Prototype Inspect Backups Features
