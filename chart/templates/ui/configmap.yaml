@@ -34,8 +34,8 @@ data:
 
   # Exposure clusterIP
   {{- if eq .Values.exposure.mode "clusterIP" }}
-  NEXT_PUBLIC_VELERO_API_URL_1: "http://{{ .Values.exposure.clusterIP.localAddress }}:{{ .Values.exposure.clusterIP.apiPort }}/api"
-  NEXT_PUBLIC_VELERO_API_WS_1: "ws://{{ .Values.exposure.clusterIP.localAddress }}:{{ .Values.exposure.clusterIP.apiPort }}"
+  NEXT_PUBLIC_VELERO_API_URL_1: {{ printf "http://%s:%s/api" .Values.exposure.clusterIP.localAddress (toString .Values.exposure.clusterIP.apiPort) | quote }}
+  NEXT_PUBLIC_VELERO_API_WS_1: {{ printf "ws://%s:%s" .Values.exposure.clusterIP.localAddress (toString .Values.exposure.clusterIP.apiPort) | quote }}
   {{- end }}
 
   # Prototype Inspect Backups Features
