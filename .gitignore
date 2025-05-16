@@ -4,3 +4,4 @@
 *csk8s*.yaml
 bin/
 tmp/
+.venv/

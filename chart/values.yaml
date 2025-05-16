@@ -145,9 +145,9 @@ apiService:
     # -- Optional: Name of existing Kubernetes Secret (optional)
     existingSecret: ""
     # -- Default admin username (used for first login)
-    defaultAdminUsername: <REPLACE_ME>
+    defaultAdminUsername: admin
     # -- Default admin password (used for first login)
-    defaultAdminPassword: <REPLACE_ME>
+    defaultAdminPassword: admin
     # -- Password used by Velero restic integration
     resticPassword: static-passw0rd
     # -- Optional: Secret key used for JWT token signing
@@ -245,10 +245,6 @@ uiService:
     nextPublicRefreshDatatableAfter: 1500
     # -- Interval (in milliseconds) for polling running tasks updates
     nextPublicRefreshRecent: 5000
-    # -- HTTP URL of the Velero API backend
-    nextPublicVeleroApiUrl: http://10.10.0.100
-    # -- WebSocket URL of the Velero API backend
-    nextPublicVeleroApiWs: ws://10.10.0.100
     # -- Enable or disable the UI logger
     nextPublicLoggerEnabled: false
 
@@ -578,9 +574,9 @@ coreService:
     # -- Optional: Name of existing Kubernetes Secret
     existingSecret: ""
     # -- Default admin username (used for first login)
-    defaultAdminUsername: <REPLACE_ME>
+    defaultAdminUsername: admin
     # -- Default admin password (used for first login)
-    defaultAdminPassword: <REPLACE_ME>
+    defaultAdminPassword: admin
     # -- Username for connecting to the NATS server
     natsUsername: ""
     # -- Password for connecting to the NATS server
@@ -681,7 +677,11 @@ exposure:
   mode: clusterIP
 
   # -- ClusterIP configuration (used if mode is clusterIP)
-  clusterIP: {}
+  clusterIP:
+    # -- IP address or hostname to use locally for port-forwarding
+    localAddress: "127.0.0.1"
+    # -- Port to use locally for API port-forwarding
+    apiPort: 30001
 
   # NodePort configuration (used if mode is nodePort)
   nodePort:

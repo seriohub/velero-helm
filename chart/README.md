@@ -1,6 +1,6 @@
 # vui
 
-![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.3.2](https://img.shields.io/badge/AppVersion-0.3.2-informational?style=flat-square)
+![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.3.2](https://img.shields.io/badge/AppVersion-0.3.2-informational?style=flat-square)
 
 Velero User Interface: a friendly UI and dashboard for Velero
 
@@ -63,8 +63,8 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | apiService.nats.portMonitoring | int | `8222` | Monitoring port for NATS |
 | apiService.nats.protocol | string | `"nats"` | Protocol used for NATS |
 | apiService.secret.clientKey | string | `nil` | Unique client key |
-| apiService.secret.defaultAdminPassword | string | `"<REPLACE_ME>"` | Default admin password (used for first login) |
-| apiService.secret.defaultAdminUsername | string | `"<REPLACE_ME>"` | Default admin username (used for first login) |
+| apiService.secret.defaultAdminPassword | string | `"admin"` | Default admin password (used for first login) |
+| apiService.secret.defaultAdminUsername | string | `"admin"` | Default admin username (used for first login) |
 | apiService.secret.existingSecret | string | `""` | Optional: Name of existing Kubernetes Secret (optional) |
 | apiService.secret.natsPassword | string | `""` |  |
 | apiService.secret.natsUsername | string | `""` |  |
@@ -113,8 +113,8 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | coreService.deployment.tolerations | list | `[]` | Tolerations for the Core pod |
 | coreService.deployment.volumeMounts | list | `[]` | Volume mounts for the Core container |
 | coreService.deployment.volumes | list | `[]` | Volumes definitions for the Core pod |
-| coreService.secret.defaultAdminPassword | string | `"<REPLACE_ME>"` | Default admin password (used for first login) |
-| coreService.secret.defaultAdminUsername | string | `"<REPLACE_ME>"` | Default admin username (used for first login) |
+| coreService.secret.defaultAdminPassword | string | `"admin"` | Default admin password (used for first login) |
+| coreService.secret.defaultAdminUsername | string | `"admin"` | Default admin username (used for first login) |
 | coreService.secret.existingSecret | string | `""` | Optional: Name of existing Kubernetes Secret |
 | coreService.secret.natsPassword | string | `""` | Password for connecting to the NATS server |
 | coreService.secret.natsUsername | string | `""` | Username for connecting to the NATS server |
@@ -136,7 +136,9 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | cronJobs.report.jobSpec.volumes | list | `[]` | Volumes definitions for the cron job pod |
 | cronJobs.report.schedule | string | `"0 8 * * *"` | Cron schedule expression for generating full reports |
 | cronJobs.report.successfulJobsHistoryLimit | int | `0` | Maximum number of successful job histories to retain |
-| exposure.clusterIP | object | `{}` | ClusterIP configuration (used if mode is clusterIP) |
+| exposure.clusterIP | object | `{"apiPort":30001,"localAddress":"127.0.0.1"}` | ClusterIP configuration (used if mode is clusterIP) |
+| exposure.clusterIP.apiPort | int | `30001` | Port to use locally for API port-forwarding |
+| exposure.clusterIP.localAddress | string | `"127.0.0.1"` | IP address or hostname to use locally for port-forwarding |
 | exposure.ingress.ingressClassName | string | `"nginx"` | Name of the ingress class (e.g., nginx, traefik) |
 | exposure.ingress.metadata.annotations | string | `nil` |  |
 | exposure.ingress.spec.tls[0].hosts[0] | string | `"vui.local.dev"` |  |
@@ -164,8 +166,6 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | uiService.config.nextPublicLoggerEnabled | bool | `false` | Enable or disable the UI logger |
 | uiService.config.nextPublicRefreshDatatableAfter | int | `1500` | Delay (in milliseconds) before refreshing datatable after actions |
 | uiService.config.nextPublicRefreshRecent | int | `5000` | Interval (in milliseconds) for polling running tasks updates |
-| uiService.config.nextPublicVeleroApiUrl | string | `"http://10.10.0.100"` | HTTP URL of the Velero API backend |
-| uiService.config.nextPublicVeleroApiWs | string | `"ws://10.10.0.100"` | WebSocket URL of the Velero API backend |
 | uiService.deployment.affinity | object | `{}` | Affinity rules for the UI pod |
 | uiService.deployment.annotations | object | `{}` | Annotations to apply to the deployment |
 | uiService.deployment.image.registry | string | `"docker.io"` | Registry of the UI container image |
