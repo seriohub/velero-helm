@@ -38,7 +38,7 @@ apiService:
       # -- Repository of the API service container image
       repository: dserio83/velero-api
       # -- Tag of the API service container image
-      tag: 0.2.6
+      tag: 0.2.7
 
     # -- Image pull policy (e.g., Always, IfNotPresent)
     imagePullPolicy: IfNotPresent
@@ -181,7 +181,7 @@ uiService:
       # -- Repository of the UI container image
       repository: dserio83/velero-ui
       # -- Tag of the UI container image
-      tag: 0.2.6
+      tag: 0.2.7
 
     # -- Image pull policy (e.g., Always, IfNotPresent)
     imagePullPolicy: IfNotPresent
@@ -247,6 +247,8 @@ uiService:
     nextPublicRefreshRecent: 5000
     # -- Enable or disable the UI logger
     nextPublicLoggerEnabled: false
+    # -- Cache in seconds before revalidate data
+    cacheTTL: 180
 
 # Watchdog Service configuration
 watchdogService:
@@ -361,6 +363,8 @@ watchdogService:
     # -- Add a prefix to schedule items in reports
     reportScheduleItemPrefix: ""
 
+    # -- Apprise configuration for notifications
+    apprise: ""
     # -- [DEPRECATED] Email username for account (no longer used, will be removed in future versions)
     emailAccount: <email>
     # -- [DEPRECATED] Enable email notifications (no longer used, will be removed in future versions)
@@ -678,10 +682,14 @@ exposure:
 
   # -- ClusterIP configuration (used if mode is clusterIP)
   clusterIP:
+    # -- Protocol to use for accessing the API (http or https)
+    protocol: http
+    # -- WebSocket protocol to use (ws or wss)
+    wsProtocol: ws
     # -- IP address or hostname to use locally for port-forwarding
     localAddress: "127.0.0.1"
-    # -- Port to use locally for API port-forwarding
-    apiPort: 30001
+    # -- Port to use locally for API port-forwarding (optional – omit or leave empty for default port)
+    apiPort:
 
   # NodePort configuration (used if mode is nodePort)
   nodePort:

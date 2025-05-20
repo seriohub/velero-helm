@@ -9,6 +9,13 @@ global:
   clusterName:  <SET_ME>
 
 # ------------------------
+# Watchdog Service
+# ------------------------
+watchdogService:
+  config:
+    apprise: "" # Apprise configuration for notifications
+
+# ------------------------
 # Exsposed Services
 # ------------------------
 exposure:

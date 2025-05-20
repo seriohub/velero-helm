@@ -1,6 +1,6 @@
 # vui
 
-![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.3.2](https://img.shields.io/badge/AppVersion-0.3.2-informational?style=flat-square)
+![Version: 1.0.4](https://img.shields.io/badge/Version-1.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.3.3](https://img.shields.io/badge/AppVersion-0.3.3-informational?style=flat-square)
 
 Velero User Interface: a friendly UI and dashboard for Velero
 
@@ -41,7 +41,7 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | apiService.deployment.annotations | object | `{}` | Annotations to apply to the deployment |
 | apiService.deployment.image.registry | string | `"docker.io"` | Registry of the API service container image |
 | apiService.deployment.image.repository | string | `"dserio83/velero-api"` | Repository of the API service container image |
-| apiService.deployment.image.tag | string | `"0.2.6"` | Tag of the API service container image |
+| apiService.deployment.image.tag | string | `"0.2.7"` | Tag of the API service container image |
 | apiService.deployment.imagePullPolicy | string | `"IfNotPresent"` | Image pull policy (e.g., Always, IfNotPresent) |
 | apiService.deployment.imagePullSecrets | list | `[]` | Secrets to use when pulling images from private registries |
 | apiService.deployment.nodeSelector | object | `{}` | Node selector for scheduling the pod |
@@ -136,9 +136,11 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | cronJobs.report.jobSpec.volumes | list | `[]` | Volumes definitions for the cron job pod |
 | cronJobs.report.schedule | string | `"0 8 * * *"` | Cron schedule expression for generating full reports |
 | cronJobs.report.successfulJobsHistoryLimit | int | `0` | Maximum number of successful job histories to retain |
-| exposure.clusterIP | object | `{"apiPort":30001,"localAddress":"127.0.0.1"}` | ClusterIP configuration (used if mode is clusterIP) |
-| exposure.clusterIP.apiPort | int | `30001` | Port to use locally for API port-forwarding |
+| exposure.clusterIP | object | `{"apiPort":null,"localAddress":"127.0.0.1","protocol":"http","wsProtocol":"ws"}` | ClusterIP configuration (used if mode is clusterIP) |
+| exposure.clusterIP.apiPort | string | `nil` | Port to use locally for API port-forwarding (optional – omit or leave empty for default port) |
 | exposure.clusterIP.localAddress | string | `"127.0.0.1"` | IP address or hostname to use locally for port-forwarding |
+| exposure.clusterIP.protocol | string | `"http"` | Protocol to use for accessing the API (http or https) |
+| exposure.clusterIP.wsProtocol | string | `"ws"` | WebSocket protocol to use (ws or wss) |
 | exposure.ingress.ingressClassName | string | `"nginx"` | Name of the ingress class (e.g., nginx, traefik) |
 | exposure.ingress.metadata.annotations | string | `nil` |  |
 | exposure.ingress.spec.tls[0].hosts[0] | string | `"vui.local.dev"` |  |
@@ -163,6 +165,7 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | natsService.deployment.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"enabled":false,"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":65534}` | Container-level security context |
 | natsService.loadBalancerIP | string | `nil` | Static IP address to assign to the LoadBalancer service. This must be pre-reserved in your cloud provider or infrastructure. |
 | natsService.protocol | string | `"nats"` | Protocol used by the NATS service |
+| uiService.config.cacheTTL | int | `180` | Cache in seconds before revalidate data |
 | uiService.config.nextPublicLoggerEnabled | bool | `false` | Enable or disable the UI logger |
 | uiService.config.nextPublicRefreshDatatableAfter | int | `1500` | Delay (in milliseconds) before refreshing datatable after actions |
 | uiService.config.nextPublicRefreshRecent | int | `5000` | Interval (in milliseconds) for polling running tasks updates |
@@ -170,7 +173,7 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | uiService.deployment.annotations | object | `{}` | Annotations to apply to the deployment |
 | uiService.deployment.image.registry | string | `"docker.io"` | Registry of the UI container image |
 | uiService.deployment.image.repository | string | `"dserio83/velero-ui"` | Repository of the UI container image |
-| uiService.deployment.image.tag | string | `"0.2.6"` | Tag of the UI container image |
+| uiService.deployment.image.tag | string | `"0.2.7"` | Tag of the UI container image |
 | uiService.deployment.imagePullPolicy | string | `"IfNotPresent"` | Image pull policy (e.g., Always, IfNotPresent) |
 | uiService.deployment.imagePullSecrets | list | `[]` | Secrets to use when pulling images from private registries |
 | uiService.deployment.nodeSelector | object | `{}` | Node selector for scheduling the UI pod |
@@ -184,6 +187,7 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | uiService.deployment.volumes | list | `[]` | Volumes definitions for the UI pod |
 | watchdogService.config.apiEndpointPort | int | `8001` | Port for API socket binding |
 | watchdogService.config.apiEndpointUrl | string | `"0.0.0.0"` | Host address for API socket binding |
+| watchdogService.config.apprise | string | `""` | Apprise configuration for notifications |
 | watchdogService.config.backupEnable | bool | `true` | Enable backup monitoring |
 | watchdogService.config.debug | bool | `false` | VEnable debug output |
 | watchdogService.config.debugLevel | string | `"info"` | Log level for debugging (e.g., debug, info, warning, error, critical) |
