@@ -6,7 +6,7 @@ To check the updates for each individual component, refer to the respective chan
 
 ***
 
-## [v1.0.4] - 2025-05-16
+## [v1.0.4] - 2025-05-20
 
 🔧 Helm Chart
 
