@@ -5,3 +5,7 @@
 bin/
 tmp/
 .venv/
+yarn.lock
+package.json
+node_modules/
+package-lock.json

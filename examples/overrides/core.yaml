@@ -14,10 +14,17 @@ global:
 # ------------------------
 apiService:
   secret:
-    defaultAdminUsername: <SET_ME>
-    defaultAdminPassword: <SET_ME>
+    # defaultAdminUsername: "admin" # ⚠️ Change for production
+    # defaultAdminPassword: "admin" # ⚠️ Change for production
     natsUsername: <SET_ME>
     natsPassword: <SET_ME>
+
+# ------------------------
+# Watchdog Service
+# ------------------------
+watchdogService:
+  config:
+    apprise: "" # Apprise configuration for notifications
 
 # ------------------------
 # Exsposed Services
@@ -52,8 +59,8 @@ coreService:
 
   secret:
     clientKey: <SET_ME>
-    defaultAdminUsername: <SET_ME>
-    defaultAdminPassword: <SET_ME>
+    # defaultAdminUsername: "admin" # ⚠️ Change for production
+    # defaultAdminPassword: "admin" # ⚠️ Change for production
     natsUsername: <SET_ME>
     natsPassword: <SET_ME>
 

@@ -9,12 +9,11 @@ global:
   clusterName: <SET_ME>
 
 # ------------------------
-# API Service
+# Watchdog Service
 # ------------------------
-apiService:
-  secret:
-    defaultAdminUsername: <SET_ME> # For default BUILT-IN authentication
-    defaultAdminPassword: <SET_ME> # For default BUILT-IN authentication
+watchdogService:
+  config:
+    apprise: "" # Apprise configuration for notifications
 
 # ------------------------
 # Exsposed Services

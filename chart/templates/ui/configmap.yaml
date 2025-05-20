@@ -11,6 +11,7 @@ data:
   NEXT_PUBLIC_REFRESH_DATATABLE_AFTER: {{ .Values.uiService.config.nextPublicRefreshDatatableAfter | quote }}
   NEXT_PUBLIC_REFRESH_RECENT: {{ .Values.uiService.config.nextPublicRefreshRecent | quote  }}
   NEXT_PUBLIC_LOGGER_ENABLED: {{ .Values.uiService.config.nextPublicLoggerEnabled | quote  }}
+  NEXT_PUBLIC_CACHE_TTL: {{ .Values.uiService.config.cacheTTL | quote  }}
   
   {{- if not .Values.global.core }}
   # API Agent Name
@@ -34,8 +35,18 @@ data:
 
   # Exposure clusterIP
   {{- if eq .Values.exposure.mode "clusterIP" }}
-  NEXT_PUBLIC_VELERO_API_URL_1: {{ printf "http://%s:%s/api" .Values.exposure.clusterIP.localAddress (toString .Values.exposure.clusterIP.apiPort) | quote }}
-  NEXT_PUBLIC_VELERO_API_WS_1: {{ printf "ws://%s:%s" .Values.exposure.clusterIP.localAddress (toString .Values.exposure.clusterIP.apiPort) | quote }}
+  {{- $proto := default "http" .Values.exposure.clusterIP.protocol }}
+  {{- $wsProto := default "ws" .Values.exposure.clusterIP.wsProtocol }}
+  {{- $host := .Values.exposure.clusterIP.localAddress }}
+  {{- $port := .Values.exposure.clusterIP.apiPort }}
+  
+  {{- if $port }}
+  NEXT_PUBLIC_VELERO_API_URL_1: {{ printf "%s://%s:%s/api" $proto $host (toString $port) | quote }}
+  NEXT_PUBLIC_VELERO_API_WS_1: {{ printf "%s://%s:%s" $wsProto $host (toString $port) | quote }}
+  {{- else }}
+  NEXT_PUBLIC_VELERO_API_URL_1: {{ printf "%s://%s/api" $proto $host | quote }}
+  NEXT_PUBLIC_VELERO_API_WS_1: {{ printf "%s://%s" $wsProto $host | quote }}
+  {{- end }}
   {{- end }}
 
   # Prototype Inspect Backups Features

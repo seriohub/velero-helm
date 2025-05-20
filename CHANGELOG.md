@@ -6,11 +6,28 @@ To check the updates for each individual component, refer to the respective chan
 
 ***
 
+## [v1.0.4] - 2025-05-16
+
+🔧 Helm Chart
+
+- ⏱️ Added configuration for in-memory TTL caching of GET requests via `uiService.config.cacheTTL`
+- 🌐 Added support for configuring protocol access when `exposure.mode` is set to `ClusterIP`:
+  - `exposure.clusterIP.protocol`
+  - `exposure.clusterIP.wsProtocol`
+- 🔔 Added configuration for Apprise service notifications via `watchdogService.config.apprise`
+- 🧩 Improved template files to better support various installation scenarios
+
+🔄 Component Updates
+
+- 📦 Updated **appVersion** to `0.3.3`
+- 🚀 Updated **API** to version `0.2.7`
+- 🎨 Updated **UI** to version `0.2.7`
+
 ## [v1.0.3] - 2025-05-16
 
 🔧 Helm Chart
 
-- 🛠️ Removed the fields `uiService.config.nextPublicVeleroApiUrl` and `uiService.config.nextPublicVeleroApiWs`, as they were not used in the templates.
+- 🛠️ Removed the fields `uiService.config.nextPublicVeleroApiUrl` and `uiService.config.nextPublicVeleroApiWs`, as they were not used in the templates
 - 🌐 Added support for configuring API access when `exposure.mode` is set to `ClusterIP` via the new fields:
   - `exposure.clusterIP.localAddress`
   - `exposure.clusterIP.apiPort`
@@ -19,7 +36,7 @@ To check the updates for each individual component, refer to the respective chan
 
 🛡️ Security Fix
 
-- A potential security issue was identified and resolved. Please update to v1.0.2 to ensure continued security and stability.
+- A potential security issue was identified and resolved. Please update to v1.0.2 to ensure continued security and stability
 
 🔄 Component Updates
 
@@ -30,7 +47,7 @@ To check the updates for each individual component, refer to the respective chan
 
 🛠️ **Fixes**
 
-- Resolved an issue with version control availability in the new release.
+- Resolved an issue with version control availability in the new release
 
 🔄 **Component Updates**
 
