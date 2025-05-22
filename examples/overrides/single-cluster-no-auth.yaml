@@ -21,10 +21,16 @@ watchdogService:
 exposure:
   mode: ingress # one of: nodePort, ingress, clusterIP
   
+  #clusterIP:
+  #  protocol: http
+  #  wsProtocol: ws
+  #  localAddress: "127.0.0.1"    
+  #  apiPort:
+
   # nodePort:
-  #  ip: 10.10.0.100
-  #  apiPort: 30101
-  #  uiPort: 30102
+    # ip: 10.10.0.100
+    # apiPort: 30001
+    # uiPort: 30002
 
   ingress:
     # ingressClassName: nginx
