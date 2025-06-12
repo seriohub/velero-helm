@@ -1,6 +1,6 @@
 # vui
 
-![Version: 1.0.4](https://img.shields.io/badge/Version-1.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.3.3](https://img.shields.io/badge/AppVersion-0.3.3-informational?style=flat-square)
+![Version: 1.0.5](https://img.shields.io/badge/Version-1.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.4.0](https://img.shields.io/badge/AppVersion-0.4.0-informational?style=flat-square)
 
 Velero User Interface: a friendly UI and dashboard for Velero
 
@@ -41,7 +41,7 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | apiService.deployment.annotations | object | `{}` | Annotations to apply to the deployment |
 | apiService.deployment.image.registry | string | `"docker.io"` | Registry of the API service container image |
 | apiService.deployment.image.repository | string | `"dserio83/velero-api"` | Repository of the API service container image |
-| apiService.deployment.image.tag | string | `"0.2.7"` | Tag of the API service container image |
+| apiService.deployment.image.tag | string | `"0.3.0"` | Tag of the API service container image |
 | apiService.deployment.imagePullPolicy | string | `"IfNotPresent"` | Image pull policy (e.g., Always, IfNotPresent) |
 | apiService.deployment.imagePullSecrets | list | `[]` | Secrets to use when pulling images from private registries |
 | apiService.deployment.nodeSelector | object | `{}` | Node selector for scheduling the pod |
@@ -173,7 +173,7 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | uiService.deployment.annotations | object | `{}` | Annotations to apply to the deployment |
 | uiService.deployment.image.registry | string | `"docker.io"` | Registry of the UI container image |
 | uiService.deployment.image.repository | string | `"dserio83/velero-ui"` | Repository of the UI container image |
-| uiService.deployment.image.tag | string | `"0.2.7"` | Tag of the UI container image |
+| uiService.deployment.image.tag | string | `"0.3.0"` | Tag of the UI container image |
 | uiService.deployment.imagePullPolicy | string | `"IfNotPresent"` | Image pull policy (e.g., Always, IfNotPresent) |
 | uiService.deployment.imagePullSecrets | list | `[]` | Secrets to use when pulling images from private registries |
 | uiService.deployment.nodeSelector | object | `{}` | Node selector for scheduling the UI pod |
