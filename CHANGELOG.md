@@ -6,6 +6,14 @@ To check the updates for each individual component, refer to the respective chan
 
 ***
 
+## [v1.0.5] - 2025-06-12
+
+🔄 Component Updates
+
+- 📦 Updated **appVersion** to `0.4.0`
+- 🚀 Updated **API** to version `0.3.0`
+- 🎨 Updated **UI** to version `0.3.0`
+
 ## [v1.0.4] - 2025-05-20
 
 🔧 Helm Chart
@@ -271,6 +279,18 @@ To check the updates for each individual component, refer to the respective chan
 ***
 
 ## Tags
+
+v1.0.5: [https://github.com/seriohub/velero-helm/releases/tag/v1.0.5](https://github.com/seriohub/velero-helm/releases/tag/v1.0.5)
+
+v1.0.4: [https://github.com/seriohub/velero-helm/releases/tag/v1.0.4](https://github.com/seriohub/velero-helm/releases/tag/v1.0.4)
+
+v1.0.3: [https://github.com/seriohub/velero-helm/releases/tag/v1.0.3](https://github.com/seriohub/velero-helm/releases/tag/v1.0.3)
+
+v1.0.2: [https://github.com/seriohub/velero-helm/releases/tag/v1.0.2](https://github.com/seriohub/velero-helm/releases/tag/v1.0.2)
+
+v1.0.1: [https://github.com/seriohub/velero-helm/releases/tag/v1.0.1](https://github.com/seriohub/velero-helm/releases/tag/v1.0.1)
+
+v1.0.0: [https://github.com/seriohub/velero-helm/releases/tag/v1.0.0](https://github.com/seriohub/velero-helm/releases/tag/v1.0.0)
 
 v0.1.27: [https://github.com/seriohub/velero-helm/releases/tag/v0.1.27](https://github.com/seriohub/velero-helm/releases/tag/v0.1.27)
 
