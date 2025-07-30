@@ -1,6 +1,6 @@
 # vui
 
-![Version: 1.0.5](https://img.shields.io/badge/Version-1.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.4.0](https://img.shields.io/badge/AppVersion-0.4.0-informational?style=flat-square)
+![Version: 1.0.6](https://img.shields.io/badge/Version-1.0.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.4.1](https://img.shields.io/badge/AppVersion-0.4.1-informational?style=flat-square)
 
 Velero User Interface: a friendly UI and dashboard for Velero
 
@@ -41,7 +41,7 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | apiService.deployment.annotations | object | `{}` | Annotations to apply to the deployment |
 | apiService.deployment.image.registry | string | `"docker.io"` | Registry of the API service container image |
 | apiService.deployment.image.repository | string | `"dserio83/velero-api"` | Repository of the API service container image |
-| apiService.deployment.image.tag | string | `"0.3.0"` | Tag of the API service container image |
+| apiService.deployment.image.tag | string | `"0.3.1"` | Tag of the API service container image |
 | apiService.deployment.imagePullPolicy | string | `"IfNotPresent"` | Image pull policy (e.g., Always, IfNotPresent) |
 | apiService.deployment.imagePullSecrets | list | `[]` | Secrets to use when pulling images from private registries |
 | apiService.deployment.nodeSelector | object | `{}` | Node selector for scheduling the pod |
@@ -96,11 +96,11 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | coreService.config.securityPathDatabase | string | `"./data"` | Path to SQLite database file used to store data |
 | coreService.deployment.affinity | object | `{}` | Affinity rules for the Core pod |
 | coreService.deployment.annotations | object | `{}` | Annotations to apply to the deployment |
-| coreService.deployment.image.registry | string | `"hub.serio.cloud"` | Registry of the Core service container image |
-| coreService.deployment.image.repository | string | `"vui/vui-core"` | Repository of the Core service container image |
-| coreService.deployment.image.tag | string | `"0.1.1"` | Tag of the Core service container image |
+| coreService.deployment.image.registry | string | `"docker.io"` | Registry of the Core service container image |
+| coreService.deployment.image.repository | string | `"dserio83/vui-core"` | Repository of the Core service container image |
+| coreService.deployment.image.tag | string | `"0.1.2"` | Tag of the Core service container image |
 | coreService.deployment.imagePullPolicy | string | `"IfNotPresent"` | Image pull policy (e.g., Always, IfNotPresent) |
-| coreService.deployment.imagePullSecrets | list | `[{"name":"vui-core-login-secret"}]` | Secrets to use when pulling images from private registries |
+| coreService.deployment.imagePullSecrets | list | `[]` | Secrets to use when pulling images from private registries |
 | coreService.deployment.nodeSelector | object | `{}` | Node selector for scheduling the Core pod |
 | coreService.deployment.podAnnotations | object | `{}` | Annotations to apply to the pods |
 | coreService.deployment.podSecurityContext | object | `{"enabled":false,"seccompProfile":{"type":"RuntimeDefault"}}` | Pod security context settings |
@@ -173,7 +173,7 @@ Velero User Interface: a friendly UI and dashboard for Velero
 | uiService.deployment.annotations | object | `{}` | Annotations to apply to the deployment |
 | uiService.deployment.image.registry | string | `"docker.io"` | Registry of the UI container image |
 | uiService.deployment.image.repository | string | `"dserio83/velero-ui"` | Repository of the UI container image |
-| uiService.deployment.image.tag | string | `"0.3.0"` | Tag of the UI container image |
+| uiService.deployment.image.tag | string | `"0.3.1"` | Tag of the UI container image |
 | uiService.deployment.imagePullPolicy | string | `"IfNotPresent"` | Image pull policy (e.g., Always, IfNotPresent) |
 | uiService.deployment.imagePullSecrets | list | `[]` | Secrets to use when pulling images from private registries |
 | uiService.deployment.nodeSelector | object | `{}` | Node selector for scheduling the UI pod |
