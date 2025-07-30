@@ -25,7 +25,7 @@ spec:
         component: core
       {{- include "seriohub-velero.selectorLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ include "seriohub-velero.fullname" . }}-readonly-sa
+      serviceAccountName: {{ include "seriohub-velero.fullname" . }}-admin-sa
       containers:
         - name: vui-core
           image: {{ .Values.coreService.deployment.image.registry | trimSuffix "/" }}/{{ .Values.coreService.deployment.image.repository }}:{{ .Values.coreService.deployment.image.tag }}

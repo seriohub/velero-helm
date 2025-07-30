@@ -38,7 +38,7 @@ apiService:
       # -- Repository of the API service container image
       repository: dserio83/velero-api
       # -- Tag of the API service container image
-      tag: 0.3.0
+      tag: 0.3.1
 
     # -- Image pull policy (e.g., Always, IfNotPresent)
     imagePullPolicy: IfNotPresent
@@ -181,7 +181,7 @@ uiService:
       # -- Repository of the UI container image
       repository: dserio83/velero-ui
       # -- Tag of the UI container image
-      tag: 0.3.0
+      tag: 0.3.1
 
     # -- Image pull policy (e.g., Always, IfNotPresent)
     imagePullPolicy: IfNotPresent
@@ -477,17 +477,16 @@ coreService:
   deployment:
     image:
       # -- Registry of the Core service container image
-      registry: hub.serio.cloud
+      registry: docker.io
       # -- Repository of the Core service container image
-      repository: vui/vui-core
+      repository: dserio83/vui-core
       # -- Tag of the Core service container image
-      tag: 0.1.1
+      tag: 0.1.2
 
     # -- Image pull policy (e.g., Always, IfNotPresent)
     imagePullPolicy: IfNotPresent
     # -- Secrets to use when pulling images from private registries
-    imagePullSecrets:
-      - name: vui-core-login-secret
+    imagePullSecrets: []
 
     # -- Pod security context settings
     podSecurityContext:
