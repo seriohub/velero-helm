@@ -23,8 +23,8 @@ data:
 
   # Exposure ingress
   {{- if eq .Values.exposure.mode "ingress" }}
-  NEXT_PUBLIC_VELERO_API_URL_1: {{ printf "https://%s/api" (index (index .Values.exposure.ingress.spec.tls 0).hosts 0) | quote }}
-  NEXT_PUBLIC_VELERO_API_WS_1: {{ printf "wss://%s" (index (index .Values.exposure.ingress.spec.tls 0).hosts 0) | quote }}
+  NEXT_PUBLIC_VELERO_API_URL_1: {{ printf "https://%s/api" .Values.exposure.ingress.host | quote }}
+  NEXT_PUBLIC_VELERO_API_WS_1: {{ printf "wss://%s" .Values.exposure.ingress.host | quote }}
   {{- end }}
   
   # Exposure nodePort
