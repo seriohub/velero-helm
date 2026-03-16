@@ -709,10 +709,10 @@ exposure:
         # -- Optional annotations for the ingress resource
         # cert-manager.io/cluster-issuer: "letsencrypt-prod"
 
-    spec:
-      tls:
-        # List of hosts to be covered by TLS
-        - hosts:
-            - vui.local.dev
-        # -- Optional: name of the Kubernetes TLS secret
-        # secretName: velero-ui-tls
+    host: vui.local.dev
+    tls:
+      # List of hosts to be covered by TLS
+      - hosts:
+          - vui.local.dev
+      # -- Optional: name of the Kubernetes TLS secret
+      # secretName: velero-ui-tls

@@ -12,7 +12,7 @@ metadata:
 spec:
   ingressClassName: {{ .Values.exposure.ingress.ingressClassName }}
   rules:
-  - host: {{ (index (index .Values.exposure.ingress.spec.tls 0).hosts 0) }}
+  - host: {{ .Values.exposure.ingress.host }}
     http:
       paths:
       - backend:
@@ -54,8 +54,8 @@ spec:
         path: /ws
         pathType: Prefix
         {{- end }}
+  {{- if .Values.exposure.ingress.tls }}
   tls:
-  {{- if .Values.exposure.ingress.spec.tls }}
-    {{- .Values.exposure.ingress.spec.tls | toYaml | nindent 2 }}
+    {{- toYaml .Values.exposure.ingress.tls | nindent 4 }}
   {{- end }}
 {{- end }}
